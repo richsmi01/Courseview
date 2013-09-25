@@ -5,3 +5,9 @@ Sept 26 Agenda:
 -  Have him walk me through how he would find out more about this group add function stuff
 -  Have him walk me through how he would find out more about elgg_get_entity_by...
 -  Discuss hosting a test elgg site for reporting to athabasca profs
+
+Stuff for Rich to do next week
+
+-  work through Matt's css tutorial plugin and fix up the course menu
+- figure out the whole building the course tree into a group object thing
+- fix up how I'm using views so I use less ad-hoq elgg_echo's through the code.
