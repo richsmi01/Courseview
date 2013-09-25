@@ -1,6 +1,7 @@
 <?php
 
-
+//this will eventually have to get more sophisticated to present the user with options depending on who they are: student, prof or admin
+//if they are a student, we will present them with a list of cohorts that they belong to and allow them to choose one.
 echo elgg_echo ('courseview:greetings', array ($vars ['name']));
 
 if (elgg_is_admin_logged_in())
@@ -20,17 +21,5 @@ if (courseview_get_profsgroup()->isMember ($myuser))
    echo elgg_view('output/url', array("text" => "Manage Courses", "href" => "courseview/managecourses", 'class' => 'elgg-button elgg-button-action'));
    
 }
-
-
-//$profgroup = elgg_get_entities(array(
-//    'type' => 'group',
-//    'joins' => array("JOIN {$db_prefix}groups_entity ge on ge.guid = e.guid"),
-//    'wheres' => array("ge.name = '$name'"),
-//));
-
-//if ($profgroup.isMemeber ($myuser->guid))
-//{
-//    
-//}
 
 ?>
