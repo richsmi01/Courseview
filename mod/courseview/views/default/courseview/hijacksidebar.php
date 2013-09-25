@@ -1,7 +1,7 @@
 <?php
 
 /*
- * 
+ *   TODO :Note, this is a sucky way to do the CSS-- work through Matt's css tutorial plugin and fix this
  */
 
 echo '
@@ -135,35 +135,15 @@ echo '
         </style>
 ';
 
-//echo elgg_echo ('hello:greetings', array ($vars ['name']));
 
-//if the user is an admin, then display a link to managing courses.  Students will not see this link
-//if (elgg_is_admin_logged_in())
-//{
-//    echo elgg_view('output/url', array("text" => "Manage Courses", "href" => "courseview/thiswillmanagecourses", 'class' => 'elgg-button elgg-button-action'));
-//}
-//
-////need to loop through and display various modules here.
-//
-// echo elgg_view('output/url', array("text" => "View Blogs", "href" => "courseview/listview", 'class' => 'elgg-button elgg-button-action'));
-// echo elgg_view('output/url', array("text" => "Exit Course Tool", "href" => "courseview/exit", 'class' => 'elgg-button elgg-button-action'));
- 
- /*******************************************************************************
-  * NOTE!!!
-  * 
-  * Need to be able to create a 'mixed' sub-module that displays multiple things that the professor wants to include like
-  * a pdf file, a video, a feedback page, a wiki-page etc that could all be grouped as "Professor's Comments" or
-  * something like that...for this, we would just get all entities regardless of subtype that matched a tag such as
-  * @#$Multi-Module 1$#@
-  * 
-  * or just one thing per sub-module like professor-video and then another submodule called - assignment etc.
-  */
- 
 
 
 $coursetree = ElggSession::offsetGet('currentcourse');
     
-echo elgg_echo ('<div class="css-treeview">')  ;  
+//Need to build the coursetree html with the appropriate class attributes so that the CSS can target it correctly and display
+//it in a tree.
+
+echo '<div class ="css-treeview">';
 for ($row=0; $row <sizeof ($coursetree); $row++)
 {
     if ($coursetree[$row][indent ]== '+')
@@ -191,55 +171,10 @@ for ($row=0; $row <sizeof ($coursetree); $row++)
     }
  else 
     {
-        echo elgg_echo('<li><a class = "indent" href = /elgg/courseview/listview/'.$coursetree [$row][subtype].'/'.$row.'>'.$coursetree[$row][label].'</a></li>');
+        echo elgg_echo('<li><a class = "indent" href = /elgg/courseview/contentpane/'.$coursetree [$row][subtype].'/'.$row.'>'.$coursetree[$row][label].'</a></li>');
     }
    
 }
 echo elgg_echo ('</div>')  ;  
- //$plugin_path = elgg_get_plugins_path();
- //echo $plugin_path;
  
- //echo '$$$'.$_SERVER['DOCUMENT_ROOT'];
-// for ($row = 0; $row<  sizeof($course_content); $row++)
-//{
-//   echo elgg_echo ('<li >'.$course_content [$row][0].'<ul>');
-//   
-//    
-//    for ($column =1; $column< sizeof($course_content[$row]); $column++)
-//    {
-//        echo elgg_echo ('<li><a href = /elgg/courseview/listview/'.$course_content [$row][$column].'/'.$row.'>---'.$course_content [$row][$column].' </a></li>');
-//        //echo '<br>----'.$course_content[$row][$column];
-//    }
-//    
-//}
-
- //echo elgg_echo (elgg_get_plugins_path().'courseview/imgs');
-    //echo elgg_echo (getcwd());
-// echo elgg_echo ('
-
-
-// 
-// 
-// 
-//     <div class="css-treeview">
-//            <ul>
-//                <li><input type="checkbox"  /><label >Module 1 - Closed!!!</label>
-//                    <ul>
-//                        <li><input type="checkbox" id="item-0-0" /><label for="item-0-0">Professors Notes</label>
-//                            <ul>
-//                                <li><a href="./">Item 1</a></li>
-//                                <li><a href="./">Item 2</a></li>
-//                                <li><a href="./">Item 3</a></li>
-//                            </ul>
-//                        </li>
-//                        
-//                                <li><a href="./">blog1 entries</a></li>
-//                                <li><a href="./">bookmarks</a></li>
-//                                <li><a href="./">discussions</a></li>
-//                       
-//                    </ul>
-//               </ul>
-//       </div>               
-//         ');
-
 ?>

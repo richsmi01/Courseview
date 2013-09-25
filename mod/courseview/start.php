@@ -11,6 +11,9 @@ function courseviewInit()
     $item = new ElggMenuItem('courseview', 'CourseView', 'courseview/main'); 
     elgg_register_menu_item('site', $item);
     
+    
+add_group_tool_option("courseview", "Use this group as a CourseView cohort", FALSE);
+    
     //include the courseview.php class library
     elgg_register_library('elgg:courseview', elgg_get_plugins_path() . 'courseview/lib/courseview.php');
     elgg_load_library('elgg:courseview');
@@ -55,10 +58,10 @@ function courseviewPageHandler($page, $identifier)
                 require "$base_path/courseview.php"; //load the default courseview welcome page
             }
             break;
-        case 'listview':
+        case 'contentpane':
             ElggSession::offsetSet('object_type', $page[1]);
             ElggSession::offsetSet('coursetreeindex',$page[2]);
-            require "$base_path/listview.php";
+            require "$base_path/contentpane.php";
             break;
         case 'courseview':
             set_input("object_type", 'all');

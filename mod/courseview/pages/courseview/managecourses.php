@@ -8,10 +8,10 @@
 echo 'Manage Courses<br>';
 
  $rs_type = ElggSession::offsetSet('object_type', 'course');
-  //require "$base_path/listview.php";
+  //require "$base_path/contentpane.php";
 
   
- //$content = elgg_view ('courseview/listview').'<br>';
+ //$content = elgg_view ('courseview/contentpane').'<br>';
  
   $content .= elgg_view('output/url', array("text" => "Set Initial Testing Conditions", "href" => "courseview/testinginit", 'class' => 'elgg-button elgg-button-action'));
  $content .= elgg_view('output/url', array("text" => "Add a course", "href" => "courseview/addcourse", 'class' => 'elgg-button elgg-button-action'));

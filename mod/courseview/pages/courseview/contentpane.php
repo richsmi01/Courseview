@@ -3,7 +3,7 @@
       <head>
             <title>HTML</title>
             <meta name="author" content="Rich Smith" />
-            <link rel="stylesheet" href="css/view2.css"/>
+            <!--<link rel="stylesheet" href="css/view2.css"/>-->
       </head>
       <body>
             <?php
@@ -17,8 +17,8 @@
                 'count' => true,
             );
          
-            $content = elgg_view ('courseview/listview');
-            //$content += 'I am in the listview page...';
+            $content = elgg_view ('courseview/contentpane');
+            //$content += 'I am in the contentpane page...';
             $vars = array('content' => $content,);
 
             $body = elgg_view_layout('one_sidebar', $vars);
@@ -26,7 +26,7 @@
          
             
             echo elgg_view_page($title, $body);
-            echo 'I AM IN LISTVIEW page....why???';
+            
             
             $testrs= get_input('rich');
             echo $testrs[1].'...'.$testrs[2];
