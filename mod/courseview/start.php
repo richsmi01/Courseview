@@ -27,7 +27,7 @@ function courseviewInit()
     
     //this is where I will put all of the action registrations for the forms
     elgg_register_action ("createcourse", $base_path.'/actions/courseview/createcourse.php');
-    echo $CONFIG->actions;
+    //echo $CONFIG->actions;
 }
 
 //this is the method that gets called when one of the courseview urls is called.  We will use a switch to choose how to respond
