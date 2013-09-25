@@ -1,7 +1,7 @@
 <?php
 
 /*
- *   TODO :Note, this is a sucky way to do the CSS-- work through Matt's css tutorial plugin and fix this
+ *   ::TODO:  This is a sucky way to do the CSS-- work through Matt's css tutorial plugin and fix this
  */
 
 echo '
@@ -142,6 +142,8 @@ $coursetree = ElggSession::offsetGet('currentcourse');
     
 //Need to build the coursetree html with the appropriate class attributes so that the CSS can target it correctly and display
 //it in a tree.
+
+// ::TODO: the css needs to be fixed so that the open and close icons show up next to the folders and modules
 
 echo '<div class ="css-treeview">';
 for ($row=0; $row <sizeof ($coursetree); $row++)

@@ -1,6 +1,6 @@
 <?php
 
-//TODO need to eventually fix this up to present the user with options depending on whether they are student, prof, or admin
+//::TODO: need to eventually fix this up to present the user with options depending on whether they are student, prof, or admin
 
 
 //get the CourseView object.  This object contains all of the stuff we need to run CourseView.

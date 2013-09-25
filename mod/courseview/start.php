@@ -8,28 +8,32 @@ elgg_register_event_handler('init', 'system', 'courseviewInit');
 function courseviewInit()
 {
     //register menu item to switch to CourseView
-    $item = new ElggMenuItem('courseview', 'CourseView', 'courseview/main'); 
+    $item = new ElggMenuItem('courseview', 'CourseView', 'courseview/main');
     elgg_register_menu_item('site', $item);
-    
-    
-add_group_tool_option("courseview", "Use this group as a CourseView cohort", FALSE);
-    
+
+    //::TODO:  ok, so what do I do with this now?
+    add_group_tool_option("courseview", "Use this group as a CourseView cohort", FALSE);
+
     //include the courseview.php class library
     elgg_register_library('elgg:courseview', elgg_get_plugins_path() . 'courseview/lib/courseview.php');
     elgg_load_library('elgg:courseview');
-    
+
     //this allows us to hijack the sidebar.  Each time the sidebar is about to be rendered, this hook fires
     elgg_register_plugin_hook_handler('view', 'page/elements/sidebar', 'sidebar_intercept');
-       
+
     //register page event handler
     elgg_register_page_handler('courseview', 'courseviewPageHandler');
     
+    //this is registering an event handler to call my interceptcreate method whenever an object is created.
+    elgg_register_event_handler('create', 'object','interceptcreate');
+
     //set up our paths
     $plugin_path = elgg_get_plugins_path();
     $base_path = $plugin_path . 'courseview';
-    
+
     //this is where I will put all of the action registrations for the forms
-    elgg_register_action ("createcourse", $base_path.'/actions/courseview/createcourse.php');
+    //::TODO:  Get Matt to better explain how actions/forms work 
+    elgg_register_action("createcourse", $base_path . '/actions/courseview/createcourse.php');
     //echo $CONFIG->actions;
 }
 
@@ -38,13 +42,13 @@ function courseviewPageHandler($page, $identifier)
 {
     $plugin_path = elgg_get_plugins_path();
     $base_path = $plugin_path . 'courseview/pages/courseview';
-   
+
     set_input('rich', $page);
 
     switch ($page[0])  //switching on the first parameter passed through the RESTful url
     {
         case 'main':
-            $status = ElggSession::offsetGet ('courseview');
+            $status = ElggSession::offsetGet('courseview');
             //if the courseview session variable was false, toggle it to true and viceversa
             if ($status)
 //            {
@@ -58,19 +62,19 @@ function courseviewPageHandler($page, $identifier)
                 require "$base_path/courseview.php"; //load the default courseview welcome page
             }
             break;
-        case 'contentpane':
+        case 'contentpane':    //this is the main page that will display content by various tag combinations
             ElggSession::offsetSet('object_type', $page[1]);
-            ElggSession::offsetSet('coursetreeindex',$page[2]);
+            ElggSession::offsetSet('coursetreeindex', $page[2]);
             require "$base_path/contentpane.php";
             break;
         case 'courseview':
             set_input("object_type", 'all');
             require "$base_path/courseview.php";
             break;
-         case 'managecourseview':
+        case 'managecourseview':
             require "$base_path/managecourseview.php";
             break;
-         case 'addcourse':
+        case 'addcourse':
             require "$base_path/addcourse.php";
             break;
         case 'exit':
@@ -81,11 +85,11 @@ function courseviewPageHandler($page, $identifier)
             set_input("object_type", $page[1]);
             require "$base_path/managecourses.php";
             break;
-         case 'testinginit':
+        case 'testinginit':
             require "$base_path/testinginit.php";
             break;
         default:
-            echo "request for ". $page[0];
+            echo "request for " . $page[0];
     }
     return true;
 }
@@ -100,6 +104,11 @@ function sidebar_intercept($hook, $entity_type, $returnvalue, $params)
     return $returnvalue;
 }
 
-
-
+//this method will eventually be used to intercept  object creations and add the appropriate tags.
+function interceptcreate ($event, $type, $object)
+{
+    system_message("Rich's object creation event hander was just triggered...");
+    system_message('Type: '.$type.'  Event: '.$event);
+    echo ('The object just created was'.$type);
+}
 

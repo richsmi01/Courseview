@@ -1,6 +1,6 @@
 <?php
 
-function courseview_get_profsgroup ()
+function courseview_get_profsgroup () //this isn't really needed anymore
 {
     return elgg_get_entities(array('type'=>'group', 'subtype' => 'group', 'title' => 'profsgroup'))[0];
 }
@@ -9,6 +9,7 @@ function courseview_get_profsgroup ()
  */
 function courseview_initialize ()
 {
+    //just some learning stuff
     $courseview_object = elgg_get_entities(array('type' => 'object', 'subtype' => 'courseview'))[0];
     //echo 'courseview_object guid:  ' . $courseview_object->guid;
     $courseview_object->plugins = array ('Hi Rich...It works!', 'blog', 'bookmark');
@@ -38,7 +39,7 @@ if (!$courseview_object)
 }
 
 
-
+//::TODO:  delete this stuff after I get my create course code all worked out
 
 //$coursetree = array();
 //$coursetree[0] = array (
