@@ -1,3 +1,24 @@
+Oct 2 Agenda - Hey Matt...sorry but I'm not as prepared as I should be...caught a touch of the flu over the 
+weekend and I'm just starting to feel better...
+
+Anyway, I thought we could discuss the following:
+
+- Is there any way that you are comfortable with that would let you view my screen remotely?  I know that Chrome has a couple plugins but 
+I want to be sure that you're ok with the security aspects of doing this.  If you are, it would make things much easier as I could show you the code 
+that I'm having trouble with, I could run it, you could see the results and make suggestions.
+
+-  I've been sketching out what I think the app should look like since I was too sick to make it over to the computer...I just transferred
+my thoughts to a ppt which I'll send you and walk you through to see if you have any comments or suggestions.
+
+-  I have a little chunk of code in testinginit (under pages) that I would like to discuss with you...I have a lot of quesions.
+    --what is the best way to add metadata?  is it set? set_meta_data, or simply adding a field?
+
+- I'd like to know how I could add a link to the group edit page after intercepting that page with my elgg_register_event_handler('pagesetup', 'system','interceptpagesetup'); in 
+the start.php file.
+
+Thanks eh!
+Rich.
+
 Sept 26 Agenda:
 
 -  Walk through start and content pane and get feedback about how I'm doing things
