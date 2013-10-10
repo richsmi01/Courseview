@@ -15,11 +15,11 @@ if (elgg_is_admin_logged_in())
 $myuser = elgg_get_logged_in_user_entity();
 
 
-if (courseview_get_profsgroup()->isMember ($myuser))
-{
+//if (courseview_get_profsgroup()->isMember ($myuser))
+//{
    echo '<br>'.$myuser->name .' is in the profs group';
    echo elgg_view('output/url', array("text" => "Manage Courses", "href" => "courseview/managecourses", 'class' => 'elgg-button elgg-button-action'));
    
-}
+//}
 
 ?>

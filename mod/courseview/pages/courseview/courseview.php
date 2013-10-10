@@ -7,6 +7,7 @@
 //If the courseview object doesn't exist, courseview_initialize () will assume that this is the first time that
 //courseview has run on this installation and will create a new one
 $courseview_guid = courseview_initialize();
+//echo elgg_echo ("~~~".var_dump($courseview_guid));
 //this puts the courseview object into the session
 ElggSession::offsetSet('courseviewobject', courseview_initialize());
 //build and call greetings view

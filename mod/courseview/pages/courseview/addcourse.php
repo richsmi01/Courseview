@@ -23,7 +23,7 @@ echo elgg_echo("Testing");
 //$group = elgg_get_entities_from_annotations(array(type=>'group', annotation_name_value_pairs=>array('name','RichGroup1')));
 //echo elgg_echo ('group:  '.var_dump($group[1]->getGUID()));
 //echo elgg_echo (elgg_list_entities(array('type' => 'group', 'title'=>'RichGroup1')));
-echo elgg_echo (var_dump(get_entity(51)));
+//echo elgg_echo (var_dump(get_entity(51)));
 $group = get_entity(51);
 $user = elgg_get_logged_in_user_entity( ) ;	
 

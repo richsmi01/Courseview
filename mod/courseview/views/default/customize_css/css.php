@@ -1,50 +1,39 @@
 <?php
-/**
- * Page Layout
- ************Changed for EasyTheme (line 25)****************
- * Contains CSS for the page shell and page layout
- *
- * Default layout: 990px wide, centered. Used in default page shell
- *
+/*
+ * 	This is a php file, yet it contains css
+ * 	This is normal for Elgg, it's part of the views system
+ * 	Simply add your css rules to this file
+ * 	Remember to clear your cache, or you may not see the changes right away
+ * 	Cache can be cleared using the button on the administration page
+ * 	or by visiting <your_url>/upgrade.php
+ * 
+ * 	For your reference, the full elgg default css is included
+ * 	in views/default/customize_css/reference
+ * 
+ * 	It is spread over a number of php files, but they are structured by what
+ * 	the css is affecting.
+ * 
+ * 	Remember that themes and other plugins also override the default css
+ * 	if you find that your changes aren't working check the order of the plugins
+ * 	and check your $priority setting in start.php
+ * 
+ * 	(also check that you're creating/modifying the correct rules)
  */
 ?>
 
-/* ***************************************
-	PAGE LAYOUT
-*************************************** */
-/***** DEFAULT LAYOUT ******/
-
-.elgg-page-default .elgg-page-header > .elgg-inner {
-	
-      // background-color: red;
-	
-}
-.elgg-page-default {
-	//min-width: 850px;
+div.customize_css_example_rule {
+	display: block;
+	width: 200px;
+	height: 200px;
+	background-color: #ff0000;
 }
 
-
-.elgg-sidebar {
- //background-color:yellow;
- //float:left;
- //box-shadow:2px 2px 2px black;
- }
- 
- .elgg-sidebar {
-	
+.elgg-page-topbar {
+	background: yellow;
+                      box-shadow:black 2px 2px 2px;
 }
 
-.elgg-main {
-
-//background-color:green;
-
-}
-//.elgg-menu-item-module2 {
-//font-weight:bold;
-//margin-left:8px;
-}
-
-           .css-treeview ul,
+            .css-treeview ul,
             .css-treeview li
             {
                 padding: 0;
@@ -109,13 +98,17 @@
                 display: block;
             }
 
-.css-treeview label,
-.css-treeview label::before
-{
-   
-    
-      background: url(<?php echo elgg_get_site_url(); ?>mod/courseview/icons.png) no-repeat;
-}
+            .css-treeview label,
+            .css-treeview label::before
+            {
+               /* background: url("localhost/elgg/courseview/imgs/icons.png") no-repeat;*/
+              /*background: url("../../imgs/icons.png") no-repeat;*/
+             /*   background: url("/imgs/icons.png") no-repeat; */
+             /* background: url("icons.png") no-repeat;*/
+           
+           /*       background: url ("'.  elgg_get_site_url().'mod/courseview/_graphics/icons.png") no-repeat;*/
+               background: url("../../../../icons.png");
+            }
 
             .css-treeview label,
             .css-treeview a,
@@ -166,3 +159,4 @@
                 }
             }
             }
+

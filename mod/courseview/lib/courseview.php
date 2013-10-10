@@ -2,7 +2,8 @@
 
 function courseview_get_profsgroup () //this isn't really needed anymore
 {
-    return elgg_get_entities(array('type'=>'group', 'subtype' => 'group', 'title' => 'profsgroup'))[0];
+    //echo elgg_echo ('!!!'.var_dump(elgg_get_entities(array('type'=>'group', 'subtype' => 'group', 'title' => 'profsgroup'))));
+   // return elgg_get_entities(array('type'=>'group', 'subtype' => 'group', 'title' => 'profsgroup'))[0];
 }
 /*
  * 
@@ -11,6 +12,11 @@ function courseview_initialize ()
 {
     //just some learning stuff
     $courseview_object = elgg_get_entities(array('type' => 'object', 'subtype' => 'courseview'))[0];
+    
+    //echo elgg_echo ('coursetreexxx'.var_dump($courseview_object->coursetree));
+    ElggSession::offsetSet('currentcourse',$courseview_object->coursetree);
+    
+    
     //echo 'courseview_object guid:  ' . $courseview_object->guid;
     $courseview_object->plugins = array ('Hi Rich...It works!', 'blog', 'bookmark');
     $courseview_object->save;
@@ -26,7 +32,7 @@ if (!$courseview_object)
     $courseview_object->save();
     $courseview_object ->plugins = array('blog','bookmark');
     $courseview_object->save();
-    echo 'This is the first time that CourseView has run...new CourseView object created';
+  //  echo 'This is the first time that CourseView has run...new CourseView object created';
     
     //Since this is the first time that CourseView has run, we need to create a professor group
     $courseview_profsgroup = new ElggGroup();
@@ -35,7 +41,7 @@ if (!$courseview_object)
     $courseview_profsgroup ->name ='profsgroup';//just added this...should it be name or title?
     $courseview_profsgroup ->save();
     
-    echo 'profsgroup created:  '.$courseview_profsgroup->guid;    
+  //  echo 'profsgroup created:  '.$courseview_profsgroup->guid;    
 }
 
 
@@ -105,7 +111,7 @@ if (!$courseview_object)
 //         indent=>'-',
 //    filter=>array('blog1')
 //    );
-//    ElggSession::offsetSet('currentcourse', $coursetree);
+    //ElggSession::offsetSet('currentcourse', $coursetree);
 
 return $courseview_object->guid;
 }
@@ -114,7 +120,7 @@ return $courseview_object->guid;
 
 function courseview_create_course ()
 {
-    echo elgg_echo('in courseview_create_course method!');
+  //  echo elgg_echo('in courseview_create_course method!');
 //    echo  count (elgg_get_entities(array('type' => 'object', 'subtype' => 'blog' )));
 //    $abc = elgg_get_entities(array('type' => 'object', 'subtype' => 'blog' ));
 //    $postings = elgg_get_entities(array('type' => 'object', 'subtype' => 'blog' ));
@@ -135,12 +141,12 @@ function courseview_create_course ()
         $course->save();
         echo 'inside if';
     }
-    echo  count (elgg_get_entities(array('type' => 'object', 'subtype' => 'course' )));
+   // echo  count (elgg_get_entities(array('type' => 'object', 'subtype' => 'course' )));
     $postings = elgg_get_entities(array('type' => 'object', 'subtype' => 'course' ));
     foreach ($postings as $temp) {
-                echo $temp->title;
-                echo $temp -> id;
-                echo $temp -> test;
+      //          echo $temp->title;
+      //          echo $temp -> id;
+      //          echo $temp -> test;
                // $temp->delete ();
     }
 }
