@@ -7,6 +7,7 @@
       </head>
       <body>-->
             <?php
+
             
              echo elgg_echo ('In the content page---Menu item guid:  '.$page[1]);
 //            $title = "View 2";

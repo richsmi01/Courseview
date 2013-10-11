@@ -11,6 +11,26 @@
 //How do I best pass the cohort and menu item between pages?
 
  echo elgg_echo ('In the content page view---Menu item guid:  '.$page[1]);
+ 
+ 
+ 
+ $cvmenuguid = 601;  // just hardcoding the cvmenu guid for now
+ echo elgg_echo ("<br/>cvmenuguid:  ".$cvmenuguid.'</br>');
+ //find all cvmenu items with a menu relationship with $comp697
+    $content = elgg_get_entities_from_relationship(array
+        ( 'relationship_guid' => $cvmenuguid,
+            'relationship' => 'content',
+        )
+     );
+    
+    //how can I sort these by menuorder???????
+    
+    //echo elgg_echo(var_dump ($menu));
+    foreach ($content as $temp)
+{
+    //echo elgg_echo('<br/>Content:  '.$temp->title);
+    echo elgg_echo(elgg_view_entity($temp, array(full_view => false)));
+}
 
 //$coursetreeindex = ElggSession::offsetGet('coursetreeindex'); //could just pull this from the url...is this easier?
 //$currentcourse = ElggSession::offsetGet('currentcourse'); //get current course

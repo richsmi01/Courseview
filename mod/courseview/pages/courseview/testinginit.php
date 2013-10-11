@@ -108,8 +108,8 @@ $rich = get_user_by_username("Rich");
     add_entity_relationship($comp697->guid, "menu", $cvmenu2->guid);
  
      //add a couple of blog postings through a relationship to the above cvmenu
-    add_entity_relationship($cvmenu2->guid, "menu", 164);  //added a blog post to this menu item
-    add_entity_relationship($cvmenu2->guid, "menu", 64);  //added a blog post to this menu item
+    add_entity_relationship($cvmenu2->guid, "content", 164);  //added a blog post to this menu item
+    add_entity_relationship($cvmenu2->guid, "content", 64);  //added a blog post to this menu item
     
 
     $cvmenu3 = new ElggObject();
