@@ -1,3 +1,15 @@
+Oct 10 Agenda -
+
+-  Walk through my updated design
+
+-  If I pull out a bunch of objects by relationship, how can I efficiently sort them by an attribute like sortorder=1, 2 etc?
+
+- So, If I'm making all these decisions based on passing values through the url, then how do we stop users from spoofing the url?
+
+- I'm not really understanding how to retrieve information back out of the url...
+
+- A couple git questions.
+
 Oct 2 Agenda - Hey Matt...sorry but I'm not as prepared as I should be...caught a touch of the flu over the 
 weekend and I'm just starting to feel better...
 
