@@ -8,7 +8,7 @@
       <body>-->
             <?php
 
-            
+            $page = get_input('rich',array(0));
              echo elgg_echo ('In the content page---Menu item guid:  '.$page[1]);
 //            $title = "View 2";
 //            $user = elgg_get_logged_in_user_entity();

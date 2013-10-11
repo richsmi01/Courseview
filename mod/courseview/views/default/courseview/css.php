@@ -69,7 +69,7 @@
             }
             /*I added this to make branch nodes push in a little bit--Rich.*/
             .css-treeview  .indent {
-                margin-left: 40px;
+                margin-left: 25px;
             }
 
             .css-treeview a:hover

@@ -50,6 +50,10 @@ function courseviewInit()
 //this is the method that gets called when one of the courseview urls is called.  We will use a switch to choose how to respond
 function courseviewPageHandler($page, $identifier)
 {
+    //TODO::add a group gatekeeper function here
+    elgg_set_page_owner_guid($page[1]);   //set the page owner to the cohort and then call gatekeeper
+    group_gatekeeper();
+    
     $plugin_path = elgg_get_plugins_path();
     $base_path = $plugin_path . 'courseview/pages/courseview';
 

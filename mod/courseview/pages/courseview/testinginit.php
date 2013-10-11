@@ -59,7 +59,7 @@ $rich = get_user_by_username("Rich");
    //Next, we'll create a cvcohort that is owned by the professor but has a container of the cvcourse (in this case COMP 697)
     
     $cvcohort697 = new ElggGroup ();
-    $cvcohort697->title = 'Comp 697 Cohort 1';
+    $cvcohort697->title = 'Comp 697 Cohort 1';  //use titles only for elgg groups
     $cvcohort697->access_id = ACCESS_PUBLIC;
     $cvcohort697->owner_guid = elgg_get_logged_in_user_guid();
     $cvcohort697->container_guid = $comp697->guid;
@@ -96,7 +96,7 @@ $rich = get_user_by_username("Rich");
 
     $cvmenu2 = new ElggObject();
     $cvmenu2->subtype = "cvmenu";
-    $cvmenu2->name = "Professor Rant";
+    $cvmenu2->name = "Professor Rant";  //should use title instead of name
     $cvmenu2->owner_guid = $user->guid;
     $cvmenu2->container_guid = $comp697->guid;
     $cvmenu2->access_id = ACCESS_PUBLIC;

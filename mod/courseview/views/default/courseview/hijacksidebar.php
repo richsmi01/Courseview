@@ -5,20 +5,23 @@ $page = get_input('rich');
 $cvcohort=$page[1];
 //echo elgg_echo ("Cohort: "+$cvcohort);
 //This pulls all menu entitities that have a relationship with this course...
-$unsortedmenu = elgg_get_entities_from_relationship(array
+$menu = elgg_get_entities_from_relationship(array
         ( 'relationship_guid' => get_entity(599)->guid,
             'relationship' => 'menu',
+            'type'=>'object',  
+            'subtype' =>'cvmenu',
+            'order_by_metadata' =>array ('name'=>'menuorder', 'direction'=>'ASC', 'as'=>'integer')
         )
      );
 //Next, I have to sort the entities by the menuorder attribute so that I can display the course links in the correct order
 //TODO::Have no idea why this works!  Ask Matt what I've done
-$menu = array();
-foreach ($unsortedmenu as $key =>$row)
-{
-    $menu[$key]=$row['menuorder'];
-}
-array_multisort($menu, SORT_ASC, $unsortedmenu);
-$menu=$unsortedmenu;
+//$menu = array();
+//foreach ($unsortedmenu as $key =>$row)
+//{
+//    $menu[$key]=$row['menuorder'];
+//}
+//array_multisort($menu, SORT_ASC, $unsortedmenu);
+//$menu=$unsortedmenu;
 
 //Here I am building the html of the treeview control and adding the correct css classes so that my css
 //can turn it into a tree that can be manipulated by the user 

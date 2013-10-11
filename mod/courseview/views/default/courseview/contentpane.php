@@ -10,11 +10,13 @@
 
 //How do I best pass the cohort and menu item between pages?
 
- echo elgg_echo ('In the content page view---Menu item guid:  '.$page[1]);
+$page = get_input('rich',array(0));
+ echo elgg_echo ('In the content page---Menu item guid:  '.$page[1]);
  
  
  
- $cvmenuguid = 601;  // just hardcoding the cvmenu guid for now
+ 
+ $cvmenuguid = $page[2];
  echo elgg_echo ("<br/>cvmenuguid:  ".$cvmenuguid.'</br>');
  //find all cvmenu items with a menu relationship with $comp697
     $content = elgg_get_entities_from_relationship(array

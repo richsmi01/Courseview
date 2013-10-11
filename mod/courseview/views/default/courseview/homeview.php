@@ -41,6 +41,6 @@ $user = elgg_get_logged_in_user_entity();
     }
    
       echo elgg_echo('<br/><br/>We are assuming that the user chose the first cohort listed<br/>');
-      echo elgg_view('output/url', array("text" => "Pretent user chooses first cohort", "href" => "courseview/contentpane/".$cvcohort[0]->guid."/1", 'class' => 'elgg-button elgg-button-action'));
+      echo elgg_view('output/url', array("text" => "Pretend user chooses first cohort", "href" => "courseview/contentpane/".$cvcohort[0]->guid."/1", 'class' => 'elgg-button elgg-button-action'));
    
 ?>
