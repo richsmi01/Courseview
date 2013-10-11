@@ -25,7 +25,6 @@ $user = elgg_get_logged_in_user_entity();
   //List all cohorts that this user is a member of
     $cvcohort = elgg_get_entities_from_relationship(array
         ('type' => 'group',
-         //TODO::change this to look for an attribute called cvcohort set to true instead of testAttribute and 123
         'metadata_names' => array('cvcohort'), 
         'metadata_values' => array(true),  
         'limit' => false,
@@ -42,6 +41,6 @@ $user = elgg_get_logged_in_user_entity();
     }
    
       echo elgg_echo('<br/><br/>We are assuming that the user chose the first cohort listed<br/>');
-      echo elgg_view('output/url', array("text" => "User chooses first cohort", "href" => "courseview/contentpane/".$cvcohort[0]->guid."/1", 'class' => 'elgg-button elgg-button-action'));
+      echo elgg_view('output/url', array("text" => "Pretent user chooses first cohort", "href" => "courseview/contentpane/".$cvcohort[0]->guid."/1", 'class' => 'elgg-button elgg-button-action'));
    
 ?>

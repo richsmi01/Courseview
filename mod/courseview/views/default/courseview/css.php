@@ -9,10 +9,6 @@
  */
 ?>
 
-/* ***************************************
-	PAGE LAYOUT
-*************************************** */
-/***** DEFAULT LAYOUT ******/
 
 .elgg-page-default .elgg-page-header > .elgg-inner {
 	
@@ -113,7 +109,6 @@
 .css-treeview label::before
 {
    
-    
       background: url(<?php echo elgg_get_site_url(); ?>mod/courseview/icons.png) no-repeat;
 }
 

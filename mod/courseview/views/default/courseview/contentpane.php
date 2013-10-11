@@ -8,6 +8,8 @@
 //add button to create a new object of correct subtype:
 //list all objects that meet subtype and tag criteria
 
+//How do I best pass the cohort and menu item between pages?
+
  echo elgg_echo ('In the content page view---Menu item guid:  '.$page[1]);
 
 //$coursetreeindex = ElggSession::offsetGet('coursetreeindex'); //could just pull this from the url...is this easier?
