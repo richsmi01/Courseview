@@ -45,6 +45,7 @@ function courseviewInit()
     elgg_register_action("createcourse", $base_path . '/actions/courseview/createcourse.php');
     //echo $CONFIG->actions;
 }
+//testing git...delete this
 
 //this is the method that gets called when one of the courseview urls is called.  We will use a switch to choose how to respond
 function courseviewPageHandler($page, $identifier)
