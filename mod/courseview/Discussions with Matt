@@ -1,3 +1,20 @@
+Oct 17 Agenda -
+
+Once again, I had a rough week and didn't get much done on this...However, I think I've got enough done for us
+to move forward on a couple important points.
+
+-  When viewing a module of type student, I'd like to be able to filter by the various plugin types.
+        - For instance, filter by blog, bookmark, file etc.
+-  As I filter by a particular plugin, I'd like a button to appear that will allow me to add content of that type.
+        -  For instance, if I'm filtering by "blog", there should be a "add blog entry" button
+-  I need to intercept the creation of this content and add the appropriate relationships.
+
+If we can cover some of this, I have a reading week next week so I should have time to completely clean up all my 
+code so we can move forward in a more organized, less frenetic prototyping fashion!
+
+
+
+
 Oct 10 Agenda -
 
 -  Walk through my updated design

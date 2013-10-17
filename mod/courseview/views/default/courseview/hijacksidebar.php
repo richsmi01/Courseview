@@ -46,8 +46,8 @@ echo elgg_echo ('<div class ="css-treeview">');
     //if the menu item is a folder type, add a checkbox which the css will massage into the collapsing tree
     if ($temp->menutype=="folder")
     {
-         echo elgg_echo('<ul>
-           <li><input type ="checkbox"/><label><a> '.$temp->name.$temp->menuorder.'!!!</a></label>');
+         echo elgg_echo("<ul>
+           <li><input type ='checkbox'/><label><a href='".elgg_get_site_url()."courseview/contentpane/".$cvcohort."/".$temp->guid."'> ".$temp->name.$temp->menuorder."!!!</a></label>");
     }
     //otherwise, let's just create a link to the contentpane and pass the guid of the menu object...the css class indent is also added here
  else

@@ -1,8 +1,7 @@
 <?php
 
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ * A setup page...won't be part of the main program
  */
 
 
@@ -48,18 +47,19 @@ $rich = get_user_by_username("Rich");
 //First, we create a cvcourse:
 //course 1 - COMP697
     $comp697 = new ElggObject();
-    $comp697->title = 'Comp 697';
+    $comp697->title = 'Comp 698';
     $comp697->access_id = ACCESS_PUBLIC;
     $comp697->owner_guid = elgg_get_logged_in_user_guid();
     $comp697->container_guid = elgg_get_logged_in_user_guid();
     $comp697->save();
     $comp697->cvcourse = true;
+    $comp697->description ="This course is about computer stufff";
     echo elgg_echo ("Comp697 cvcourse GUID:  ".$comp697->guid);
     
    //Next, we'll create a cvcohort that is owned by the professor but has a container of the cvcourse (in this case COMP 697)
     
     $cvcohort697 = new ElggGroup ();
-    $cvcohort697->title = 'Comp 697 Cohort 1';  //use titles only for elgg groups
+    $cvcohort697->title = 'Comp 698 Cohort 1';  //use titles only for elgg groups
     $cvcohort697->access_id = ACCESS_PUBLIC;
     $cvcohort697->owner_guid = elgg_get_logged_in_user_guid();
     $cvcohort697->container_guid = $comp697->guid;
@@ -152,94 +152,46 @@ $rich = get_user_by_username("Rich");
     add_entity_relationship($comp697->guid, 'menu', $cvmenu5->guid);
 
 
-//    //find all cvmenu items with a menu relationship with $comp697
-//    $menu = elgg_get_entities_from_relationship(array
-//        ( 'relationship_guid' => $comp697->guid,
-//            'relationship' => 'menu',
-//        )
-//     );
-//    
-//    //how can I sort these by menuorder???????
-//    
-//    //echo elgg_echo(var_dump ($menu));
-//    foreach ($menu as $temp)
-//{
-//    echo elgg_echo('<br/>Getting menu item:  '.$temp->name);
-//}
+
+
+
+//Here we are listing all groups that are owned by the currently logged in user that have the testAttribute=123 set
+
+    $groupsowned = elgg_get_entities_from_metadata(array
+        ('type' => 'group',
+        'metadata_names' => array('testAttribute'),
+        'metadata_values' => array('123'),
+        'limit' => false,
+        'owner_guid' => $user->guid
+            )
+    );
+    echo elgg_echo('<br/>Groups owned by Professor: <br/>');
+    foreach ($groupsowned as $group)
+    {
+        echo elgg_echo("<br/>GROUP: " . $group->guid . ', ' . $group->title . ', ' . $group->testAttribute);
+    }
     
-//course 2 - COMP698
-//    $comp698 = new ElggGroup();
-//    $comp698->title = 'comp698';
-//    $comp698->access_id = ACCESS_PUBLIC;
-//    $comp698->owner_guid = elgg_get_logged_in_user_guid();
-//    $comp698->container_guid = elgg_get_logged_in_user_guid();
-//    $comp698->save();
-//    $comp698->testAttribute = "123";
-//    $coursegroup->cvcourse = true;
-////now we're having the currently logged user join the group
-//    $comp698->join($user);
-//    $comp698->join($aiko);
-//
-////course 3 - COMP699
-//    $comp699 = new ElggGroup();
-//    $comp699->title = 'comp699';
-//    $comp699->access_id = ACCESS_PUBLIC;
-//    $comp699->owner_guid = elgg_get_logged_in_user_guid();
-//    $comp699->container_guid = elgg_get_logged_in_user_guid();
-//    $comp699->save();
-//    $comp699->testAttribute = "123";
-//    $comp699->cvcourse = true;
-////now we're having the currently logged user join the group
-//    $comp699->join($user);
-//    $comp699->join($lori);
-//
-//
-////Here we are listing all groups that are owned by the currently logged in user that have the testAttribute=123 set
-//
-//    $groupsowned = elgg_get_entities_from_metadata(array
-//        ('type' => 'group',
-//        'metadata_names' => array('testAttribute'),
-//        'metadata_values' => array('123'),
-//        'limit' => false,
-//        'owner_guid' => $user->guid
-//            )
-//    );
-//    echo elgg_echo('<br/>Groups owned by Professor: <br/>');
-//    foreach ($groupsowned as $group)
-//    {
-//        echo elgg_echo("<br/>GROUP: " . $group->guid . ', ' . $group->title . ', ' . $group->testAttribute);
-//    }
-////And here we are listing all groups that the currently logged in user belongs to.
-//    $groupsmember = elgg_get_entities_from_relationship(array
-//        ('type' => 'group',
-//        'metadata_names' => array('testAttribute'),
-//        'metadata_values' => array('123'),
-//        'limit' => false,
-//        'relationship' => 'member',
-//        'relationship_guid' => $user->guid
-//            )
-//    );
-//    
-//    echo elgg_echo('<br/><br/>Groups owned that professor belongs to: <br/>');
-//    $somegroup = new ElggGroup;
-//    foreach ($groupsmember as $group)
-//    {
-//        echo elgg_echo("<br/>GROUP: " . $group->guid . ', ' . $group->title . ', ' . $group->testAttribute);
-//        $somegroup = $group;
-//    }
+//And here we are listing all groups that the currently logged in user belongs to.
+    $groupsmember = elgg_get_entities_from_relationship(array
+        ('type' => 'group',
+        'metadata_names' => array('testAttribute'),
+        'metadata_values' => array('123'),
+        'limit' => false,
+        'relationship' => 'member',
+        'relationship_guid' => $user->guid
+            )
+    );
+    
+    echo elgg_echo('<br/><br/>Groups owned that professor belongs to: <br/>');
+    $somegroup = new ElggGroup;
+    foreach ($groupsmember as $group)
+    {
+        echo elgg_echo("<br/>GROUP: " . $group->guid . ', ' . $group->title . ', ' . $group->testAttribute);
+        $somegroup = $group;
+    }
 
 
-//Here, I'd like to create an entity of subtype cvtreeitem
-//$cvtreeitem = new ElggObject();
-//$cvtreeitem ->type ='object';
-//$cvtreeitem ->title ='comp697';
-//$cvtreeitem->subtype='cvtreeitem';
-//$cvtreeitem ->name ='comp697';
-//$cvtreeitem ->access_id = ACCESS_PUBLIC;
-//$cvtreeitem->owner_guid = elgg_get_logged_in_user_guid();
-//$cvtreeitem->container_guid = $somegroup->guid;
-//$cvtreeitem->save();
-//$cvtreeitem->testAttribute = "123"; 
+
 //list all cvtreeitems that belong to somegroup and meet the testAttribute criteria
 //    $treeitems = elgg_get_entities_from_metadata(array
 //        ('type' => 'object',

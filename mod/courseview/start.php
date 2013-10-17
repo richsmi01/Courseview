@@ -58,6 +58,9 @@ function courseviewPageHandler($page, $identifier)
     $base_path = $plugin_path . 'courseview/pages/courseview';
 
     set_input('rich', $page);
+    set_input ('cvcohortguid', $page[1]);
+    set_input ('$cvmenuguid', $page[2]);
+   
 
     switch ($page[0])  //switching on the first parameter passed through the RESTful url
     {

@@ -161,3 +161,54 @@
                 }
             }
             }
+            
+            #editbox {
+                border: solid 1px black;
+                padding:10px;
+                box-shadow:black 2px 2px 2px;
+                margin:3px;
+            }
+            
+            /* This will hide the edit course material unless the prof has checked the edit course checkbox.*/
+            
+            #editcourse {
+                visibility:hidden;
+                height:0px;
+            }
+            #editcoursecheckbox~label{
+            color:red;
+            }
+
+            #editcoursecheckbox:checked ~#editcourse {
+                visibility:visible;
+                height:auto;
+                color:blue;
+  
+            }
+            
+             .editcourse {
+             float:left;
+             width:30px;
+             height:30px;
+             
+            }
+            .uparrowcontainer, downarrowcontainer {
+            display:block;
+            }
+            
+            .uparrow {
+                height:15px;
+                width: 15px;
+                background-color:blue;
+                border: solid black;
+                margin:3px;
+                
+            }
+            .downarrow {
+                height:15px;
+                width: 15px;
+                background-color:red;
+                border: solid black;
+                margin:3px;
+            }
+            .

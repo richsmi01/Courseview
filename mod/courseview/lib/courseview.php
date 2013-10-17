@@ -1,9 +1,22 @@
 <?php
-
-function courseview_get_profsgroup () //this isn't really needed anymore
+//this method grabs the courseview object and returns the profsgroup attribute which contains the guid of the profsgroup
+function cv_get_profsgroup () 
 {
-    //echo elgg_echo ('!!!'.var_dump(elgg_get_entities(array('type'=>'group', 'subtype' => 'group', 'title' => 'profsgroup'))));
-   // return elgg_get_entities(array('type'=>'group', 'subtype' => 'group', 'title' => 'profsgroup'))[0];
+    $cvcourseview = elgg_get_entities(array('type'=>'object','subtype'=>'courseview'));
+    return $cvcourseview[0]->profsgroup;
+}
+
+function cv_isprof ($user)
+{
+    //for now, we're just going to assume that everybody is a prof
+    return true;
+    
+//   $profs =cv_get_profsgroup();
+//    
+//   if   (get_entity(cv_get_profsgroup())->isMember ($user))
+//    {
+//        return true;
+//    }
 }
 /*
  * 
@@ -26,20 +39,23 @@ function courseview_initialize ()
     //we build a CourseView Object to track various things that our plugin needs.
 if (!$courseview_object)
 {
-    $courseview_object = new ElggObject();
-    $courseview_object->subtype = "courseview";
-    $courseview_object->access_id = 2;
-    $courseview_object->save();
-    $courseview_object ->plugins = array('blog','bookmark');
-    $courseview_object->save();
-  //  echo 'This is the first time that CourseView has run...new CourseView object created';
-    
-    //Since this is the first time that CourseView has run, we need to create a professor group
+     //Since this is the first time that CourseView has run, we need to create a professor group
     $courseview_profsgroup = new ElggGroup();
     $courseview_profsgroup->subtype = 'group';
     $courseview_profsgroup ->title ='profsgroup';
     $courseview_profsgroup ->name ='profsgroup';//just added this...should it be name or title?
     $courseview_profsgroup ->save();
+    
+    $courseview_object = new ElggObject();
+    $courseview_object->subtype = "courseview";
+    $courseview_object->access_id = 2;
+    $courseview_object->save();
+    $courseview_object ->plugins = array('blog','bookmark');
+    $courseview_object->profsgroup = $courseview_profsgroup->guid; //add the profsgroup guid to our courseview object.
+    $courseview_object->save();
+  //  echo 'This is the first time that CourseView has run...new CourseView object created';
+    
+   
     
   //  echo 'profsgroup created:  '.$courseview_profsgroup->guid;    
 }

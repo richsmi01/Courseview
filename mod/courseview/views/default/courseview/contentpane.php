@@ -7,32 +7,118 @@
 //echo elgg_view('output/url', array("text" => "Manage Courses", "href" => "courseview/thiswillmanagecourses", 'class' => 'elgg-button elgg-button-action'));
 //add button to create a new object of correct subtype:
 //list all objects that meet subtype and tag criteria
-
 //How do I best pass the cohort and menu item between pages?
+$user = elgg_get_logged_in_user_entity();
+if ((cv_isprof($user)))
+{
+    echo elgg_echo('
+    <div id ="editbox"> aaa           
+           <input type ="checkbox" id = "editcoursecheckbox"/><label>Edit Course?</label></br></br>
+            <div  id ="editcourse">
+                    Edit stuff will go in here
+                   <br/>
+                    <br/>
+                    <select>
+                            <option value="Add a folder">addFolder</option>
+                            <option value="Add a student Module">addStudent</option>
+                            <option value="Add Professor Module">addProfessor</option>
+                     </select>
+               </div>
+    </div>');
+}
 
-$page = get_input('rich',array(0));
- echo elgg_echo ('In the content page---Menu item guid:  '.$page[1]);
- 
- 
- 
- 
- $cvmenuguid = $page[2];
- echo elgg_echo ("<br/>cvmenuguid:  ".$cvmenuguid.'</br>');
- //find all cvmenu items with a menu relationship with $comp697
-    $content = elgg_get_entities_from_relationship(array
-        ( 'relationship_guid' => $cvmenuguid,
-            'relationship' => 'content',
-        )
-     );
+$cvmenuguid = get_input('$cvmenuguid');
+$cvcohortguid = get_input('cvcohortguid');
+$menuitem = get_entity($cvmenuguid);
+$menutype =$menuitem->menutype;
+
+//just some stuff for changing the objects for debugging...
+//add_entity_relationship($cvmenuguid, 'content608', 54); 
+//$menuitem->description = "Student Content 4 description is here...This will contain information about the folder";
+//$menuitem->save();
+
+
+//get the type of menuitem (folder, bundle, student) and display the content accordingly
+switch ($menutype)
+{
+    case "folder":
+        echo elgg_echo("FOLDER");
+        echo elgg_echo ("<br>".$menuitem->name);
+        echo elgg_echo ("<br>".$menuitem->description); 
+        break;
     
-    //how can I sort these by menuorder???????
+    case "bundle":
+        echo elgg_echo("BUNDLE");  //::TODO:  Move all of this stuff into methods to clean up the code
+        $content = elgg_get_entities_from_relationship(array
+            ('relationship_guid' => $cvmenuguid,
+            'relationship' => 'content',
+                )
+        );
+        foreach ($content as $temp)
+        {
+            //echo elgg_echo('<br/>Content:  '.$temp->title);
+            if (cv_isprof($user))
+            {
+                echo elgg_echo('<div class="editcourse"><a class ="uparrowcontainer" href="http://sheridancollege.ca"><div class="uparrow" ></div></a>');
+                echo elgg_echo('<a class ="downarrowcontainer" href="http://sheridancollege.ca"><div class="downarrow"></div></a>');
+                echo elgg_echo('</div>');
+            }
+            echo elgg_echo(elgg_view_entity($temp, array(full_view => false)));
+        }
+        break;
+
+
+    case "student":  //::TODO:  Same thing...move refactor all of this into constituent methods for code clarity...
+        $plugins = elgg_get_entities(array('type' => 'object', 'subtype' => 'courseview'))[0]->plugins;//is there a better way to do this?
+        echo elgg_echo("STUDENT");//this is building a little dropdown menu based on the plugins pulled from the cvcourseview object
+        echo elgg_echo('<br/>FILTER BY:  <select>');
+        foreach ($plugins as $plugin)
+        {
+            echo elgg_echo('<option value = "' . $plugin . '">' . $plugin . "</option>");
+        }
+
+        echo elgg_echo('</select>  ');
+        echo elgg_view('output/url', array("text" => "Go!", "href" => "/0", 'class' => 'elgg-button elgg-button-action'));
+        echo elgg_echo('-------Add a: ');
+        echo elgg_view('output/url', array("text" => "blog", "href" => "/0", 'class' => 'elgg-button elgg-button-action'));
+        echo elgg_echo("<br/><br/>");
+
+        $relationship = 'content' . $cvcohortguid;
+        //echo elgg_echo ("Relationship name:  ".$relationship);
+        $content = elgg_get_entities_from_relationship(array
+            ('relationship_guid' => $cvmenuguid,
+            'relationship' => $relationship,
+                )
+        );
+
+        foreach ($content as $temp)
+        {
+//This code will presumabley only need to run when in bundle mode...think this one through some more.
+//::TODO:  Think about replacing the whole "bundle" with "professor"  That way, we have three module types:  Folder, Professor, and Student
+//            if (cv_isprof($user))
+//            {
+//                echo elgg_echo('<div class="editcourse"><a class ="uparrowcontainer" href="http://sheridancollege.ca"><div class="uparrow" ></div></a>');
+//                echo elgg_echo('<a class ="downarrowcontainer" href="http://sheridancollege.ca"><div class="downarrow"></div></a>');
+//                echo elgg_echo('</div>');
+//            }
+            echo elgg_echo(elgg_view_entity($temp, array(full_view => false)));
+        }
+        break;
+    default:
+        echo elgg_echo("WELCME TO");
+        break;
+}
+ 
+ 
+ 
+ //$cvmenuguid = $page[2];
+ //echo elgg_echo ("<br/>cvmenuguid:  ".$cvmenuguid.'</br>');
+ //find all cvmenu items with a menu relationship with $comp697
+    
+    
     
     //echo elgg_echo(var_dump ($menu));
-    foreach ($content as $temp)
-{
-    //echo elgg_echo('<br/>Content:  '.$temp->title);
-    echo elgg_echo(elgg_view_entity($temp, array(full_view => false)));
-}
+   
 
 //$coursetreeindex = ElggSession::offsetGet('coursetreeindex'); //could just pull this from the url...is this easier?
 //$currentcourse = ElggSession::offsetGet('currentcourse'); //get current course
