@@ -59,8 +59,9 @@ function courseviewPageHandler($page, $identifier)
 
     set_input('rich', $page);
     set_input ('cvcohortguid', $page[1]);
-    set_input ('$cvmenuguid', $page[2]);
-   
+    set_input ('cvmenuguid', $page[2]);
+   ElggSession::offsetSet('cohort',$page[1]);
+   ElggSession::offsetSet('cvmenu',$page[2]);
 
     switch ($page[0])  //switching on the first parameter passed through the RESTful url
     {
@@ -132,14 +133,23 @@ function sidebar_intercept($hook, $entity_type, $returnvalue, $params)
 function interceptcreate ($event, $type, $object)
 {
     system_message("Rich's object creation event hander was just triggered...");
-    system_message('Type: '.$type.'  Event: '.$event);
-    echo elgg_echo('interceptcreate is running:  The object just created was of type: '.$type.' GUID:  '.$object->guid.' and subtype: '.$object->subtype.'<br/>');
+    system_message("object created:  ".$object->guid);
+    //system_message('Type: '.$type.'  Event: '.$event);
+    //$temp1 = 'abc'.get_input('cvmenuguid');
+    //system_message ('CVMENUGUID: '.get_input('cvmenuguid'));
+    //set_input("createdobject", $object->guid);
+    $cvmenu = ElggSession::offsetget('cvmenu');
+    system_message ('CVMENUGUID: '.$temp2);
+    add_entity_relationship($cvmenu, 'content608', $object->guid); 
+    //echo elgg_echo('interceptcreate is running:  The object just created was of type: '.$type.' GUID:  '.$object->guid.' and subtype: '.$object->subtype.'<br/>');
 }
 
 function interceptpagesetup ($event, $type, $object)
 {
     $context = elgg_get_context();
     system_message('Context:  '.$context);
+    $temp1 = 'abc'.get_input('cvmenuguid');
+    system_message ('CVMENUGUID: '.get_input('cvmenuguid'));
     if ($context=='group_profile')
     {
        //echo elgg_echo ('In Group Page '.var_dump($object));

@@ -27,26 +27,28 @@ if ((cv_isprof($user)))
     </div>');
 }
 
-$cvmenuguid = get_input('$cvmenuguid');
+set_input("rich1","rich1");
+$cvmenuguid = get_input('cvmenuguid');
 $cvcohortguid = get_input('cvcohortguid');
 $menuitem = get_entity($cvmenuguid);
-$menutype =$menuitem->menutype;
-
+$menutype = $menuitem->menutype;
+echo '#####'.get_input('createdobject');
+echo ('CVMENUGUID:  '.$cvmenuguid);
 //just some stuff for changing the objects for debugging...
 //add_entity_relationship($cvmenuguid, 'content608', 54); 
-//$menuitem->description = "Student Content 4 description is here...This will contain information about the folder";
+//$menuitem->description = "Module 1 information is placed in this description field";
 //$menuitem->save();
-
-
 //get the type of menuitem (folder, bundle, student) and display the content accordingly
 switch ($menutype)
 {
     case "folder":
         echo elgg_echo("FOLDER");
-        echo elgg_echo ("<br>".$menuitem->name);
-        echo elgg_echo ("<br>".$menuitem->description); 
+        echo elgg_echo("<br>" . $menuitem->name);
+        echo elgg_echo("<br>Description: " . $menuitem->description);        
         break;
     
+   
+
     case "bundle":
         echo elgg_echo("BUNDLE");  //::TODO:  Move all of this stuff into methods to clean up the code
         $content = elgg_get_entities_from_relationship(array
@@ -69,27 +71,59 @@ switch ($menutype)
 
 
     case "student":  //::TODO:  Same thing...move refactor all of this into constituent methods for code clarity...
-        $plugins = elgg_get_entities(array('type' => 'object', 'subtype' => 'courseview'))[0]->plugins;//is there a better way to do this?
-        echo elgg_echo("STUDENT");//this is building a little dropdown menu based on the plugins pulled from the cvcourseview object
-        echo elgg_echo('<br/>FILTER BY:  <select>');
-        foreach ($plugins as $plugin)
-        {
-            echo elgg_echo('<option value = "' . $plugin . '">' . $plugin . "</option>");
-        }
-
-        echo elgg_echo('</select>  ');
-        echo elgg_view('output/url', array("text" => "Go!", "href" => "/0", 'class' => 'elgg-button elgg-button-action'));
-        echo elgg_echo('-------Add a: ');
-        echo elgg_view('output/url', array("text" => "blog", "href" => "/0", 'class' => 'elgg-button elgg-button-action'));
-        echo elgg_echo("<br/><br/>");
-
-        $relationship = 'content' . $cvcohortguid;
-        //echo elgg_echo ("Relationship name:  ".$relationship);
-        $content = elgg_get_entities_from_relationship(array
-            ('relationship_guid' => $cvmenuguid,
-            'relationship' => $relationship,
+      
+        $createbutton = elgg_get_plugin_setting('blogadd', 'courseview');
+        echo '@@@'.elgg_get_plugin_setting('testpluginsetting','courseview');
+        
+        $filter = get_input('filter');
+        
+        echo '<form method="get" action="'.current_page_url().'">';
+        echo elgg_view('input/dropdown', array(
+            'name' => 'filter',
+            'value' => $filter,  //could add second paramater with default --> maybe all
+            'options_values' => array(
+                'all'=>'All',
+                'blog' => 'Blog',
+                'bookmark' => 'Bookmark',
+                'file' => 'File')
                 )
         );
+        echo elgg_view('input/submit', array (
+            'value'=>elgg_echo('submit')
+        ));
+        $url = 'http://localhost/elgg/blog/add/'.elgg_get_logged_in_user_entity()->guid;
+         echo elgg_view('output/url', array (
+            'text'=>'Create a '.$filter,
+             'href'=>$createbutton
+        ));
+        echo '</form>';
+        
+//        echo elgg_echo("STUDENT");//this is building a little dropdown menu based on the plugins pulled from the cvcourseview object
+//        echo elgg_echo('<br/>FILTER BY:  <select>');
+//        foreach ($plugins as $plugin)
+//        {
+//            echo elgg_echo('<option value = "' . $plugin . '">' . $plugin . "</option>");
+//        }
+//        echo elgg_echo('</select>  ');
+//        echo elgg_view('output/url', array("text" => "Go!", "href" => "/0", 'class' => 'elgg-button elgg-button-action'));
+//        echo elgg_echo('-------Add a: ');
+//        echo elgg_view('output/url', array("text" => "blog", "href" => "/0", 'class' => 'elgg-button elgg-button-action'));
+//        echo elgg_echo("<br/><br/>");
+
+        $relationship = 'content' . $cvcohortguid;
+        echo elgg_echo ("Relationship name:  ".$relationship);
+        echo elgg_echo ("Relationship GUID:  ".$cvmenuguid);
+        $options =array
+            ('relationship_guid' => $cvmenuguid,
+            'relationship' => $relationship,
+            'type'=>'object',
+            'subtype' => $filter,
+                );
+                if ($filter=='all')
+                {
+                    unset($options['subtype']);
+                }
+        $content = elgg_get_entities_from_relationship($options);
 
         foreach ($content as $temp)
         {
