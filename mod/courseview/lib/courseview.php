@@ -8,8 +8,9 @@ function cv_get_profsgroup ()
 
 function cv_isprof ($user)
 {
-    //for now, we're just going to assume that everybody is a prof
-    return true;
+    $profsgroup = elgg_get_plugin_setting('profsgroup','courseview');
+    
+    return get_entity($profsgroup)->isMember($user);
     
 //   $profs =cv_get_profsgroup();
 //    
