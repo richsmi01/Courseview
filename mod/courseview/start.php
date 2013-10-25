@@ -7,7 +7,6 @@ elgg_register_event_handler('init', 'system', 'courseviewInit');
 
 function courseviewInit()
 {
-    //elgg_extend_view('css/elgg','customize_css/css', 1000);
     elgg_extend_view('css/elgg','courseview/css', 1000);
 
 
@@ -15,6 +14,7 @@ function courseviewInit()
     //instead of calling an url and handling in the switch statement, use an action.
     //$item = new ElggMenuItem('courseview', 'CourseView', elgg_add_action_tokens_to_url('action/courseview/toggle'); -- then add an action at action/courseview/toggle
     //check this out elgg_add_action_tokens_to_url($url)
+//    $item = new ElggMenuItem('courseview', 'CourseView', 'action/courseview/toggle');
     $item = new ElggMenuItem('courseview', 'CourseView', 'courseview/main');
     elgg_register_menu_item('site', $item);
 
@@ -43,6 +43,7 @@ function courseviewInit()
     //this is where I will put all of the action registrations for the forms
     //::TODO:  Get Matt to better explain how actions/forms work 
     elgg_register_action("createcourse", $base_path . '/actions/courseview/createcourse.php');
+    elgg_register_action('courseview/toggle',$base_path.'/action/togglecourseview.php');
     //echo $CONFIG->actions;
 }
 //testing git...delete this
@@ -55,12 +56,13 @@ function courseviewPageHandler($page, $identifier)
     group_gatekeeper();
     
     $plugin_path = elgg_get_plugins_path();
+   
     $base_path = $plugin_path . 'courseview/pages/courseview';
 
     set_input('rich', $page);
     set_input ('cvcohortguid', $page[1]);
     set_input ('cvmenuguid', $page[2]);
-   ElggSession::offsetSet('cohort',$page[1]);
+   ElggSession::offsetSet('cvcohort',$page[1]);
    ElggSession::offsetSet('cvmenu',$page[2]);
 
     switch ($page[0])  //switching on the first parameter passed through the RESTful url
@@ -134,14 +136,19 @@ function interceptcreate ($event, $type, $object)
 {
     system_message("Rich's object creation event hander was just triggered...");
     system_message("object created:  ".$object->guid);
-    //system_message('Type: '.$type.'  Event: '.$event);
-    //$temp1 = 'abc'.get_input('cvmenuguid');
-    //system_message ('CVMENUGUID: '.get_input('cvmenuguid'));
-    //set_input("createdobject", $object->guid);
-    $cvmenu = ElggSession::offsetget('cvmenu');
+  
+    $cvmenu = ElggSession::offsetGet('cvmenu'); //need to put this into the session since I'm no longer on a courseview page
+     $cvcohort = ElggSession::offsetGet('cvcohort');
     system_message ('CVMENUGUID: '.$temp2);
     add_entity_relationship($cvmenu, 'content608', $object->guid); 
     //echo elgg_echo('interceptcreate is running:  The object just created was of type: '.$type.' GUID:  '.$object->guid.' and subtype: '.$object->subtype.'<br/>');
+    
+    //::TODO:  Need to figure out how to return to the contentpane page of courseview after creating content --It's hardcoded at the moment
+    
+    $plugin_path = elgg_get_plugins_path();
+    $content_path = $plugin_path . 'courseview/pages/contentpane';
+    
+   forward ('http://localhost/elgg/courseview/contentpane/'.$cvcohort.'/'.$cvmenu);
 }
 
 function interceptpagesetup ($event, $type, $object)

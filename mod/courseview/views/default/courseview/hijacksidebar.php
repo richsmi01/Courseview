@@ -3,7 +3,7 @@
 $page = get_input('rich');
 //echo elgg_echo (var_dump($page));
 //$cvcohort=$page[1];
-$cvcohort=ElggSession::offsetget('cohort');
+$cvcohort=ElggSession::offsetget('cvcohort');
 echo elgg_echo ("Cohort: "+$cvcohort);
 //This pulls all menu entitities that have a relationship with this course...
 $menu = elgg_get_entities_from_relationship(array

@@ -13,10 +13,6 @@ echo elgg_view('input/text', array(
 echo 'Plugins to be reconginized by Courseview';
 $plugins = get_registered_entity_types()[object];
 
-
-
-//echo elgg_view('input/checkbox', array('name' => 'params[check2]', 'value' => $vars['entity']->check2));
-
 $shortname= array();
 $pluginaddurl=array();
 $approvedlist =array();
@@ -34,7 +30,7 @@ foreach ($plugins as $plugin)
     echo elgg_view('input/text', array(
     'name' => 'params['.$friendly.']',
     'value' => $vars['entity']->$friendly));
-    //'class' => 'cssclassname'));  //this doens't work
+    //'class' => 'cssclassname'));  //::TODO: this doesn't work -- Check with Matt
 
     echo elgg_view('input/text', array(
         'name' => 'params[' . $pluginname . ']',
@@ -48,7 +44,7 @@ foreach ($plugins as $plugin)
     }
 }
 
-var_dump($pluginaddurl);
+//var_dump($pluginaddurl);
 elgg_set_plugin_setting('availableplugins', serialize($approvedlist), 'courseview');  //need to serialize arrays before putting in settings
 elgg_set_plugin_setting('plugincreatestring', serialize($pluginaddurl), 'courseview');  //need to serialize arrays before putting in settings
 
