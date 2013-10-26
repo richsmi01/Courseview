@@ -4,7 +4,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-forward('courseview/contentpane');
+//forward('courseview/contentpane');
            
 //            $status = ElggSession::offsetGet('courseview');
 //            echo '$$$'.$status;
@@ -18,9 +18,11 @@ forward('courseview/contentpane');
 ////            else
 //            {
 //   
-//                ElggSession::offsetSet('courseview', true); //set session variable telling elgg that we are in 'masters' mode
-// 
-//                require "$base_path/courseview.php"; //load the default courseview welcome page
+                ElggSession::offsetSet('courseview', true); //set session variable telling elgg that we are in 'masters' mode
+                //$base_path=dirname(__FILE__); //gives a relative path to the directory where this file exists
+                $plugin_path = elgg_get_plugins_path().'courseview/pages/courseview';
+                
+                forward( "courseview.php"); //load the default courseview welcome page
 //            }
 
 ?>

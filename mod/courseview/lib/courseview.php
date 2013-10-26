@@ -8,9 +8,28 @@ function cv_get_profsgroup ()
 
 function cv_isprof ($user)
 {
-    $profsgroup = elgg_get_plugin_setting('profsgroup','courseview');
+    $profsgroup = get_entity(elgg_get_plugin_setting('profsgroup','courseview'));
+    echo $profsgroup->guid;
+
+    if ($profsgroup->guid=='')
+    {
+        return false;
+    }
+    else
+    {
+        return true;
+    }
     
-    return get_entity($profsgroup)->isMember($user);
+//    echo elgg_entity_exists(elgg_get_plugin_setting('profsgroup','courseview'));
+//    //echo get_entity($profsgroup)->isMember($user);
+//    if(get_entity($profsgroup)->isMember($user))
+//    {
+//        return true;
+//    }
+//    else 
+//        {
+//        return false;
+//        }
     
 //   $profs =cv_get_profsgroup();
 //    

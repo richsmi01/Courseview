@@ -11,18 +11,23 @@ echo elgg_view('input/text', array(
     'disabled' => true));
 
 echo 'Plugins to be reconginized by Courseview';
-$plugins = get_registered_entity_types()[object];
+$plugins = get_registered_entity_types()['object'];
 
 $shortname= array();
 $pluginaddurl=array();
 $approvedlist =array();
 
-$count = 0;
+
 foreach ($plugins as $plugin)
 {
-    //$temp = 'check' . $count;
+    $temp = 'check' . $plugin;
     echo '<div class=cvsettingsplugins>';
-    echo elgg_view('input/checkbox', array('name' => 'params[check1]', 'value' => $vars['entity']->check1));
+    $checkoptions =array('name' => "params[$temp]", 'value' => 1);  //sends a 0 if the checkbox isn't checked
+    if ($vars['entity']->$temp ==1)
+    {
+        $checkoptions['checked'] = true;
+    }
+    echo elgg_view('input/checkbox', $checkoptions);
     echo $plugin;
     $pluginname = "createstring" . $plugin;
     $friendly = "friendly".$plugin;
@@ -36,7 +41,7 @@ foreach ($plugins as $plugin)
         'name' => 'params[' . $pluginname . ']',
         'value' => $vars['entity']->$pluginname));
     echo'</div>';
-    if ($vars['entity']->$friendly !='')  //this should be changed to use the checkbox when I get that working...
+    if ($vars['entity']->$temp ==1)  //this should be changed to use the checkbox when I get that working...
     {
        // $shortname[]=$vars['entity']->$friendly;
         $pluginaddurl[$plugin]= $vars['entity']->$pluginname;

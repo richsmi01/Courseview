@@ -7,9 +7,13 @@
 //echo elgg_view('output/url', array("text" => "Manage Courses", "href" => "courseview/thiswillmanagecourses", 'class' => 'elgg-button elgg-button-action'));
 
 $user = elgg_get_logged_in_user_entity();
-$cvmenuguid = get_input('cvmenuguid');  //the guid of the currently selected menu item
+echo 'User: '.$user->name.'<br/>';
+
+$cvcohortguid=ElggSession::offsetGet('cvcohortguid');
+$cvmenuguid = ElggSession::offsetGet('cvmenuguid');
+//$cvmenuguid = get_input('cvmenuguid');  //the guid of the currently selected menu item
 $menuitem = get_entity($cvmenuguid);  //get the menuitem object
-$cvcohortguid = get_input('cvcohortguid');  //the guid of the current cohort
+//$cvcohortguid = get_input('cvcohortguid');  //the guid of the current cohort
 $menutype = $menuitem->menutype;  //there are three types of menu items:  folder, bundle, and student
 
 if ((cv_isprof($user)))
@@ -18,38 +22,16 @@ if ((cv_isprof($user)))
     echo ' <div id ="editbox"> aaa           
             <input type ="checkbox" id = "editcoursecheckbox"/><label>Edit Course?</label></br></br>';
              echo '<div  id ="editcourse">';
-                 echo '<form method="get" action="courseview/action">'; 
-                 echo 'Module Name: ';
-                     echo elgg_view('input/text', array(
-                    'name' => 'params[modulename]',
-                     'value'=>$moduletitle));
-                    echo elgg_view('input/submit', array(
-                    'value' => elgg_echo('Update')));
-                    echo '<br/>Create a new menu item:';
-                    echo '<br/>Enter name of new module';
-                    echo elgg_view('input/text', array(
-                    'name' => 'params[newmodulename]',
-                     'value'=>""));
-                     echo '<br/>Enter type of new module';
-                     echo elgg_view('input/text', array(
-                    'name' => 'params[newmoduletype]',
-                     'value'=>""));
-                      echo '<br/>Enter indent of new module';
-                     echo elgg_view('input/text', array(
-                    'name' => 'params[newmoduleindent]',
-                     'value'=>""));
-                      echo '<br/>Enter order of new module';
-                      echo elgg_view('input/text', array(
-                    'name' => 'params[newmoduleorder]',
-                     'value'=>""));
-                    echo elgg_view('input/submit', array(
-                    'value' => elgg_echo('Create')));
+//              echo elgg_view('input/text', array(
+//                    'name' => 'params[modulename]',
+//                     'value'=>$moduletitle));
+//                    echo elgg_view('input/submit', array(
+//                    'value' => elgg_echo('Update')));
                     
-                 echo '</form>';
+             echo elgg_view_form('addmenuitem');
             echo'</div>';
     echo '</div>';
 }
-
 
 
 switch ($menutype)
@@ -61,7 +43,9 @@ switch ($menutype)
         break;
 
     case "bundle":
-        echo elgg_echo("BUNDLE");  //::TODO:  Move all of this stuff into methods to clean up the code
+       // echo elgg_echo("BUNDLE");  //::TODO:  Move all of this stuff into methods to clean up the code
+            //add_entity_relationship($cvmenuguid, "content", 690);
+            //add_entity_relationship($cvmenuguid, "content", 689);
         $content = elgg_get_entities_from_relationship(array(
             'relationship_guid' => $cvmenuguid,
             'relationship' => 'content'));
@@ -78,7 +62,7 @@ switch ($menutype)
         break;
 
     case "student":  //::TODO:  Same thing...move refactor all of this into constituent methods for code clarity...
-        $filter = get_input('filter'); //the currently selected dropdown list    
+        $filter = get_input('filter','all'); //the currently selected dropdown list    
         //pull down the create strings for the various plugins from the settings page:
         $createString = unserialize(elgg_get_plugin_setting('plugincreatestring', 'courseview'));
         //build the string used for the create content button...need to substitute real value for the placeholders in the setup page
@@ -93,8 +77,7 @@ switch ($menutype)
         echo elgg_view('input/dropdown', array(
             'name' => 'filter',
             'value' => $filter,
-            'defaults' => 'All', //::TODO:  Ask Matt how to default this...
-            'selected' => 'all',
+            
             'options_values' => $availableplugins));
         echo elgg_view('input/submit', array(
             'value' => elgg_echo('Go!')));
@@ -107,8 +90,8 @@ switch ($menutype)
         echo '</form><br/>';
 
         $relationship = 'content' . $cvcohortguid;
-        echo elgg_echo("Relationship name:  " . $relationship);
-        echo elgg_echo("Relationship GUID:  " . $cvmenuguid);
+        //echo elgg_echo("Relationship name:  " . $relationship);
+        //echo elgg_echo("Relationship GUID:  " . $cvmenuguid);
         $options = array
             ('relationship_guid' => $cvmenuguid,
             'relationship' => $relationship,
