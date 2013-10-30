@@ -211,4 +211,8 @@
                 border: solid black;
                 margin:3px;
             }
-            .
+  
+            #cvfolderdescription {
+            font-size: 400%;
+            text-align:center;
+            }

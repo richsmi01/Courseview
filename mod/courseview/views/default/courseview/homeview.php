@@ -1,8 +1,5 @@
 <?php
 
-//this will eventually have to get more sophisticated to present the user with options depending on who they are: student, prof or admin
-//if they are a student, we will present them with a list of cohorts that they belong to and allow them to choose one.
-
 $user = elgg_get_logged_in_user_entity();
 //check to see if the user is an admin and provide appropriate admin button
 if (elgg_is_admin_logged_in())
@@ -12,8 +9,6 @@ if (elgg_is_admin_logged_in())
     echo elgg_view('output/url', array("text" => "Manage CourseView", "href" => "courseview/managecourseview", 'class' => 'elgg-button elgg-button-action'));
 }
 //check to see if the user is a professor and add appropriate content based on this
-
-
 if (cv_isprof($user))
 {
    echo '<br>'.$user->name .' is in the profs group<br/>';

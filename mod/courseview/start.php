@@ -29,7 +29,8 @@ function courseviewInit()
 
     //this allows us to hijack the sidebar.  Each time the sidebar is about to be rendered, this hook fires
     elgg_register_plugin_hook_handler('view', 'page/elements/sidebar', 'sidebar_intercept');
-    //this allows us to intercept each time elgg calls a forward.  We will use this to be able to return to the coursview tool after adding content
+    //this allows us to intercept each time elgg calls a forward.  We will use this to be able to return to the coursview tool after adding a relationship
+    //to added content
     elgg_register_plugin_hook_handler ('forward', 'all', 'cvforwardintercept');
     
     //register page event handler
