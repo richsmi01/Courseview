@@ -9,6 +9,7 @@ if (elgg_is_admin_logged_in())
     echo elgg_view('output/url', array("text" => "Manage CourseView", "href" => "courseview/managecourseview", 'class' => 'elgg-button elgg-button-action'));
 }
 //check to see if the user is a professor and add appropriate content based on this
+require (elgg_get_plugins_path() . 'courseview/lib/courseview.php');
 if (cv_isprof($user))
 {
    echo '<br>'.$user->name .' is in the profs group<br/>';
@@ -30,7 +31,8 @@ if (cv_isprof($user))
     //$somegroup = new ElggGroup;
     foreach ($cvcohorts as $cvcohort)
     {
-        echo elgg_echo ("<br/>");
+        //echo elgg_echo ("<br/>~~~".get_entity($cvcohort->container_guid)->title);
+        echo ('<br/>');
         echo elgg_view('output/url', array("text" => $cvcohort->title, "href" => "courseview/contentpane/".$cvcohort->guid."/0", 'class' => 'elgg-button elgg-button-action'));
         //echo elgg_echo("<br/>Cohort: <em>".$cvcohort->title .'</em>...GUID: '.  $cvcohort->guid);
     }

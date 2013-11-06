@@ -14,7 +14,7 @@ echo 'Manage Courses<br>';
  //$content = elgg_view ('courseview/contentpane').'<br>';
  
   $content .= elgg_view('output/url', array("text" => "Set Initial Testing Conditions", "href" => "courseview/testinginit", 'class' => 'elgg-button elgg-button-action'));
- $content .= elgg_view('output/url', array("text" => "Add a course", "href" => "courseview/addcourse", 'class' => 'elgg-button elgg-button-action'));
+// $content .= elgg_view('output/url', array("text" => "Add a course", "href" => "courseview/addcourse", 'class' => 'elgg-button elgg-button-action'));
  $vars = array('content' => $content,);
  $body = elgg_view_layout('one_sidebar', $vars);
  echo elgg_view_page($title, $body);

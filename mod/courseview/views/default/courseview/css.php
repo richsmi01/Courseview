@@ -216,3 +216,16 @@
             font-size: 400%;
             text-align:center;
             }
+            
+            .cvminiview 
+            {
+       
+            border:solid black 1px;
+            padding:10px;
+            margin:10px;
+            }
+            .cvminiview em
+            {
+                font-weight:bold;
+                color:red;
+            }

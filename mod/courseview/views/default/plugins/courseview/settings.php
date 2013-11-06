@@ -41,9 +41,8 @@ foreach ($plugins as $plugin)
         'name' => 'params[' . $pluginname . ']',
         'value' => $vars['entity']->$pluginname));
     echo'</div>';
-    if ($vars['entity']->$temp ==1)  //this should be changed to use the checkbox when I get that working...
+    if ($vars['entity']->$temp ==1)  
     {
-       // $shortname[]=$vars['entity']->$friendly;
         $pluginaddurl[$plugin]= $vars['entity']->$pluginname;
         $approvedlist [$plugin]=$vars['entity']->$friendly;
     }
@@ -53,14 +52,4 @@ foreach ($plugins as $plugin)
 elgg_set_plugin_setting('availableplugins', serialize($approvedlist), 'courseview');  //need to serialize arrays before putting in settings
 elgg_set_plugin_setting('plugincreatestring', serialize($pluginaddurl), 'courseview');  //need to serialize arrays before putting in settings
 
-//echo elgg_view('input/text', array(
-//    'name2' => 'params[test]',
-//    'value' => "hello",
-//    'class' => 'cssclassname',
-//    'disabled' => true));
-
-
-//elgg_set_plugin_setting('testpluginsetting', 'Did this work???', 'courseview');
-//echo elgg_get_plugin_setting('testpluginsetting','courseview');
-//var_dump(get_registered_entity_types());
 ?>

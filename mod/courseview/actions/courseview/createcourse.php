@@ -1,31 +1,27 @@
 <?php
 
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ * This action will create a course using information provided by the createcourse form
  */
 
 //I need to place the code to build the course object here and then redirect some sort of course editing page...
-
 //I should check to make sure that the user is a professor.
 
-$inputs = get_input('title');  //this pulls the text from the title textbox in the form...
+$cvcoursename = get_input('cvcoursename');  //this pulls the text from the title textbox in the form...
+echo $cvcoursename;
+$cvcoursedescription = get_input('cvcoursedescription');
+echo $cvcoursedescription;
 
-//echo 'Course created!!!';
-//    $coursegroup= new ElggGroup();
-//    $coursegroup->subtype = 'group';
-//    $coursegroup ->title ='comp697';
-//    $coursegroup ->name ='comp697';
-//    $coursegroup ->save();
-//    $coursegroup -> testAttribute = "Hi Rich";
-//    $coursegroup ->save();
-//
-//    $user = elgg_get_logged_in_user_entity();
-//    $groups = $user->getGroups();
-//    
-//    foreach ($groups as $group)
-//{
-//    echo elgg_echo ("GROUP: ".$group->title.$group->testAttribute);
-//}
-
+exit;
+$cvcourse = new ElggObject();
+$cvcourse->title = $cvcoursename;
+$cvcourse->access_id = ACCESS_PUBLIC;
+$cvcourse->owner_guid = elgg_get_logged_in_user_guid();
+$cvcourse->container_guid = elgg_get_logged_in_user_guid();
+$cvcourse->save();
+$cvcourse->cvcourse = true;
+$cvcourse->description = $cvcoursedescription;
+$cvcourse->save();
+echo elgg_echo("Course Created! ");
+exit;
 ?>

@@ -7,7 +7,7 @@
 //build and call greetings view
 $user = elgg_get_logged_in_user_entity();
 $params = array('name' => $user->name);
-$content = elgg_view('courseview/homeview', $params);
+$content = elgg_view('courseview/courseviewlanding', $params);
 
 //display the content in a one_sidebar layout
 $vars = array('content' => $content,);
