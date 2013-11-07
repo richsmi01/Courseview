@@ -23,25 +23,14 @@ $content .=  elgg_echo('Remove a cohort from courseview<br>');
 $content .=  elgg_echo('edit courses, and cohorts');
 
 
-
-
-//delete this eventually
-//$cvcohorts = elgg_get_entities_from_relationship(array
-//        ('type' => 'group',
-//        'metadata_names' => array('cvcourse'), 
-//        'metadata_values' => array(true),  
-//        'limit' => false,
-//        'owner_guid' => $user->guid,
-//       // 'relationship' => 'owner',
-//       // 'relationship_guid' => $user->guid
-//            )
-//    );
-
 $content.= elgg_view_form('createcourse');
+$content.=elgg_view_form('cveditacourse');
 $content.= elgg_view_form ('deletecourse');
 $content.= elgg_view_form('addacohort');
-
 $content.=elgg_view_form('deleteacohort');
+
+
+$content.=elgg_view('courseview/cvcoursetree');
 
 
 $vars = array('content' => $content,);

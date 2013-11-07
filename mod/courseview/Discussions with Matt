@@ -1,8 +1,19 @@
-Where should I use extend view vs require?
+Nov 7 agenda
 
-Actions and tokens one last time...
+Request for less polite critique of code
+
+Actions and tokens one last time...turning courseview on and off
 
 need to be able to ascertain whether or not a user belongs to any CV groups
+
+need to fetch all cohorts that a user is a member of
+
+Can I figure out what submit button was hit on a form?  edit menu item example
+
+Where should I use extend view vs require?
+
+Setting up a quasi-production courseview site in the next couple weeks
+
 
 
 Oct 24 Agenda -

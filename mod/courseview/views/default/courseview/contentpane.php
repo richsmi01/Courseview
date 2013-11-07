@@ -13,7 +13,7 @@ $cvmenuguid = ElggSession::offsetGet('cvmenuguid');
 $menuitem = get_entity($cvmenuguid);  //get the menuitem object
 $menutype = $menuitem->menutype;  //there are three types of menu items:  folder, bundle, and student
 $base_path=dirname(__FILE__); //gives a relative path to the directory where this file exists
-
+//echo 'MENU ITEM: '.$menuitem->name;
 require (elgg_get_plugins_path() . 'courseview/lib/courseview.php'); //various methods 
 //::TODO:  Is it better to require this or use somthing like this
     //elgg_register_library('elgg:courseview', elgg_get_plugins_path() . 'courseview/lib/courseview.php');
@@ -42,7 +42,7 @@ switch ($menutype)
         break;
     
     default:
-        echo elgg_echo("WELCME TO");
+        echo elgg_echo("<BR><BR>WELCOME TO COURSEVIEW");
         break;
 }
  

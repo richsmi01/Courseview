@@ -47,7 +47,7 @@ $rich = get_user_by_username("Rich");
 //First, we create a cvcourse:
 //course 1 - PROG100
     $cvcourse = new ElggObject();
-    $cvcourse->title = 'Prog 100';
+    $cvcourse->title = 'Prog 1000';
     $cvcourse->access_id = ACCESS_PUBLIC;
     $cvcourse->owner_guid = elgg_get_logged_in_user_guid();
     $cvcourse->container_guid = elgg_get_logged_in_user_guid();
@@ -81,6 +81,20 @@ $rich = get_user_by_username("Rich");
 //create the cvmenu objects that will make up the menu for this course
     $cvmenu = new ElggObject();
     $cvmenu->subtype = 'cvmenu';
+    $cvmenu->name = 'Prog 1000';
+    $cvmenu->owner_guid = $user->guid;
+    $cvmenu->container_guid = $cvcourse->guid;
+    $cvmenu->access_id = ACCESS_PUBLIC;
+    $cvmenu->save();
+    $cvmenu->menutype = "folder";
+    $cvmenu->meta1 = "closed";
+    $cvmenu->menuorder = 0;
+    $cvmenu->indent="";
+//now, connect it to the course
+    add_entity_relationship($cvcourse->guid, "menu", $cvmenu->guid);
+    
+    $cvmenu = new ElggObject();
+    $cvmenu->subtype = 'cvmenu';
     $cvmenu->name = 'Module 1';
     $cvmenu->owner_guid = $user->guid;
     $cvmenu->container_guid = $cvcourse->guid;
@@ -88,42 +102,42 @@ $rich = get_user_by_username("Rich");
     $cvmenu->save();
     $cvmenu->menutype = "folder";
     $cvmenu->meta1 = "closed";
-    $cvmenu->menuorder = 1;
+    $cvmenu->menuorder = 2;
     $cvmenu->indent="";
 //now, connect it to the course
     add_entity_relationship($cvcourse->guid, "menu", $cvmenu->guid);
 
 
-//    $cvmenu2 = new ElggObject();
-//    $cvmenu2->subtype = "cvmenu";
-//    $cvmenu2->name = "Professor Rant";  //should use title instead of name
-//    $cvmenu2->owner_guid = $user->guid;
-//    $cvmenu2->container_guid = $cvcourse->guid;
-//    $cvmenu2->access_id = ACCESS_PUBLIC;
-//    $cvmenu2->save();
-//    $cvmenu2->menutype = "bundle";
-//    $cvmenu2->meta1 = "";
-//    $cvmenu2->menuorder = 2;
-//    $cvmenu2->indent="+";
-//    add_entity_relationship($cvcourse->guid, "menu", $cvmenu2->guid);
+    $cvmenu2 = new ElggObject();
+    $cvmenu2->subtype = "cvmenu";
+    $cvmenu2->name = "Professor Rant";  //should use title instead of name
+    $cvmenu2->owner_guid = $user->guid;
+    $cvmenu2->container_guid = $cvcourse->guid;
+    $cvmenu2->access_id = ACCESS_PUBLIC;
+    $cvmenu2->save();
+    $cvmenu2->menutype = "bundle";
+    $cvmenu2->meta1 = "";
+    $cvmenu2->menuorder = 3;
+    $cvmenu2->indent="+";
+    add_entity_relationship($cvcourse->guid, "menu", $cvmenu2->guid);
 // 
 //     //add a couple of blog postings through a relationship to the above cvmenu
 //    add_entity_relationship($cvmenu2->guid, "content", 164);  //added a blog post to this menu item
 //    add_entity_relationship($cvmenu2->guid, "content", 64);  //added a blog post to this menu item
 //    
 //
-//    $cvmenu3 = new ElggObject();
-//    $cvmenu3->subtype = "cvmenu";
-//    $cvmenu3->name = "Student Content";
-//    $cvmenu3->owner_guid = $user->guid;
-//    $cvmenu3->container_guid = $cvcourse->guid;
-//    $cvmenu3->access_id = ACCESS_PUBLIC;
-//    $cvmenu3->save();
-//    $cvmenu3->menutype = "student";
-//    $cvmenu3->meta1 = "";
-//    $cvmenu3->menuorder = 3;
-//    $cvmenu3->indent="";
-//    add_entity_relationship($cvcourse->guid, 'menu', $cvmenu3->guid);
+    $cvmenu3 = new ElggObject();
+    $cvmenu3->subtype = "cvmenu";
+    $cvmenu3->name = "Student Content";
+    $cvmenu3->owner_guid = $user->guid;
+    $cvmenu3->container_guid = $cvcourse->guid;
+    $cvmenu3->access_id = ACCESS_PUBLIC;
+    $cvmenu3->save();
+    $cvmenu3->menutype = "student";
+    $cvmenu3->meta1 = "";
+    $cvmenu3->menuorder = 4;
+    $cvmenu3->indent=".";
+    add_entity_relationship($cvcourse->guid, 'menu', $cvmenu3->guid);
 //    
 //     $cvmenu4 = new ElggObject();
 //    $cvmenu4->subtype = "cvmenu";

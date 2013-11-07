@@ -22,7 +22,8 @@ $html = elgg_view_form('createcourse');
 //echo elgg_echo('Is Member? ' . $group->isMember($user));
 
 //$course_title = 'Course 1';
-
+echo 'this isnt used???  Im in addcourse page';
+exit;
 $layout = elgg_view_layout('content', array(
     'title' => 'Add a course',
     'content' => $html,

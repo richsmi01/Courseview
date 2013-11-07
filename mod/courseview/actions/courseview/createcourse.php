@@ -12,7 +12,6 @@ echo $cvcoursename;
 $cvcoursedescription = get_input('cvcoursedescription');
 echo $cvcoursedescription;
 
-exit;
 $cvcourse = new ElggObject();
 $cvcourse->title = $cvcoursename;
 $cvcourse->access_id = ACCESS_PUBLIC;
@@ -23,5 +22,21 @@ $cvcourse->cvcourse = true;
 $cvcourse->description = $cvcoursedescription;
 $cvcourse->save();
 echo elgg_echo("Course Created! ");
+
+$cvmenu = new ElggObject();
+    $cvmenu->subtype = 'cvmenu';
+    $cvmenu->name = $cvcoursename;
+    $cvmenu->owner_guid = $user->guid;
+    $cvmenu->container_guid = $cvcourse->guid;
+    $cvmenu->access_id = ACCESS_PUBLIC;
+    $cvmenu->save();
+    $cvmenu->menutype = "folder";
+    $cvmenu->meta1 = "closed";
+    $cvmenu->menuorder = 0;
+    $cvmenu->indent="";
+    $cvmenu->save();
+//now, connect it to the course
+    add_entity_relationship($cvcourse->guid, "menu", $cvmenu->guid);
+
 exit;
 ?>

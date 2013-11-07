@@ -11,13 +11,13 @@ echo $cvcohortguid."!!!";
 $cvcohort = get_entity($cvcohortguid);
 echo $cvcohort->title;
 
-exit;
 
 
 
 
-echo 'Course:  '.$cvcourse->title.' has been deleted';
-$cvcourse->delete();
+
+echo 'Course:  '.$cvcohort->title.' has been deleted';
+$cvcohort->delete();
 exit;
 
 

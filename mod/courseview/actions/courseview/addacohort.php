@@ -4,11 +4,12 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
+$user= elgg_get_logged_in_user_entity();
 $cvcohortname = get_input('cvcohortname');
 $cvcourseguid = get_input('cvcourse');  
 $cvcourse = get_entity($cvcourseguid);
-echo $cohortname;
-echo '<br>'.$course->title;
+echo $cvcohortname;
+echo '<br>'.$cvcourse->title;
 
  $cvcohort = new ElggGroup ();
     $cvcohort->title = $cvcohortname;  //use titles only for elgg groups
@@ -19,4 +20,7 @@ echo '<br>'.$course->title;
     $cvcohort->cvcohort = true;
       echo elgg_echo ("Cohort Created:  ".$cvcohort->guid);
       $cvcohort->save();
+      
+      //make the professor a member of the group (cohort)
+      $cvcohort->join($user);
 ?>

@@ -9,7 +9,7 @@ function cv_get_profsgroup ()
 function cv_isprof ($user)
 {
     $profsgroup = get_entity(elgg_get_plugin_setting('profsgroup','courseview'));
-    echo $profsgroup->guid;
+    //echo $profsgroup->guid;
 
     if ($profsgroup->guid=='')
     {
@@ -73,81 +73,11 @@ if (!$courseview_object)
     $courseview_object ->plugins = array('blog','bookmark');
     $courseview_object->profsgroup = $courseview_profsgroup->guid; //add the profsgroup guid to our courseview object.
     $courseview_object->save();
-  //  echo 'This is the first time that CourseView has run...new CourseView object created';
-    
-   
-    
-  //  echo 'profsgroup created:  '.$courseview_profsgroup->guid;    
+  
 }
 
 
-//::TODO:  delete this stuff after I get my create course code all worked out
 
-//$coursetree = array();
-//$coursetree[0] = array (
-//    label=>'Module 1',
-//    contenttype =>'moduleOpen',
-//    subtype =>'mod1guid',
-//    filter=>'',
-//    indent=>'0',
-//    );
-//    $coursetree[1] = array (
-//    label=>'Professors Rants',
-//    contenttype =>'bundle',
-//    subtype =>'bundleguid1',
-//         indent=>'+',
-//    filter=>''
-//    );
-//    $coursetree[2] = array (
-//    label=>'More Comments',
-//    contenttype =>'guid99999',
-//    subtype =>'',
-//         indent=>'0',
-//    filter=>''
-//    );
-//    $coursetree[3] = array (
-//    label=>'Module 2',
-//    contenttype =>'moduleOpen',
-//    subtype =>'mod2guid',
-//    indent=>'-',
-//    filter=>''
-//    );
-//     $coursetree[4] = array (
-//    label=>'Blogs 1',
-//    contenttype =>'guid99999',
-//    subtype =>'blog',
-//         indent=>'+',
-//    filter=>array ('tag1','blog1')
-//    );
-//      $coursetree[5] = array (
-//    label=>'Blogs 2',
-//    contenttype =>'guid99999',
-//    subtype =>'blog',
-//         indent=>'0',
-//    filter=>array ('tag1')
-//    );
-//      $coursetree[6] = array (
-//    label=>'Files',
-//    content =>'guid99999',
-//    subtype =>'file',
-//         indent=>'0',
-//    filter=>array ('tag1')
-//    );
-//         $coursetree[7] = array (
-//    label=>'The Wire',
-//    contenttype =>'guid99999',
-//    subtype =>'thewire',
-//         indent=>'-',
-//    filter=>'tag1'
-//    );
-//          $coursetree[8] = array (
-//    label=>'Bookmarks',
-//    content =>'guid99999',
-//    subtype =>'bookmarks',
-//         indent=>'-',
-//    filter=>array('blog1')
-//    );
-    //ElggSession::offsetSet('currentcourse', $coursetree);
 
 return $courseview_object->guid;
 }

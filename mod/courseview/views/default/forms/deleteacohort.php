@@ -16,4 +16,5 @@ $base_path = elgg_get_plugins_path() . 'courseview/views/default/courseview';
 require ($base_path . '/listcohorts.php');
 echo elgg_view('input/submit');
 echo "</div>";
+
 ?>

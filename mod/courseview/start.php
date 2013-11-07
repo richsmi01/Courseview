@@ -10,7 +10,8 @@ function courseviewInit()
     elgg_extend_view('css/elgg', 'courseview/css', 1000);  //set up our link to css rulesets
     //register menu item to switch to CourseView
     //instead of calling an url and handling in the switch statement, use an action.
-    //::TODO:  Ask Matt about the redirect in togglecourseview.php == until then, keep doing it the old way by passing it to the switch
+    //::MATT:  1.  I can't figure out the action tokens business here...help!
+//::TODO:  Ask Matt about the redirect in togglecourseview.php == until then, keep doing it the old way by passing it to the switch
     $item = new ElggMenuItem('courseview', 'CourseView', 'courseview/main');
     //$item = new ElggMenuItem('courseview', 'CourseView', elgg_add_action_tokens_to_url('actions/toggle')); // then add an action at action/courseview/toggle
     elgg_register_menu_item('site', $item);
@@ -32,6 +33,8 @@ function courseviewInit()
     //this is where I will put all of the action registrations for the forms
     //::TODO:  Get Matt to better explain how actions/forms work 
     elgg_register_action("createcourse", $base_path . '/actions/courseview/createcourse.php');
+    elgg_register_action("cveditacourse", $base_path . '/actions/courseview/cveditacourse.php');
+    elgg_register_action("editmenuitem", $base_path . '/actions/courseview/editmenuitem.php');
     elgg_register_action("deleteacohort", $base_path . '/actions/courseview/deleteacohort.php');
     elgg_register_action("addacohort", $base_path . '/actions/courseview/addacohort.php');
     elgg_register_action("deletecourse", $base_path . '/actions/courseview/deletecourse.php');
@@ -56,12 +59,12 @@ function courseviewPageHandler($page, $identifier)
             //::TODO:  This needs to be replaced with an action
             $status = ElggSession::offsetGet('courseview');
             //if the courseview session variable was false, toggle it to true and viceversa
-            if ($status)
-            {
-                ElggSession::offsetSet('courseview', false);
-                forward('http://localhost/elgg/activity');
-            } 
-            else
+//            if ($status)
+//            {
+//                ElggSession::offsetSet('courseview', false);
+//                forward('http://localhost/elgg/activity');
+//            } 
+//            else
             {
                 ElggSession::offsetSet('courseview', true); //set session variable telling elgg that we are in 'masters' mode
                 require "$base_path/courseviewlanding.php"; //load the default courseview welcome page
@@ -74,9 +77,9 @@ function courseviewPageHandler($page, $identifier)
             set_input("object_type", 'all');
             require "$base_path/courseviewlanding.php";
             break;
-        case 'addcourse':
-            require "$base_path/addcourse.php";
-            break;
+//        case 'addcourse':
+//            require "$base_path/addcourse.php";
+//            break;
         case 'exit':  //I don't think I need this at all...just use the togglecourseview action
             ElggSession::offsetSet('courseview', false);
             forward('http://localhost/elgg/activity');
@@ -114,8 +117,8 @@ function cvsidebarintercept($hook, $entity_type, $returnvalue, $params)
 //this method intercepts object creations and adds relationships to menu items when appropriate
 function cvinterceptcreate($event, $type, $object)
 {
-    $cvmenu = ElggSession::offsetGet('cvmenu'); //need to put this into the session since I'm no longer on a courseview page
-    $cvcohort = ElggSession::offsetGet('cvcohort');
+    $cvmenu = ElggSession::offsetGet('cvmenuguid'); //need to get this from the session since I'm no longer on a courseview page
+    $cvcohort = ElggSession::offsetGet('cvcohortguid');
     if ($object->getSubtype() != 'cvmenu' && ElggSession::offsetGet('courseview'))//::TODO:need to eventually change this to only add to subtype of approved plugins
     {
         $relationship = 'content' . $cvcohort;
@@ -138,14 +141,14 @@ function cvforwardintercept($hook, $type, $return, $params)
     return $return;
 }
 
-function cvinterceptpagesetup($event, $type, $object)  //this really isn't need anymore is it?
-{
-    $context = elgg_get_context();
-    //system_message('Context:  '.$context);
-    $temp1 = 'abc' . get_input('cvmenuguid');
-    //system_message ('CVMENUGUID: '.get_input('cvmenuguid'));
-    if ($context == 'group_profile')
-    {
-        //echo elgg_echo ('In Group Page '.var_dump($object));
-    }
-}
+//function cvinterceptpagesetup($event, $type, $object)  //this really isn't need anymore is it?
+//{
+//    $context = elgg_get_context();
+//    //system_message('Context:  '.$context);
+//    $temp1 = 'abc' . get_input('cvmenuguid');
+//    //system_message ('CVMENUGUID: '.get_input('cvmenuguid'));
+//    if ($context == 'group_profile')
+//    {
+//        //echo elgg_echo ('In Group Page '.var_dump($object));
+//    }
+//}

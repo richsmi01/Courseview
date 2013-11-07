@@ -1,14 +1,12 @@
 <?php
 
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+//::MATT:  2.  So, this form will ultimately lead to the cveditcourse view...show I go to an action and have it load the view or should I just redirect through the switch statement in start
+
 $userguid = elgg_get_logged_in_user_guid();
 
 
 echo "<div class='cvminiview'>";
-echo '<em>DELETE A COURSE:</em><br/><br/>';
+echo '<em>EDIT A COURSE:</em><br/><br/>';
 echo ('Please choose course name to edit: ');
 
 $base_path = elgg_get_plugins_path() . 'courseview/views/default/courseview';
