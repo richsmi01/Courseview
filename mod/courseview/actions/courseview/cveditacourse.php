@@ -6,5 +6,8 @@
  */
 echo 'edit a course action';
 
+
+
+
 exit;
 ?>

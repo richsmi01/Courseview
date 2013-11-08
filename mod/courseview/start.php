@@ -11,7 +11,7 @@ function courseviewInit()
     //register menu item to switch to CourseView
     //instead of calling an url and handling in the switch statement, use an action.
     //::MATT:  1.  I can't figure out the action tokens business here...help!
-//::TODO:  Ask Matt about the redirect in togglecourseview.php == until then, keep doing it the old way by passing it to the switch
+    //::TODO:  Ask Matt about the redirect in togglecourseview.php == until then, keep doing it the old way by passing it to the switch
     $item = new ElggMenuItem('courseview', 'CourseView', 'courseview/main');
     //$item = new ElggMenuItem('courseview', 'CourseView', elgg_add_action_tokens_to_url('actions/toggle')); // then add an action at action/courseview/toggle
     elgg_register_menu_item('site', $item);

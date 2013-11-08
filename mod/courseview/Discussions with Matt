@@ -4,6 +4,14 @@ Request for less polite critique of code
 
 Actions and tokens one last time...turning courseview on and off
 
+passing stuff to views... the $vars array?
+
+Discuss new requirement to add content to courseview from outside of courseview...during creation and editing
+
+Discuss my idea to do away with cohort selection and just build all cohorts into the treeview
+
+Discuss problems with persisting treeview
+
 need to be able to ascertain whether or not a user belongs to any CV groups
 
 need to fetch all cohorts that a user is a member of
