@@ -14,15 +14,20 @@ echo elgg_view('input/text', array(
     'name' => 'cvmodulename',
     'value' => $cvmenu->name));
 echo elgg_view('input/submit', array(
-    'value' => 'Change Name'));
+    'value' => 'Change Name',
+     'name' =>'buttonchoice'));
 echo elgg_view('input/submit', array(
-    'value' => 'Indent'));
+    'value' => 'Indent',
+     'name' =>'buttonchoice'));
 echo elgg_view('input/submit', array(
-    'value' => 'Outdent'));
+    'value' => 'Outdent',
+     'name' =>'buttonchoice'));
 echo elgg_view('input/submit', array(
-    'value' => 'Move up'));
+    'value' => 'Move Up',
+     'name' =>'buttonchoice'));
 echo elgg_view('input/submit', array(
-    'value' => 'Move down'));
+    'value' => 'Move Down',
+    'name' =>'buttonchoice'));
 echo '<br/>';
 echo elgg_view('input/submit', array(
     'value' => 'Delete Menu Item'));

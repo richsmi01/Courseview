@@ -80,10 +80,10 @@ function courseviewPageHandler($page, $identifier)
 //        case 'addcourse':
 //            require "$base_path/addcourse.php";
 //            break;
-        case 'exit':  //I don't think I need this at all...just use the togglecourseview action
-            ElggSession::offsetSet('courseview', false);
-            forward('http://localhost/elgg/activity');
-            break;
+//        case 'exit':  //I don't think I need this at all...just use the togglecourseview action
+//            ElggSession::offsetSet('courseview', false);
+//            forward('http://localhost/elgg/activity');
+//            break;
         //One of the next two should be deleted --pick one to manage all courses
         case 'managecourseview':
             require "$base_path/managecourseview.php";

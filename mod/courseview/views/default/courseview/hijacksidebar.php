@@ -24,14 +24,14 @@ echo elgg_echo ('<div class ="css-treeview">');
   foreach ($menu as $temp)
 {
     //If this menu item should be indented from the previous one, add a <ul> tag to start a new unordered list
-    if ($temp->indent==='+')
+    if ($temp->indent=='+')
     {
         echo elgg_echo('
             <ul>
             ');
     }
     //if this menu item should be outdented, close off our unordered list and list item
-    if ($temp->indent==='-')
+    if ($temp->indent=='-')
     {
         echo elgg_echo('
             </ul>
@@ -45,7 +45,7 @@ echo elgg_echo ('<div class ="css-treeview">');
         $name="* ";  //currently I'm just adding a * to the active module but eventually I should use it to force the active module folder to default to open
     }
    $name = $name.$temp->name;
-    $name .= '--'.$temp->menuorder;
+    $name .= '--'.$temp->menuorder.$temp->indent;
     if ($temp->menutype=="folder")
     {
          echo elgg_echo("<ul>
