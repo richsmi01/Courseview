@@ -12,7 +12,8 @@ if (elgg_is_admin_logged_in())
     
 }
 //check to see if the user is a professor and add appropriate content based on this
-require (elgg_get_plugins_path() . 'courseview/lib/courseview.php');
+echo elgg_view ('courseview/courseview');
+  elgg_load_library('elgg:courseview');
 if (cv_isprof($user))
 {
     echo "<div class='cvminiview'>";
@@ -21,27 +22,7 @@ if (cv_isprof($user))
    echo '</div>';
 }
 
-  //List all cohorts that this user is a member of
-    $cvcohorts = elgg_get_entities_from_relationship(array
-        ('type' => 'group',
-       'metadata_names' => array('cvcohort'), 
-        'metadata_values' => array(true),  
-        'limit' => false,
-        'relationship' => 'member',
-        'relationship_guid' => $user->guid
-            )
-    );
-    
-    echo "<div class='cvminiview'>";
-    echo elgg_echo('<br/><em>Please choose a cohort: </em><br/>');
-    //$somegroup = new ElggGroup;
-    
-    foreach ($cvcohorts as $cvcohort)
-    {
-        //echo elgg_echo ("<br/>~~~".get_entity($cvcohort->container_guid)->title);
-        echo ('<br/>');
-        echo elgg_view('output/url', array("text" => $cvcohort->title, "href" => "courseview/contentpane/".$cvcohort->guid."/0", 'class' => 'elgg-button elgg-button-action'));
-        //echo elgg_echo("<br/>Cohort: <em>".$cvcohort->title .'</em>...GUID: '.  $cvcohort->guid);
-    }
-    echo '</div>';
+//add the actual content
+echo elgg_view('courseview/contentpane');
+
 ?>

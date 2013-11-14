@@ -20,10 +20,13 @@ echo elgg_view('input/text', array(
 //    'name' => 'newmoduleorder',
 //    'value' => ""));
 echo elgg_view('input/submit', array(
-    'value' => elgg_echo('Outdent')));
+    'value' => elgg_echo('Outdent'),
+     'name' =>'buttonchoice'));
 echo elgg_view('input/submit', array(
-    'value' => elgg_echo('Same Level')));
+    'value' => elgg_echo('Same Level'),
+     'name' =>'buttonchoice'));
 echo elgg_view('input/submit', array(
-    'value' => elgg_echo('Indent')));
+    'value' => elgg_echo('Indent'),
+     'name' =>'buttonchoice'));
 echo '</div>';
 ?>

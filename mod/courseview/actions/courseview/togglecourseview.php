@@ -22,7 +22,7 @@
                 //$base_path=dirname(__FILE__); //gives a relative path to the directory where this file exists
                 $plugin_path = elgg_get_plugins_path().'courseview/pages/courseview';
                 
-                forward( "courseview.php"); //load the default courseview welcome page
+                forward("courseview/courseview"); //load the default courseview welcome page
 //            }
 
 ?>

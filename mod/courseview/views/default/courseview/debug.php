@@ -34,7 +34,7 @@ $options = array
          $menuitems = cv_get_menu_items_for_cohort($cohort->guid);
           foreach ($menuitems as $menuitem)
           {
-            echo "--------------Menu Item:  $menuitem->title --  $menuitem->guid --$menuitem->menutype -- indentlevel = $menuitem->indent<br>";
+            echo "--------------Menu Item:  $menuitem->name --  $menuitem->guid --$menuitem->menutype -- menuorder $menuitem->menuorder --  indentlevel = $menuitem->indent<br>";
             $content = cv_get_content_by_menu_item('all', $menuitem->guid, 'content'.$cohort->guid);
             foreach ($content as $contentitem)
             {

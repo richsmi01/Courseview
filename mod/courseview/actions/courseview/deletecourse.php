@@ -15,7 +15,7 @@ echo $cvcourse->title;
 
 echo 'Course:  '.$cvcourse->title.' has been deleted';
 $cvcourse->delete();
-exit;
+//exit;
 
 
 ?>

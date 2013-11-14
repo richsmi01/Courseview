@@ -12,8 +12,8 @@ function courseviewInit()
     //instead of calling an url and handling in the switch statement, use an action.
     //::MATT:  1.  I can't figure out the action tokens business here...help!
     //::TODO:  Ask Matt about the redirect in togglecourseview.php == until then, keep doing it the old way by passing it to the switch
-    $item = new ElggMenuItem('courseview', 'CourseView', 'courseview/main');
-    //$item = new ElggMenuItem('courseview', 'CourseView', elgg_add_action_tokens_to_url('actions/toggle')); // then add an action at action/courseview/toggle
+    //$item = new ElggMenuItem('courseview', 'CourseView', 'courseview/main');
+    $item = new ElggMenuItem('courseview', 'CourseView', elgg_add_action_tokens_to_url('action/toggle')); // then add an action at action/courseview/toggle
     elgg_register_menu_item('site', $item);
 
     //this allows us to hijack the sidebar.  Each time the sidebar is about to be rendered, this hook fires
@@ -28,6 +28,8 @@ function courseviewInit()
     //this is registering an event handler to call my interceptcreate method whenever an object is created.
     elgg_register_event_handler('create', 'object', 'cvinterceptcreate');
 
+    elgg_register_library('elgg:courseview', elgg_get_plugins_path() . 'courseview/lib/courseview.php');
+    
     //set up our paths
     $base_path = dirname(__FILE__); //gives a relative path to the directory where this file exists
     //this is where I will put all of the action registrations for the forms
@@ -117,14 +119,22 @@ function cvsidebarintercept($hook, $entity_type, $returnvalue, $params)
 //this method intercepts object creations and adds relationships to menu items when appropriate
 function cvinterceptcreate($event, $type, $object)
 {
-    $cvmenu = ElggSession::offsetGet('cvmenuguid'); //need to get this from the session since I'm no longer on a courseview page
-    $cvcohort = ElggSession::offsetGet('cvcohortguid');
+    $cvmenuguid = ElggSession::offsetGet('cvmenuguid'); //need to get this from the session since I'm no longer on a courseview page
+    $cvcohortguid = ElggSession::offsetGet('cvcohortguid');
     if ($object->getSubtype() != 'cvmenu' && ElggSession::offsetGet('courseview'))//::TODO:need to eventually change this to only add to subtype of approved plugins
     {
-        $relationship = 'content' . $cvcohort;
-        add_entity_relationship($cvmenu, $relationship, $object->guid);
+        $relationship = 'content' ;
+        
+        if (get_entity($cvmenuguid)->menutype !='professor') {
+            $relationship.= $cvcohortguid;
+        }
+//        echo 'cvmenuguid:  '.$cvmenuguid.'<br>';
+//        echo 'relationship:  '.$relationship.'<br>';
+//        echo 'new object guid:  '.$object->guid.'<br>';
+      
+        add_entity_relationship($cvmenuguid, $relationship, $object->guid);
         $rootdomain = elgg_get_site_url();
-        $cvredirect = $rootdomain . 'courseview/contentpane/' . $cvcohort . '/' . $cvmenu;
+        $cvredirect = $rootdomain . 'courseview/contentpane/' . $cvcohortguid . '/' . $cvmenu;
         ElggSession::offsetSet('cvredirect', $cvredirect);
         //::TODO:  Need to understand the whole forward intercept thing better.
     }

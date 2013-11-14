@@ -33,10 +33,10 @@ $cvmenu = new ElggObject();
     $cvmenu->menutype = "folder";
     $cvmenu->meta1 = "closed";
     $cvmenu->menuorder = 0;
-    $cvmenu->indent="";
+    $cvmenu->indent="0";
     $cvmenu->save();
 //now, connect it to the course
     add_entity_relationship($cvcourse->guid, "menu", $cvmenu->guid);
 
-exit;
+
 ?>

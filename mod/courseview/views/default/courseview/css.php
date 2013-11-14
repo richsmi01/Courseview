@@ -229,3 +229,28 @@
                 font-weight:bold;
                 color:red;
             }
+            
+            li  input[type=checkbox] ~ div{
+             display: none;
+/*background-color:blue;*/
+}
+
+li  input[type=checkbox]:checked  ~ div {
+  display: block;
+  /*background-color:yellow;*/
+}
+
+ .cvcurrent {
+ font-style: italic;
+            
+            
+    /*        #editmenuitem, #addmenuitem{
+            display:none;
+            }
+            
+            #editmenuitem:target, #addmenuitem:target
+            {
+         
+           display:block;
+        
+            }*/
