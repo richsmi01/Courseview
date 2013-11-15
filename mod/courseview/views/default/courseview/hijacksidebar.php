@@ -20,6 +20,7 @@
                 }
                  // stuff+=" tree item:  "+ treemenu[i].name+"tree indent  "+treemenu[i].id;
         }
+        current.checked=true;
        //alert (stuff);
     }
 
@@ -56,7 +57,7 @@ foreach ($groupsmember as $cohort)
 {
     $cvcohortguid = $cohort->guid;
     $menu = cv_get_menu_items_for_cohort($cvcohortguid);
-
+echo '<h3>CourseView</h3><br>';
 //Here we are building the html of the treeview control and adding the correct css classes so that my css
 //can turn it into a tree that can be manipulated by the user 
     echo elgg_echo('<div class ="css-treeview">');
@@ -66,7 +67,7 @@ foreach ($groupsmember as $cohort)
         //If this menu item should be indented from the previous one, add a <ul> tag to start a new unordered list
         if ($temp->indent > $indentlevel)
         {
-            $abc.='@' . $temp->menuorder;
+           // $abc.='@' . $temp->menuorder;
             echo elgg_echo('
             <ul>
             ');
@@ -111,7 +112,7 @@ foreach ($groupsmember as $cohort)
             echo elgg_echo("<li><a abc ='m' name='$indent' class = 'cvmenuitem $class2 indent' id ='$id1' href ='" . elgg_get_site_url() . "courseview/contentpane/" . $cvcohortguid . "/" . $temp->guid . "' >" . $name . "</a></li>");
         }
     }
-    echo '<br>' . $abc;
+   // echo '<br>' . $abc;
     echo elgg_echo('</div>');
 }
 ?>

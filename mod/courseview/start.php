@@ -108,7 +108,8 @@ function cvsidebarintercept($hook, $entity_type, $returnvalue, $params)
     //here we check to see if we are currently in courseview mode.  If we are, we hijack the sidebar for our course 
     if (ElggSession::offsetGet('courseview'))
     {
-        $returnvalue = elgg_view('courseview/hijacksidebar');
+        $temp = $returnvalue;
+        $returnvalue = elgg_view('courseview/hijacksidebar').$temp;
     } else  //this should be an else if that checks if user is currently enrolled in any cohorts -- need to figure out how to do this
     {
         $returnvalue.= '<br/>add to courseview'; //::TODO:  This is where I need to put the code for Dr Dron's idea

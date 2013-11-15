@@ -66,5 +66,5 @@ add_entity_relationship($cvcourseguid, 'menu', $cvmenu->guid);
 echo 'cvcourse = ' . get_entity($cvcourseguid)->title;
 echo 'cvmenu = ' . $cvmenu->name;
 echo 'indent: '.$indent;
-exit;
+//exit;
 ?>
