@@ -1,32 +1,4 @@
-<script>  //quick and dirty script to persist the tree menu between page refreshes...should probably think about a better way to do this...maybe through ajax
-    window.onload=function(){
-        var treemenu = document.getElementsByClassName("cvmenuitem");
-        var current=document.getElementsByClassName("cvcurrent")[0];
-        
-        var currentposition = current.id;
-        var currentindent = current.name;
-       // var stuff="length of treemenu: "+treemenu.length+"\ncurrent: "+current+"<br>";
-        for (i = currentposition; i >=0; i--) 
-        {
-            //stuff+=treemenu[i].name+" - "+treemenu[i].id+"<br>";
-            //treemenu[i].innerHTML += "**"+treemenu[i].id;
-//            treemenu[i].checked=true;
-            if (treemenu[i].checked==false&& treemenu[i].name<currentindent) 
-            {
-                treemenu[i].checked=true;
-                currentindent--;
-            }
-           
-            if (currentindent==0) 
-            {
-                break;
-            }
-        }
-    current.checked=true;
-//var debug = document.getElementById("debug");
-        //debug.innerHTML += ' Debug Stuff<br>' + stuff;
-        }
-</script>
+
 
 <?php
 //pull in any needed vars
@@ -73,16 +45,15 @@ foreach ($groupsmember as $cohort)
         $name = $menuitem->name;
         $id1 = $count; //$menuitem->menuorder;
         $count++;
-        $class2 = "";
+
         $indent = $menuitem->indent;
-        if ($menuitem->guid == $cvmenuguid)
-        {
-            $class2 = " cvcurrent";  //setting the current menu item
-        }
+        
+            $class2 = "cvinsert"; 
+  
         if ($menuitem->menutype == "folder")
         {
             echo "<li>";
-                echo "<input type ='checkbox' abc ='m' name='$indent' class ='cvmenuitem $class2' id ='$id1' />";
+                echo "<input type ='checkbox'  name='$indent' class ='cvmenuitem'  />";
                     echo "<label>";
                         echo "<a href='" . elgg_get_site_url() . "courseview/contentpane/" . $cvcohortguid . "/" . $menuitem->guid . "'> " . $name . "</a>";
                     echo "</label>";
@@ -90,7 +61,9 @@ foreach ($groupsmember as $cohort)
         //otherwise, let's just create a link to the contentpane and pass the guid of the menu object...the css class indent is also added here
         else
         {
-            echo elgg_echo("<li><a abc ='m' name='$indent' class = 'cvmenuitem $class2 indent' id ='$id1' href ='" . elgg_get_site_url() . "courseview/contentpane/" . $cvcohortguid . "/" . $menuitem->guid . "' >" . $name . "</a></li>");
+            echo elgg_echo("<li>");
+                  echo "<input type ='checkbox'  name='$indent' class ='cvmenuitem $class2'  />";
+                echo "<a  name='$indent' class = 'cvmenuitem $class2 indent' href ='" . elgg_get_site_url() . "courseview/contentpane/" . $cvcohortguid . "/" . $menuitem->guid . "' >" . $name . "</a></li>";
         }
     }
     // echo '<br>' . $abc;

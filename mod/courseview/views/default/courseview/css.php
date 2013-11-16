@@ -54,6 +54,9 @@ position: absolute;
 opacity: 0;
 }
 
+.css-treeview input.cvinsert{
+opacity: 1;
+}
 .css-treeview
 {
 font: normal 11px "Segoe UI", Arial, Sans-serif;
@@ -239,6 +242,8 @@ li  input[type=checkbox]:checked  ~ div {
 display: block;
 /*background-color:yellow;*/
 }
+
+
 
 .cvcurrent {
 font-style: italic;
