@@ -1,5 +1,16 @@
 <?php
-
+//$validplugins= unserialize(elgg_get_plugin_setting('availableplugins', 'courseview')); 
+//if (array_key_exists("blog",$validplugins))
+//{
+//    echo 'yep';
+//} 
+//else
+//{
+//    echo 'nope';
+//}
+//var_dump ($validplugins);
+//echo cv_is_valid_plugin ('blog');
+//exit;
 /*
  * Rich Test stuff
  */
@@ -42,8 +53,10 @@ switch ($menutype)
     default:
         echo elgg_echo("<BR><BR>WELCOME TO COURSEVIEW");
         break;
+   
 }
  
+echo "<p id = 'debug'></p>";
  
  
  

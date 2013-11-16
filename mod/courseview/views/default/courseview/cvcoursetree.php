@@ -24,15 +24,15 @@ $menu = elgg_get_entities_from_relationship(array
 
 echo "<div class='cvminiview'>";
 echo elgg_echo ('<div class ="css-treeview">');
-  foreach ($menu as $temp)
+  foreach ($menu as $menuitem)
 {
     //If this menu item should be indented from the previous one, add a <ul> tag to start a new unordered list
-    if ($temp->indent==='+')
+    if ($menuitem->indent==='+')
     {
         echo elgg_echo('<ul>');
     }
     //if this menu item should be outdented, close off our unordered list and list item
-    if ($temp->indent==='-')
+    if ($menuitem->indent==='-')
     {
         echo elgg_echo('
             </ul>
@@ -41,21 +41,21 @@ echo elgg_echo ('<div class ="css-treeview">');
     }
     //if the menu item is a folder type, add a checkbox which the css will massage into the collapsing tree
     $name = '';
-    if ($temp->guid==$cvmenu)
+    if ($menuitem->guid==$cvmenu)
     {
         $name="* ";  //currently I'm just adding a * to the active module but eventually I should use it to force the active module folder to default to open
     }
-    $name = $name.$temp->name;
+    $name = $name.$menuitem->name;
     //$name .= '--'.$temp->menuorder;
-    if ($temp->menutype=="folder")
+    if ($menuitem->menutype=="folder")
     {
          echo elgg_echo("<ul>
-           <li><input type ='checkbox'/><label><a href='".elgg_get_site_url()."courseview/contentpane/".$cvcohort."/".$temp->guid."'> ".$name."</a></label>");
+           <li><input type ='checkbox'/><label><a href='".elgg_get_site_url()."courseview/contentpane/".$cvcohort."/".$menuitem->guid."'> ".$name."</a></label>");
     }
     //otherwise, let's just create a link to the contentpane and pass the guid of the menu object...the css class indent is also added here
  else
     {
-        echo elgg_echo("<li><a class = 'indent' href ='".  elgg_get_site_url()."courseview/contentpane/".$cvcohort."/".$temp->guid."' >".$name."</a></li>");
+        echo elgg_echo("<li><a class = 'indent' href ='".  elgg_get_site_url()."courseview/contentpane/".$cvcohort."/".$menuitem->guid."' >".$name."</a></li>");
     }
 }     
 echo elgg_echo ('</div>')  ;  

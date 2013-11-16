@@ -16,7 +16,7 @@ if (cv_isprof(elgg_get_logged_in_user_entity()))
 $content = elgg_get_entities_from_relationship(array(
     'relationship_guid' => $cvmenuguid,
     'relationship' => 'content'));
-foreach ($content as $temp)
+foreach ($content as $menuitem)
 {
     if (cv_isprof($user))
     {
@@ -24,6 +24,6 @@ foreach ($content as $temp)
         echo elgg_echo('<a class ="downarrowcontainer" href="http://sheridancollege.ca"><div class="downarrow"></div></a>');
         echo elgg_echo('</div>');
     }
-    echo elgg_echo(elgg_view_entity($temp, array(full_view => false)));
+    echo elgg_echo(elgg_view_entity($menuitem, array(full_view => false)));
 }
 ?>

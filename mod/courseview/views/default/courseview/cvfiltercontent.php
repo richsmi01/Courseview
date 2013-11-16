@@ -47,7 +47,7 @@ echo elgg_view('input/submit', array(
 if ($createbutton != '')  //if there is a currently filtered plugin type, give the user the option to create content
 {
     echo elgg_view('output/url', array(
-        'text' => 'Create a ' . $filter . ' posting',
+        'text' => 'Create a ' . $availableplugins[$filter] . ' posting',
         'href' => $createbutton));
 }
 echo '</form><br/>';

@@ -63,6 +63,13 @@ function cv_get_cohorts_by_courseguid($courseguid)
     return $value;
 }
 
+function cv_is_valid_plugin( $arg1)
+{
+    $validplugins= unserialize(elgg_get_plugin_setting('availableplugins', 'courseview')); 
+    return (array_key_exists($arg1,$validplugins));  
+}
+
+
 //    echo elgg_entity_exists(elgg_get_plugin_setting('profsgroup','courseview'));
 //    //echo get_entity($profsgroup)->isMember($user);
 //    if(get_entity($profsgroup)->isMember($user))
@@ -179,5 +186,7 @@ function courseview_listplugins()
 //echo $returnvalue;
     return $returnvalue;
 }
+
+
 
 ?>

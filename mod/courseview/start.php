@@ -7,21 +7,26 @@ elgg_register_event_handler('init', 'system', 'courseviewInit'); //call coursevi
 
 function courseviewInit()
 {
-    elgg_extend_view('css/elgg', 'courseview/css', 1000);  //set up our link to css rulesets
+    //set up our link to css rulesets
+    elgg_extend_view('css/elgg', 'courseview/css', 1000);  
+    
     //register menu item to switch to CourseView
-    //instead of calling an url and handling in the switch statement, use an action.
-    //::MATT:  1.  I can't figure out the action tokens business here...help!
-    //::TODO:  Ask Matt about the redirect in togglecourseview.php == until then, keep doing it the old way by passing it to the switch
-    //$item = new ElggMenuItem('courseview', 'CourseView', 'courseview/main');
     $item = new ElggMenuItem('courseview', 'CourseView', elgg_add_action_tokens_to_url('action/toggle')); // then add an action at action/courseview/toggle
     elgg_register_menu_item('site', $item);
 
     //this allows us to hijack the sidebar.  Each time the sidebar is about to be rendered, this hook fires
     elgg_register_plugin_hook_handler('view', 'page/elements/sidebar', 'cvsidebarintercept');
+    
     //this allows us to intercept each time elgg calls a forward.  We will use this to be able to return to the coursview tool after adding a relationship
     //to added content
     elgg_register_plugin_hook_handler('forward', 'all', 'cvforwardintercept');
-
+    
+    //this allows us too add a menu choice to add an entity to a cohort
+    elgg_register_plugin_hook_handler ('register','menu:entity','cventitymenu');
+    
+    //registering my ajax-based tree control for adding content from the wild to a cohort
+    elgg_register_ajax_view('ajaxaddtocohort');
+    
     //register page event handler
     elgg_register_page_handler('courseview', 'courseviewPageHandler');
     //elgg_register_event_handler('pagesetup', 'system','interceptpagesetup');  //likely won't need this
@@ -122,8 +127,10 @@ function cvinterceptcreate($event, $type, $object)
 {
     $cvmenuguid = ElggSession::offsetGet('cvmenuguid'); //need to get this from the session since I'm no longer on a courseview page
     $cvcohortguid = ElggSession::offsetGet('cvcohortguid');
-    if ($object->getSubtype() != 'cvmenu' && ElggSession::offsetGet('courseview'))//::TODO:need to eventually change this to only add to subtype of approved plugins
-    {
+    $validplugins= unserialize(elgg_get_plugin_setting('availableplugins', 'courseview')); 
+    //check if the courseview flag is on and the object is one of the selected plugins available to courseview from the settings page.
+    if (ElggSession::offsetGet('courseview') && is_valid_plugin($object->getSubtype()))
+    { 
         $relationship = 'content' ;
         
         if (get_entity($cvmenuguid)->menutype !='professor') {
@@ -150,6 +157,26 @@ function cvforwardintercept($hook, $type, $return, $params)
         ElggSession::offsetUnset('cvredirect');
     }
     return $return;
+}
+
+function cventitymenu ($hook, $type, $return, $params)
+{
+//    var_dump ($return);
+//    var_dump ($params);
+//    exit;
+    //$validplugins= unserialize(elgg_get_plugin_setting('availableplugins', 'courseview')); 
+    if (is_valid_plugin($params['entity']->getSubtype()))
+    {
+        $item = new ElggMenuItem('cvpin','add to Cohort', '#');
+        $return [] = $item;
+    }
+     return $return;
+}
+
+function is_valid_plugin( $arg1)
+{
+    $validplugins= unserialize(elgg_get_plugin_setting('availableplugins', 'courseview')); 
+    return (array_key_exists($arg1,$validplugins));  
 }
 
 //function cvinterceptpagesetup($event, $type, $object)  //this really isn't need anymore is it?

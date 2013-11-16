@@ -22,10 +22,10 @@ $approvedlist =array();
 
 foreach ($plugins as $plugin)
 {
-    $temp = 'check' . $plugin;
+    $menuitem = 'check' . $plugin;
     echo '<div class=cvsettingsplugins>';
-    $checkoptions =array('name' => "params[$temp]", 'value' => 1);  //sends a 0 if the checkbox isn't checked
-    if ($vars['entity']->$temp ==1)
+    $checkoptions =array('name' => "params[$menuitem]", 'value' => 1);  //sends a 0 if the checkbox isn't checked
+    if ($vars['entity']->$menuitem ==1)
     {
         $checkoptions['checked'] = true;
     }
@@ -43,7 +43,7 @@ foreach ($plugins as $plugin)
         'name' => 'params[' . $pluginname . ']',
         'value' => $vars['entity']->$pluginname));
     echo'</div>';
-    if ($vars['entity']->$temp ==1)  
+    if ($vars['entity']->$menuitem ==1)  
     {
         $pluginaddurl[$plugin]= $vars['entity']->$pluginname;
         $approvedlist [$plugin]=$vars['entity']->$friendly;

@@ -10,9 +10,9 @@ $relationship = 'content' . $cvcohortguid;
 //echo elgg_echo("Relationship GUID:  " . $cvmenuguid);
 //
 $content = cv_get_content_by_menu_item($filter, $cvmenuguid, $relationship);
-foreach ($content as $temp)
+foreach ($content as $menuitem)
 {
 //::TODO:  Think about replacing the whole "professor" with "professor"  That way, we have three module types:  Folder, Professor, and Student
-    echo elgg_echo(elgg_view_entity($temp, array(full_view => false)));
+    echo elgg_echo(elgg_view_entity($menuitem, array(full_view => false)));
 }
 ?>
