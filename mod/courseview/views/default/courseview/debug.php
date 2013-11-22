@@ -7,8 +7,10 @@
 //::TODO: Instead of having cvcourse = true and cvcohort = true...change it to cvObject = 'course' or 'cohort' or 'content' etc
  elgg_load_library('elgg:courseview');
 
-echo elgg_echo("Rich's Testing Page<br>");
-
+echo elgg_echo("<br>Rich's Testing Page<br>");
+echo'###'.$page[0];
+echo elgg_echo($vars['page']);
+echo '<br><br>';
 //get the currently logged in user entity
 $user = elgg_get_logged_in_user_entity();
 $aiko = get_user_by_username("Aiko");

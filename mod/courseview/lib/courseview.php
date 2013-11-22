@@ -21,6 +21,23 @@ function cv_get_menu_items_for_cohort($cvcohortguid)
     return $menu;
 }
 
+function cv_get_student_menu_items_by_cohort($cvcohortguid)
+{
+    $menu = elgg_get_entities_from_relationship(array
+        ('relationship_guid' => get_entity($cvcohortguid)->container_guid,
+        'relationship' => 'menu',
+        'type' => 'object',
+        'subtype' => 'cvmenu',
+        'order_by_metadata' => array('name' => 'menuorder', 'direction' => 'ASC', 'as' => 'integer'),
+        'limit' => 1000,
+        'metadata_names' => array('menutype'),
+        'metadata_values' => array('student'),
+            )
+    );
+    return $menu;
+}
+
+
 function cv_get_users_cohorts()
 {
     $userguid = elgg_get_logged_in_user_guid();

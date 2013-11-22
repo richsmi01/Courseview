@@ -27,6 +27,10 @@ function courseviewInit()
     //registering my ajax-based tree control for adding content from the wild to a cohort
     elgg_register_ajax_view('ajaxaddtocohort');
     
+    
+    elgg_extend_view('page/elements/footer', 'courseview/addcontenttocohort');
+    
+    
     //register page event handler
     elgg_register_page_handler('courseview', 'courseviewPageHandler');
     //elgg_register_event_handler('pagesetup', 'system','interceptpagesetup');  //likely won't need this
@@ -40,6 +44,7 @@ function courseviewInit()
     //this is where I will put all of the action registrations for the forms
     //::TODO:  Get Matt to better explain how actions/forms work 
     elgg_register_action("createcourse", $base_path . '/actions/courseview/createcourse.php');
+    elgg_register_action("cvaddtocohorttreeview", $base_path . '/actions/courseview/cvaddtocohorts.php');
     elgg_register_action("cveditacourse", $base_path . '/actions/courseview/cveditacourse.php');
     elgg_register_action("editmenuitem", $base_path . '/actions/courseview/editmenuitem.php');
     elgg_register_action("deleteacohort", $base_path . '/actions/courseview/deleteacohort.php');

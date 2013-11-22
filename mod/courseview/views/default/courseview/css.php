@@ -249,6 +249,13 @@ display: block;
 font-style: italic;
 }
 
+.cvtreeaddtocohort {
+
+//color :red;
+border: 1px solid black;
+padding:10px;
+}
+
 /*        #editmenuitem, #addmenuitem{
 display:none;
 }
@@ -259,3 +266,9 @@ display:none;
 display:block;
 
 }*/
+
+#addToCohort
+{
+visibility:hidden;
+height:0px;
+}

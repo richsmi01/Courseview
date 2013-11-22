@@ -160,3 +160,7 @@ div.customize_css_example_rule {
             }
             }
 
+.cvtreeaddtocohort {
+
+color :red;
+}

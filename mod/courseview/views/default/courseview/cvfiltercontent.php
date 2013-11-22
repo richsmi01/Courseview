@@ -18,7 +18,19 @@ $createbutton = str_replace('{user_guid}', elgg_get_logged_in_user_guid(), $crea
 //create and populate a pulldown menu using the list of authorized plugins from the setup screen   
 $availableplugins = unserialize(elgg_get_plugin_setting('availableplugins', 'courseview'));  //pull down list of authorized plugin types
 $availableplugins['all'] = 'All';  //add the ability for the student to select all content
-//this is just hardcoded for now but will eventually pull all cohorts that this user belongs to.
+//
+//foreach ($availableplugins as $value)
+//{
+//    if ($value=='')
+//    {
+//        echo $value.'x';
+//        unset_config($value);
+//    }
+  
+//}
+//
+//
+unset ($availableplugins[array_search('',$availableplugins)]);
 
 $availablecohorts = cv_get_cohorts_by_courseguid($courseguid);
 

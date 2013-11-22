@@ -12,9 +12,16 @@ elgg_load_library('elgg:courseview');
 //get  a list of the cohorts that the logged in user belongs to
 $groupsmember = cv_get_users_cohorts();
 
-echo '<h3>CourseView</h3><br>';
+
+  echo elgg_echo('<div class ="cvtreeaddtocohort">');
+  echo 'zzz';
+ echo elgg_view('input/checkboxes', array('name' => 'features', 'value'=>'rich')) ;
+ echo '<br>';
 $count=0;
+$rscount=0;
 //loop through each cohort and build the tree menu
+echo 'object guid';
+echo "<input type ='input'  name='objectguid'   />";
 foreach ($groupsmember as $cohort)
 {
     $cvcohortguid = $cohort->guid;
@@ -45,7 +52,7 @@ foreach ($groupsmember as $cohort)
         $name = $menuitem->name;
         $id1 = $count; //$menuitem->menuorder;
         $count++;
-
+//        echo 'COUNT: '+$count+"!!!<br>";
         $indent = $menuitem->indent;
         
             $class2 = "cvinsert"; 
@@ -53,21 +60,38 @@ foreach ($groupsmember as $cohort)
         if ($menuitem->menutype == "folder")
         {
             echo "<li>";
-                echo "<input type ='checkbox'  name='$indent' class ='cvmenuitem'  />";
+                echo "<input type ='checkbox'  name='$indent' class ='cvmenuitem'   />";
                     echo "<label>";
-                        echo "<a href='" . elgg_get_site_url() . "courseview/contentpane/" . $cvcohortguid . "/" . $menuitem->guid . "'> " . $name . "</a>";
+                        echo "<span href='" . elgg_get_site_url() . "courseview/contentpane/" . $cvcohortguid . "/" . $menuitem->guid . "'> " . $name . "</span>";
                     echo "</label>";
         }
         //otherwise, let's just create a link to the contentpane and pass the guid of the menu object...the css class indent is also added here
+        elseif ($menuitem->menutype=='professor')
+        {
+            echo "<span class ='indent'>$name.</span>";
+        }
+        
         else
         {
+            $value='rs'.$menuitem->guid;
+            //$value = "rs".$rscount;
+            echo $value;
+            $rscount+=1;
+            //echo $value;
             echo elgg_echo("<li>");
-                  echo "<input type ='checkbox'  name='$indent' class ='cvmenuitem $class2'  />";
-                echo "<a  name='$indent' class = 'cvmenuitem $class2 indent' href ='" . elgg_get_site_url() . "courseview/contentpane/" . $cvcohortguid . "/" . $menuitem->guid . "' >" . $name . "</a></li>";
+                  echo "<input type ='checkbox' name='check [ ]' value ='$value' class ='cvmenuitem $class2 '  />";  
+                echo "<p  name='$indent' class = 'cvmenuitem $class2  indent' href ='" . elgg_get_site_url() . "courseview/contentpane/" . $cvcohortguid . "/" . $menuitem->guid . "' >" . $name . "</p></li>";
+                  echo $value;
+                
         }
     }
     // echo '<br>' . $abc;
     echo elgg_echo('</div>');
 }
 echo '<br>';
+
+echo elgg_view('input/submit', array(
+    'value' => elgg_echo('Add this item to the modules checked above')));
+  echo '</div>';
+
 ?>

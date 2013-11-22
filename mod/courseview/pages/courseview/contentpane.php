@@ -2,7 +2,7 @@
 
 $content = elgg_view('courseview/contentpane');
 //$content .= elgg_view('courseview/debug');
-$content .= elgg_view('courseview/treeview');
+$content .= elgg_view_form('treeview');
  
 $vars = array('content' => $content,);
 $body = elgg_view_layout('one_sidebar', $vars);
