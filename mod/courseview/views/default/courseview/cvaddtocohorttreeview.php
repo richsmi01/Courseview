@@ -1,4 +1,10 @@
 
+<!--move our link to just above the save button-->
+<script>
+    $(document).ready (function () {
+        $(".elgg-form input[type='submit']:last-of-type").before($("#add_entity_to_cohrot_menus"));
+    });
+</script>
 
 <?php
 //pull in any needed vars
@@ -12,16 +18,15 @@ elgg_load_library('elgg:courseview');
 //get  a list of the cohorts that the logged in user belongs to
 $groupsmember = cv_get_users_cohorts();
 
-
-  echo elgg_echo('<div class ="cvtreeaddtocohort">');
-  echo 'zzz';
- echo elgg_view('input/checkboxes', array('name' => 'features', 'value'=>'rich')) ;
+ 
+ echo ('<div class ="cvtreeaddtocohort">');
  echo '<br>';
 $count=0;
 $rscount=0;
-//loop through each cohort and build the tree menu
+//::TODO:  for now, I'm just asking for the object guid...I need to get it from the context of the transaction
 echo 'object guid';
 echo "<input type ='input'  name='objectguid'   />";
+//loop through each cohort and build the tree menu
 foreach ($groupsmember as $cohort)
 {
     $cvcohortguid = $cohort->guid;
@@ -29,7 +34,7 @@ foreach ($groupsmember as $cohort)
 
     //Here we are building the html of the treeview control and adding the correct css classes so that my css
     //can turn it into a tree that can be manipulated by the user 
-    echo elgg_echo('<div class ="css-treeview">');
+    echo ('<div class ="css-treeview">');
     $indentlevel = 0;
 
     //now, loop through each menu item (by menusort order)
@@ -38,12 +43,12 @@ foreach ($groupsmember as $cohort)
         //If this menu item should be indented from the previous one, add a <ul> tag to start a new unordered list
         if ($menuitem->indent > $indentlevel)
         {
-            echo elgg_echo('<ul>');
+            echo('<ul>');
         }
         //if this menu item should be outdented, close off our list item and unorderedlist item
         else if ($menuitem->indent < $indentlevel)
         {
-            echo elgg_echo('</li> </ul>');
+            echo ('</li> </ul>');
         }
         //now we set indent level to the current menu item indent level so that we can check against it on the next iteration
         $indentlevel = $menuitem->indent;
@@ -55,14 +60,14 @@ foreach ($groupsmember as $cohort)
 //        echo 'COUNT: '+$count+"!!!<br>";
         $indent = $menuitem->indent;
         
-            $class2 = "cvinsert"; 
+        $class2 = "cvinsert"; 
   
         if ($menuitem->menutype == "folder")
         {
             echo "<li>";
                 echo "<input type ='checkbox'  name='$indent' class ='cvmenuitem'   />";
                     echo "<label>";
-                        echo "<span href='" . elgg_get_site_url() . "courseview/contentpane/" . $cvcohortguid . "/" . $menuitem->guid . "'> " . $name . "</span>";
+                        echo "<a href='" . elgg_get_site_url() . "courseview/contentpane/" . $cvcohortguid . "/" . $menuitem->guid . "'> " . $name . "</a>";
                     echo "</label>";
         }
         //otherwise, let's just create a link to the contentpane and pass the guid of the menu object...the css class indent is also added here
@@ -78,20 +83,22 @@ foreach ($groupsmember as $cohort)
             echo $value;
             $rscount+=1;
             //echo $value;
-            echo elgg_echo("<li>");
-                  echo "<input type ='checkbox' name='check [ ]' value ='$value' class ='cvmenuitem $class2 '  />";  
-                echo "<p  name='$indent' class = 'cvmenuitem $class2  indent' href ='" . elgg_get_site_url() . "courseview/contentpane/" . $cvcohortguid . "/" . $menuitem->guid . "' >" . $name . "</p></li>";
+            echo ("<li>");
+
+//                  echo "<input type ='checkbox' name='check[]' value ='$value' class ='$class2 '  />";  
+            echo elgg_view('input/checkbox', array('name' => 'test[]', 'value'=>"$value", 'class' => 'cvinsert')) ;
+                echo "<a  name='$indent' class = 'cvmenuitem $class2  indent' href ='" . elgg_get_site_url() . "courseview/contentpane/" . $cvcohortguid . "/" . $menuitem->guid . "' >" . $name . "</a></li>";
                   echo $value;
                 
         }
     }
     // echo '<br>' . $abc;
-    echo elgg_echo('</div>');
+    echo ('</div>');
 }
 echo '<br>';
 
-echo elgg_view('input/submit', array(
-    'value' => elgg_echo('Add this item to the modules checked above')));
+//echo elgg_view('input/submit', array(
+//    'value' => elgg_echo('Add this item to the modules checked above')));
   echo '</div>';
 
 ?>

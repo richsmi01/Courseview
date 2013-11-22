@@ -11,13 +11,13 @@ function courseviewInit()
     elgg_extend_view('css/elgg', 'courseview/css', 1000);  
     
     //register menu item to switch to CourseView
-    $item = new ElggMenuItem('courseview', 'CourseView', elgg_add_action_tokens_to_url('action/toggle')); // then add an action at action/courseview/toggle
+    $item = new ElggMenuItem('courseview', 'CourseView', elgg_add_action_tokens_to_url('action/toggle'));
     elgg_register_menu_item('site', $item);
 
-    //this allows us to hijack the sidebar.  Each time the sidebar is about to be rendered, this hook fires
+    // allows us to hijack the sidebar.  Each time the sidebar is about to be rendered, this hook fires
     elgg_register_plugin_hook_handler('view', 'page/elements/sidebar', 'cvsidebarintercept');
     
-    //this allows us to intercept each time elgg calls a forward.  We will use this to be able to return to the coursview tool after adding a relationship
+    // allows us to intercept each time elgg calls a forward.  We will use this to be able to return to the coursview tool after adding a relationship
     //to added content
     elgg_register_plugin_hook_handler('forward', 'all', 'cvforwardintercept');
     
@@ -26,16 +26,15 @@ function courseviewInit()
     
     //registering my ajax-based tree control for adding content from the wild to a cohort
     elgg_register_ajax_view('ajaxaddtocohort');
-    
-    
-    elgg_extend_view('page/elements/footer', 'courseview/addcontenttocohort');
-    
+      
+    elgg_extend_view('input/form', 'courseview/addcontenttocohort',250);
     
     //register page event handler
     elgg_register_page_handler('courseview', 'courseviewPageHandler');
     //elgg_register_event_handler('pagesetup', 'system','interceptpagesetup');  //likely won't need this
     //this is registering an event handler to call my interceptcreate method whenever an object is created.
     elgg_register_event_handler('create', 'object', 'cvinterceptcreate');
+    elgg_register_event_handler('update', 'object', 'cvinterceptupdate');
 
     elgg_register_library('elgg:courseview', elgg_get_plugins_path() . 'courseview/lib/courseview.php');
     
@@ -120,10 +119,7 @@ function cvsidebarintercept($hook, $entity_type, $returnvalue, $params)
     {
         $temp = $returnvalue;
         $returnvalue = elgg_view('courseview/hijacksidebar').$temp;
-    } else  //this should be an else if that checks if user is currently enrolled in any cohorts -- need to figure out how to do this
-    {
-        $returnvalue.= '<br/>add to courseview'; //::TODO:  This is where I need to put the code for Dr Dron's idea
-    }
+    } 
     return $returnvalue;
 }
 
@@ -151,6 +147,24 @@ function cvinterceptcreate($event, $type, $object)
         ElggSession::offsetSet('cvredirect', $cvredirect);
         //::TODO:  Need to understand the whole forward intercept thing better.
     }
+}
+
+function cvinterceptupdate($event, $type, $object)
+{
+    $cvmenuguid = ElggSession::offsetGet('cvmenuguid'); //need to get this from the session since I'm no longer on a courseview page
+    $cvcohortguid = ElggSession::offsetGet('cvcohortguid');
+    $validplugins= unserialize(elgg_get_plugin_setting('availableplugins', 'courseview')); 
+    var_dump ($event);
+     var_dump ($type);
+      var_dump ($object);
+     echo 'Did this work?'. get_input('objectguid');
+     echo'Object guid:  '.$object->guid;
+      exit;
+    
+        $rootdomain = elgg_get_site_url();
+        $cvredirect = $rootdomain . 'courseview/contentpane/' . $cvcohortguid . '/' . $cvmenu;
+        ElggSession::offsetSet('cvredirect', $cvredirect);
+
 }
 
 function cvforwardintercept($hook, $type, $return, $params)

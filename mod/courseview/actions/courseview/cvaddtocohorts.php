@@ -8,14 +8,14 @@
 elgg_load_library('elgg:courseview');
 
  $cvcohortguid = ElggSession::offsetGet('cvcohortguid');
-echo get_input('objectguid');
-echo '###'.get_input('rs1');
-echo '<br>###'.get_input('rs2');
-echo 'Cool!<br>';
 
-$invite = $_POST['check'];
-echo '.......'.$invite;
-echo '+++++'.get_input ('check [ ]');
+ 
+$test = get_input ('test');
+//echo $test['key'];
+var_dump ($test);
+
+
+
 $cvobject = get_entity(get_input(objectguid));
 $menuitems = cv_get_student_menu_items_by_cohort ($cvobject->container_guid);
 $count =0;
