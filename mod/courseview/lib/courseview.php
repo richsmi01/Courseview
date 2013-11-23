@@ -86,6 +86,15 @@ function cv_is_valid_plugin( $arg1)
     return (array_key_exists($arg1,$validplugins));  
 }
 
+function cv_debug_to_console( $data ) {
+
+    if ( is_array( $data ) )
+        $output = "<script>console.log( 'Debug Objects: " . implode( ',', $data) . "' );</script>";
+    else
+        $output = "<script>console.log( 'Debug Objects: " . $data . "' );</script>";
+
+    echo $output;
+}
 
 //    echo elgg_entity_exists(elgg_get_plugin_setting('profsgroup','courseview'));
 //    //echo get_entity($profsgroup)->isMember($user);

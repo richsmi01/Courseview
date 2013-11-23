@@ -6,7 +6,12 @@
     });
 </script>
 
+
 <?php
+var_dump($vars['action']);
+$entity = ($vars['entity']);
+echo "...".$entity->guid;
+
 //pull in any needed vars
 $cvcohortguid = ElggSession::offsetGet('cvcohortguid');
 $cvmenuguid = ElggSession::offsetGet('cvmenuguid');
@@ -40,7 +45,16 @@ foreach ($groupsmember as $cohort)
     //now, loop through each menu item (by menusort order)
     foreach ($menuitems as $menuitem)
     {
-        //If this menu item should be indented from the previous one, add a <ul> tag to start a new unordered list
+        
+        $rel = 'content'.$cvcohortguid;     
+        $checkoptions = false;
+        if (check_entity_relationship($menuitem->guid, $rel, $entity->guid)->guid_one>0)
+        {
+            echo'<BR>MATCH!!!';
+             $checkoptions = true;
+        }
+        
+    //If this menu item should be indented from the previous one, add a <ul> tag to start a new unordered list
         if ($menuitem->indent > $indentlevel)
         {
             echo('<ul>');
@@ -84,9 +98,10 @@ foreach ($groupsmember as $cohort)
             $rscount+=1;
             //echo $value;
             echo ("<li>");
+            
 
 //                  echo "<input type ='checkbox' name='check[]' value ='$value' class ='$class2 '  />";  
-            echo elgg_view('input/checkbox', array('name' => 'test[]', 'value'=>"$value", 'class' => 'cvinsert')) ;
+            echo elgg_view('input/checkbox', array('name' => 'test[]', 'value'=>"$value", 'class' => 'cvinsert', 'checked' => $checkoptions )) ;
                 echo "<a  name='$indent' class = 'cvmenuitem $class2  indent' href ='" . elgg_get_site_url() . "courseview/contentpane/" . $cvcohortguid . "/" . $menuitem->guid . "' >" . $name . "</a></li>";
                   echo $value;
                 

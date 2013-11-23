@@ -57,7 +57,8 @@ foreach ($validkeys as $plugin)
     <label  for ="showtree" style="display:inline">Add this content to a CourseView module </label><br><br>
     <div id ='addToCohort'>
     <?php
-        echo elgg_view('courseview/cvaddtocohorttreeview');
+     //echo elgg_view('courseview/debug');
+        echo elgg_view('courseview/cvaddtocohorttreeview',$vars);
         echo '</div>';
         echo '</div>';
     ?>

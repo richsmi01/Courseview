@@ -36,8 +36,15 @@ $options = array
          $menuitems = cv_get_menu_items_for_cohort($cohort->guid);
           foreach ($menuitems as $menuitem)
           {
-            echo "--------------Menu Item:  $menuitem->name --  $menuitem->guid --$menuitem->menutype -- menuorder $menuitem->menuorder --  indentlevel = $menuitem->indent<br>";
+            $test = get_entity_relationships($menuitem->guid);
+              
+              echo "--------------Menu Item:  $menuitem->name --  $menuitem->guid --$menuitem->menutype -- menuorder $menuitem->menuorder --  indentlevel = $menuitem->indent<br>";
             $content = cv_get_content_by_menu_item('all', $menuitem->guid, 'content'.$cohort->guid);
+            foreach($test as $t)
+            {
+                echo 'Relationship  '. $t->relationship."<br>";
+            }
+            
             foreach ($content as $contentitem)
             {
                 echo '------------------Content:'. $contentitem->getSubtype().' --'.$contentitem->title.'--'.$contentitem->guid.'<br>';

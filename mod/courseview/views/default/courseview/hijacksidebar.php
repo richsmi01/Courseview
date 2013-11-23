@@ -70,7 +70,7 @@ foreach ($groupsmember as $cohort)
         $indentlevel = $menuitem->indent;
 
         //setting up attributes to insert into the html tags
-        $name = $menuitem->name;
+        $name = $menuitem->name.'--'.$menuitem->guid;
         $id1 = $count; //$menuitem->menuorder;
         $count++;
         $class2 = "";

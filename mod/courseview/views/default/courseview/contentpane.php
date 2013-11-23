@@ -18,6 +18,9 @@
 //echo elgg_view('output/url', array("text" => "Manage Courses", "href" => "courseview/thiswillmanagecourses", 'class' => 'elgg-button elgg-button-action'));
 
   elgg_load_library('elgg:courseview');
+  
+//  echo elgg_view('courseview/testing'); 
+//  exit;
 $user = elgg_get_logged_in_user_entity();
 $cvmenuguid = ElggSession::offsetGet('cvmenuguid');
 $menuitem = get_entity($cvmenuguid);  //get the menuitem object

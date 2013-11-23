@@ -29,6 +29,7 @@ echo ' <ul>';
         echo elgg_view_form ('deletecourse');
         echo elgg_view_form('addacohort');
         echo elgg_view_form('deleteacohort');
+       
     echo '</div>';
     echo '</li>';
 echo '</ul>';
