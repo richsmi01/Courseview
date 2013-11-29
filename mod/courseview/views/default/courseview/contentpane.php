@@ -19,7 +19,7 @@
 
   elgg_load_library('elgg:courseview');
   
-//  echo elgg_view('courseview/testing'); 
+ // echo elgg_view('courseview/debug'); 
 //  exit;
 $user = elgg_get_logged_in_user_entity();
 $cvmenuguid = ElggSession::offsetGet('cvmenuguid');
@@ -59,7 +59,7 @@ switch ($menutype)
    
 }
  
-echo "<p id = 'debug'></p>";
+//echo "<p id = 'debug'></p>";
  
  
  

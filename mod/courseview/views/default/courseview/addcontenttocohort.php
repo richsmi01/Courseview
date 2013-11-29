@@ -7,9 +7,9 @@ if ( true)
     //::TODO:  Need to write a method that determines whether a user is in any cohorts
 }
 
-var_dump($vars['action']);
+//var_dump($vars['action']);
 $entity = ($vars['entity']);
-echo "...".$entity->guid;
+//echo "...".$entity->guid;
 //var_dump($vars);
 $action = $vars['action'];
 $validplugins = unserialize(elgg_get_plugin_setting('availableplugins', 'courseview'));
@@ -52,7 +52,7 @@ foreach ($validkeys as $plugin)
 </script>
 
 
-<div id='add_entity_to_cohrot_menus'>
+<div id='add_entity_to_cohort_menus'>
     <input onclick = "showCVAdd ()" id ="showtree" type ='checkbox' style='display:inline' />
     <label  for ="showtree" style="display:inline">Add this content to a CourseView module </label><br><br>
     <div id ='addToCohort'>

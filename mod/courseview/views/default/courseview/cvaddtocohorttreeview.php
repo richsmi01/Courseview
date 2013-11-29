@@ -2,16 +2,15 @@
 <!--move our link to just above the save button-->
 <script>
     $(document).ready (function () {
-        $(".elgg-form input[type='submit']:last-of-type").before($("#add_entity_to_cohrot_menus"));
+        $(".elgg-form input[type='submit']:last-of-type").before($("#add_entity_to_cohort_menus"));
     });
 </script>
 
 
 <?php
-var_dump($vars['action']);
+//var_dump($vars['action']);
 $entity = ($vars['entity']);
-echo "...".$entity->guid;
-
+//echo "...".$entity->guid;
 //pull in any needed vars
 $cvcohortguid = ElggSession::offsetGet('cvcohortguid');
 $cvmenuguid = ElggSession::offsetGet('cvmenuguid');
@@ -23,20 +22,21 @@ elgg_load_library('elgg:courseview');
 //get  a list of the cohorts that the logged in user belongs to
 $groupsmember = cv_get_users_cohorts();
 
- 
- echo ('<div class ="cvtreeaddtocohort">');
- echo '<br>';
-$count=0;
-$rscount=0;
+
+echo ('<div class ="cvtreeaddtocohort">');
+echo '<br>';
+$count = 0;
+$rscount = 0;
 //::TODO:  for now, I'm just asking for the object guid...I need to get it from the context of the transaction
-echo 'object guid';
-echo "<input type ='input'  name='objectguid'   />";
+//echo 'object guid';
+//echo "<input type ='input'  name='objectguid'   />";
 //loop through each cohort and build the tree menu
 foreach ($groupsmember as $cohort)
 {
     $cvcohortguid = $cohort->guid;
     $menuitems = cv_get_menu_items_for_cohort($cvcohortguid);
 
+    //$checkedmodules =array();
     //Here we are building the html of the treeview control and adding the correct css classes so that my css
     //can turn it into a tree that can be manipulated by the user 
     echo ('<div class ="css-treeview">');
@@ -45,16 +45,15 @@ foreach ($groupsmember as $cohort)
     //now, loop through each menu item (by menusort order)
     foreach ($menuitems as $menuitem)
     {
-        
-        $rel = 'content'.$cvcohortguid;     
+
+        $rel = 'content' . $cvcohortguid;
         $checkoptions = false;
-        if (check_entity_relationship($menuitem->guid, $rel, $entity->guid)->guid_one>0)
+        if (check_entity_relationship($menuitem->guid, $rel, $entity->guid)->guid_one > 0)
         {
-            echo'<BR>MATCH!!!';
-             $checkoptions = true;
+            $checkoptions = true;
         }
-        
-    //If this menu item should be indented from the previous one, add a <ul> tag to start a new unordered list
+
+        //If this menu item should be indented from the previous one, add a <ul> tag to start a new unordered list
         if ($menuitem->indent > $indentlevel)
         {
             echo('<ul>');
@@ -71,49 +70,33 @@ foreach ($groupsmember as $cohort)
         $name = $menuitem->name;
         $id1 = $count; //$menuitem->menuorder;
         $count++;
-//        echo 'COUNT: '+$count+"!!!<br>";
         $indent = $menuitem->indent;
-        
-        $class2 = "cvinsert"; 
-  
+
+        $class2 = "cvinsert";
+
         if ($menuitem->menutype == "folder")
         {
             echo "<li>";
-                echo "<input type ='checkbox'  name='$indent' class ='cvmenuitem'   />";
-                    echo "<label>";
-                        echo "<a href='" . elgg_get_site_url() . "courseview/contentpane/" . $cvcohortguid . "/" . $menuitem->guid . "'> " . $name . "</a>";
-                    echo "</label>";
+            echo "<input type ='checkbox'  name='$indent' class ='cvmenuitem'   />";
+            echo "<label>";
+            echo "<a href='" . elgg_get_site_url() . "courseview/contentpane/" . $cvcohortguid . "/" . $menuitem->guid . "'> " . $name . "</a>";
+            echo "</label>";
         }
         //otherwise, let's just create a link to the contentpane and pass the guid of the menu object...the css class indent is also added here
-        elseif ($menuitem->menutype=='professor')
+        elseif ($menuitem->menutype == 'professor')
         {
             echo "<span class ='indent'>$name.</span>";
-        }
-        
-        else
+        } else
         {
-            $value='rs'.$menuitem->guid;
-            //$value = "rs".$rscount;
-            echo $value;
-            $rscount+=1;
-            //echo $value;
+            $value = $menuitem->guid;
             echo ("<li>");
-            
-
-//                  echo "<input type ='checkbox' name='check[]' value ='$value' class ='$class2 '  />";  
-            echo elgg_view('input/checkbox', array('name' => 'test[]', 'value'=>"$value", 'class' => 'cvinsert', 'checked' => $checkoptions )) ;
-                echo "<a  name='$indent' class = 'cvmenuitem $class2  indent' href ='" . elgg_get_site_url() . "courseview/contentpane/" . $cvcohortguid . "/" . $menuitem->guid . "' >" . $name . "</a></li>";
-                  echo $value;
-                
+            echo elgg_view('input/checkbox', array('name' => 'modules[]', 'value' => '+' . $value, 'class' => 'cvinsert', 'checked' => $checkoptions, 'default' => '-' . $value));
+            echo "<a  name='$indent' class = 'cvmenuitem $class2  indent' href ='" . elgg_get_site_url() . "courseview/contentpane/" . $cvcohortguid . "/" . $menuitem->guid . "' >" . $name . "</a></li>";
         }
     }
-    // echo '<br>' . $abc;
     echo ('</div>');
 }
 echo '<br>';
-
-//echo elgg_view('input/submit', array(
-//    'value' => elgg_echo('Add this item to the modules checked above')));
-  echo '</div>';
+echo '</div>';
 
 ?>

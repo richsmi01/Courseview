@@ -9,6 +9,7 @@
 
 function cv_get_menu_items_for_cohort($cvcohortguid)
 {
+    //echo "<br>Getting menu items from relationship:".get_entity($cvcohortguid)->container_guid.'-- menu --';
     $menu = elgg_get_entities_from_relationship(array
         ('relationship_guid' => get_entity($cvcohortguid)->container_guid,
         'relationship' => 'menu',
@@ -18,6 +19,8 @@ function cv_get_menu_items_for_cohort($cvcohortguid)
         'limit' => 1000,
             )
     );
+    //echo'<br>menu items returned '.  sizeof($menu);
+    //var_dump($menu);
     return $menu;
 }
 
@@ -50,6 +53,7 @@ function cv_get_users_cohorts()
         'relationship_guid' => $userguid,
     );
     $groupsmember = elgg_get_entities_from_relationship($searchcriteria);
+   // var_dump ($groupsmember);
     return $groupsmember;
 }
 

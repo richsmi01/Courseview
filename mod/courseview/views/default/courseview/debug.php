@@ -29,24 +29,30 @@ $options = array
  foreach ($courses as $course)
 {
     echo "Course:  $course->title --  $course->guid <br>";
+    //var_dump($course);
     $cohorts = cv_get_cohorts_by_courseguid ($course->guid);
+    echo "<br>Retrieved ". sizeof($cohorts) ."cohorts.<br>";
     foreach ($cohorts as $cohort)
     {
         echo "-------Cohort:  $cohort->title --  $cohort->guid <br>";
+        //var_dump($cohort);
          $menuitems = cv_get_menu_items_for_cohort($cohort->guid);
+         echo "<br>Retrieved ". sizeof($menuitems) ."menu items.<br>";
           foreach ($menuitems as $menuitem)
           {
             $test = get_entity_relationships($menuitem->guid);
-              
+            //var_dump($menuitem);
               echo "--------------Menu Item:  $menuitem->name --  $menuitem->guid --$menuitem->menutype -- menuorder $menuitem->menuorder --  indentlevel = $menuitem->indent<br>";
             $content = cv_get_content_by_menu_item('all', $menuitem->guid, 'content'.$cohort->guid);
             foreach($test as $t)
             {
+                //var_dump($t);
                 echo 'Relationship  '. $t->relationship."<br>";
             }
             
             foreach ($content as $contentitem)
             {
+               // var_dump($contentitem);
                 echo '------------------Content:'. $contentitem->getSubtype().' --'.$contentitem->title.'--'.$contentitem->guid.'<br>';
             }
             
