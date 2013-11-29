@@ -54,7 +54,7 @@ switch ($menutype)
         break;
     
     default:
-        echo elgg_echo("<BR><BR>WELCOME TO COURSEVIEW");
+        echo elgg_echo("<BR><BR><BR><div id ='cvwelcome' >WELCOME TO COURSEVIEW!</div>");
         break;
    
 }

@@ -11,8 +11,17 @@ function courseviewInit()
     elgg_extend_view('css/elgg', 'courseview/css', 1000);
 
     //register menu item to switch to CourseView
-    $item = new ElggMenuItem('courseview', 'CourseView', elgg_add_action_tokens_to_url('action/toggle'));
+    $status = ElggSession::offsetGet('courseview');
+    $menutext ="CourseView";
+    if ($status)
+    {
+        $menutext="Exit CourseView";
+    }
+    
+    $item = new ElggMenuItem('courseview', $menutext, elgg_add_action_tokens_to_url('action/toggle'));
     elgg_register_menu_item('site', $item);
+    
+
 
     // allows us to hijack the sidebar.  Each time the sidebar is about to be rendered, this hook fires
     elgg_register_plugin_hook_handler('view', 'page/elements/sidebar', 'cvsidebarintercept');
@@ -67,26 +76,27 @@ function courseviewPageHandler($page, $identifier)
     switch ($page[0])  //switching on the first parameter passed through the RESTful url
     {
         case 'main':
-            //::TODO:  This needs to be replaced with an action
-            $status = ElggSession::offsetGet('courseview');
-            //if the courseview session variable was false, toggle it to true and viceversa
-//            if ($status)
+//            //::TODO:  This needs to be replaced with an action
+//            $status = ElggSession::offsetGet('courseview');
+//            //if the courseview session variable was false, toggle it to true and viceversa
+////            if ($status)
+////            {
+////                ElggSession::offsetSet('courseview', false);
+////                forward('http://localhost/elgg/activity');
+////            } 
+////            else
 //            {
-//                ElggSession::offsetSet('courseview', false);
-//                forward('http://localhost/elgg/activity');
-//            } 
-//            else
-            {
-                ElggSession::offsetSet('courseview', true); //set session variable telling elgg that we are in 'masters' mode
-                require "$base_path/courseviewlanding.php"; //load the default courseview welcome page
-            }
-            break;
+//                ElggSession::offsetSet('courseview', true); //set session variable telling elgg that we are in 'masters' mode
+//                require "$base_path/courseviewlanding.php"; //load the default courseview welcome page
+//            }
+//            break;
         case 'contentpane':    //this is the main course content page
             require "$base_path/contentpane.php";
             break;
         case 'courseview':   //this is the landing page when a user first clicks on coursview
             set_input("object_type", 'all');
-            require "$base_path/courseviewlanding.php";
+//            require "$base_path/courseviewlanding.php";
+             require "$base_path/contentpane.php";
             break;
 //        case 'addcourse':
 //            require "$base_path/addcourse.php";

@@ -272,3 +272,9 @@ display:block;
 visibility:hidden;
 height:0px;
 }
+
+#cvwelcome {
+    font-size:300%;
+    text-align: center;
+    font-weight: bold;
+}

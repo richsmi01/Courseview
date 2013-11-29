@@ -52,6 +52,10 @@ foreach ($groupsmember as $cohort)
         {
             $checkoptions = true;
         }
+        if ($cvmenuguid ==$menuitem->guid)
+        {
+            $checkoptions =true;
+        }
 
         //If this menu item should be indented from the previous one, add a <ul> tag to start a new unordered list
         if ($menuitem->indent > $indentlevel)
