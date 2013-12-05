@@ -4,20 +4,22 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
+elgg_load_library('elgg:courseview');
+$cvcohortguid = ElggSession::offsetGet('cvcohortguid');
 $cvmenuitemname = get_input('cvmodulename');
 $cvmenuitem = get_entity(ElggSession::offsetGet('cvmenuguid'));
- echo "menu item indent ".$cvmenuitem->indent;
-echo "TEST:" . get_input('buttonchoice');
- echo "menu item indent ".$cvmenuitem->indent;
-
+ //echo "menu item indent ".$cvmenuitem->indent;
+//echo "TEST:" . get_input('buttonchoice');
+ //echo "menu item indent ".$cvmenuitem->indent;
+$menuitems = cv_get_menu_items_for_cohort ($cvcohortguid);
 switch (get_input('buttonchoice'))
 {
     case 'Indent':
-        echo 'indent has been selected';
+        //echo 'indent has been selected';
        
      
         $cvmenuitem->indent=$cvmenuitem->indent+1;
+        $cvmenuitem->save();
 //        if ($cvmenuitem->indent == '-')
 //        {
 //            $cvmenuitem->indent = '.';
@@ -27,8 +29,9 @@ switch (get_input('buttonchoice'))
 //        }
         break;
     case 'Outdent':
-        echo 'outdent has been selected';
+       // echo 'outdent has been selected';
          $cvmenuitem->indent=$cvmenuitem->indent-1;
+        $cvmenuitem->save();
 //        if ($cvmenuitem->indent == '+')
 //        {
 //            $cvmenuitem->indent = '.';
@@ -39,22 +42,70 @@ switch (get_input('buttonchoice'))
         break;
 
     case 'Move Up':
-        echo 'move up selected';
+        //echo 'move up selected';
+        $trailer;
+        foreach ($menuitems as $menuitem)
+        {
+            if ($menuitem->menuorder == $cvmenuitem->menuorder)
+            {
+                break;
+            }
+            $trailer = $menuitem;
+        }
+        //echo $trailer->name;
+        $trailer->menuorder = $cvmenuitem->menuorder;
+        $cvmenuitem->menuorder=$cvmenuitem->menuorder -1;
+        $cvmenuitem->save();
+        $trailer->save();
         break;    
      case 'Move Down':
-         echo 'move down selected';
-         break;
+         $done=false;
+         $leader;
+        foreach ($menuitems as $menuitem)
+        {
+            $leader =$menuitem;
+            if ($done)
+            {
+                break;
+            }
+            if ($menuitem->menuorder == $cvmenuitem->menuorder)
+            {
+                $done=true;
+            }
+            
+        }
+        //echo $leader->name;
+   
+        $leader->menuorder = $cvmenuitem->menuorder;
+        $cvmenuitem->menuorder=$cvmenuitem->menuorder +1;
+        $cvmenuitem->save();
+        $leader->save();
+        break;    
+        // echo 'move down selected';
+      
 
     case 'Change Name':
-        echo 'Change Name has been selected';
+       // echo 'Change Name has been selected';
         $cvmenuitem->name = $cvmenuitemname;
+        $cvmenuitem->save();
         break;
+    
+    case 'Delete Menu Item':
+        //echo"delelting menu item: ".$cvmenuitem->id;
+        
+        echo "menu items: ".sizeof($menuitems)."<br>";
+        //var_dump($menuitems);
+        for ($a=$cvmenuitem->menuorder; $a<sizeof($menuitems); $a++)
+        {
+            $menuitems[$a]->menuorder = $menuitems[$a]->menuorder -1;
+        }
+        $cvmenuitem->delete();
 }
 
-$cvmenuitem->save();
+//$cvmenuitem->save();
 //echo $cvmenuitemname;
 
-exit;
+//exit;
 
 
 

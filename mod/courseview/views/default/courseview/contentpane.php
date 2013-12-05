@@ -30,18 +30,19 @@ $base_path=dirname(__FILE__); //gives a relative path to the directory where thi
 //require (elgg_get_plugins_path() . 'courseview/lib/courseview.php'); //various methods 
 //::TODO:  Is it better to require this or use somthing like this
  
-echo '<h1>'.$menuitem->name.'</h1><br>';
+
 //if the user is a prof, include the ability to edit the course
 if ((cv_isprof($user)))
 {
-    echo elgg_view('courseview/profeditcontentview');  //don't use require when  a view will do...
+    echo elgg_view('courseview/profeditcontentview');  
 }
+echo '<h1>'.$menuitem->name.'</h1><br>';
 //depending on what type of module is selected, load the correct view for folder, professor or student
 switch ($menutype)
 {
     case "folder":
         echo elgg_echo("<br><p id = 'cvfolderdescription'>" . $menuitem->name."</p>");
-        echo elgg_echo("<br>Description: " . $menuitem->description);
+   //     echo elgg_echo("<br>Description: " . $menuitem->description);
         break;
 //::TODO:  CHANGE THESE REQUIRES INTO ELGG_VIEW
     case "professor":

@@ -7,7 +7,16 @@ elgg_register_event_handler('init', 'system', 'courseviewInit'); //call coursevi
 
 function courseviewInit()
 {
-    //set up our link to css rulesets
+ //   $debug_path = elgg_get_plugins_path() . 'courseview/';
+//  echo $debug_path.'ChromePhp.php';
+   //include $debug_path.'ChromePhp.php';
+//ChromePhp::log('Hello console!');
+//ChromePhp::log($_SERVER);
+//ChromePhp::warn('Yay!');
+
+
+
+//set up our link to css rulesets
     elgg_extend_view('css/elgg', 'courseview/css', 1000);
 
     //register menu item to switch to CourseView
@@ -42,7 +51,8 @@ function courseviewInit()
     elgg_register_page_handler('courseview', 'courseviewPageHandler');
     //elgg_register_event_handler('pagesetup', 'system','interceptpagesetup');  //likely won't need this
     //this is registering an event handler to call my interceptcreate method whenever an object is created.
-    elgg_register_event_handler('create', 'object', 'cvinterceptcreate');
+//    elgg_register_event_handler('create', 'object', 'cvinterceptcreate');
+    elgg_register_event_handler('create', 'object', 'cvinterceptupdate');
     elgg_register_event_handler('update', 'object', 'cvinterceptupdate');
 
     elgg_register_library('elgg:courseview', elgg_get_plugins_path() . 'courseview/lib/courseview.php');
@@ -136,28 +146,28 @@ function cvsidebarintercept($hook, $entity_type, $returnvalue, $params)
 //this method intercepts object creations and adds relationships to menu items when appropriate
 function cvinterceptcreate($event, $type, $object)
 {
-    $cvmenuguid = ElggSession::offsetGet('cvmenuguid'); //need to get this from the session since I'm no longer on a courseview page
-    $cvcohortguid = ElggSession::offsetGet('cvcohortguid');
-    $validplugins = unserialize(elgg_get_plugin_setting('availableplugins', 'courseview'));
-    //check if the courseview flag is on and the object is one of the selected plugins available to courseview from the settings page.
-    if (ElggSession::offsetGet('courseview') && is_valid_plugin($object->getSubtype()))
-    {
-        $relationship = 'content';
-
-        if (get_entity($cvmenuguid)->menutype != 'professor')
-        {
-            $relationship.= $cvcohortguid;
-        }
-//        echo 'cvmenuguid:  '.$cvmenuguid.'<br>';
-//        echo 'relationship:  '.$relationship.'<br>';
-//        echo 'new object guid:  '.$object->guid.'<br>';
-
-        add_entity_relationship($cvmenuguid, $relationship, $object->guid);
-        $rootdomain = elgg_get_site_url();
-        $cvredirect = $rootdomain . 'courseview/contentpane/' . $cvcohortguid . '/' . $cvmenu;
-        ElggSession::offsetSet('cvredirect', $cvredirect);
-        //::TODO:  Need to understand the whole forward intercept thing better.
-    }
+//    $cvmenuguid = ElggSession::offsetGet('cvmenuguid'); //need to get this from the session since I'm no longer on a courseview page
+//    $cvcohortguid = ElggSession::offsetGet('cvcohortguid');
+//    $validplugins = unserialize(elgg_get_plugin_setting('availableplugins', 'courseview'));
+//    //check if the courseview flag is on and the object is one of the selected plugins available to courseview from the settings page.
+//    if (ElggSession::offsetGet('courseview') && is_valid_plugin($object->getSubtype()))
+//    {
+//        $relationship = 'content';
+//
+//        if (get_entity($cvmenuguid)->menutype != 'professor')
+//        {
+//            $relationship.= $cvcohortguid;
+//        }
+////        echo 'cvmenuguid:  '.$cvmenuguid.'<br>';
+////        echo 'relationship:  '.$relationship.'<br>';
+////        echo 'new object guid:  '.$object->guid.'<br>';
+//
+//        add_entity_relationship($cvmenuguid, $relationship, $object->guid);
+//        $rootdomain = elgg_get_site_url();
+//        $cvredirect = $rootdomain . 'courseview/contentpane/' . $cvcohortguid . '/' . $cvmenu;
+//        ElggSession::offsetSet('cvredirect', $cvredirect);
+//        //::TODO:  Need to understand the whole forward intercept thing better.
+//    }
 }
 
 function cvinterceptupdate($event, $type, $object)
@@ -170,7 +180,14 @@ function cvinterceptupdate($event, $type, $object)
     foreach ($modules as $module)
     {
         $guid_one = substr($module,1);
-        $relationship = 'content' . $cvcohortguid;
+        
+        //need to check if this is a non-professor type content and change relationship accordingly...
+        $relationship = 'content' ;
+        if (get_entity($cvmenuguid)->menutype != 'professor')
+        {
+            $relationship.= $cvcohortguid;
+        }
+
         $guid_two = $object->guid;
         echo '<br>Module: '.'--'.get_entity($guid_one)->name;
         if (strrchr ('+', $module))  //if the module was checked, then add relationship
@@ -192,9 +209,11 @@ function cvinterceptupdate($event, $type, $object)
             }
         }
     }
- //exit;
+    echo 'Completed<br>';
     $rootdomain = elgg_get_site_url();
-    $cvredirect = $rootdomain . 'courseview/contentpane/' . $cvcohortguid . '/' . $cvmenu;
+    echo '$rootdomain = '.$rootdomain.'<br>';
+    $cvredirect = $rootdomain . 'courseview/contentpane/' . $cvcohortguid . '/' . $cvmenuguid;
+    echo '$cvredirect = '.$cvredirect;
     ElggSession::offsetSet('cvredirect', $cvredirect);
 }
 

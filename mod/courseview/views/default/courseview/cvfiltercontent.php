@@ -3,10 +3,15 @@
 /*
  * This file builds the dropdown filter used to filter content by cohort and content type
  */
-//echo 'cvcoursecontent<br>';
-$courseguid= ElggSession::offsetGet('cvcourseguid');
+//pull in any needed values
+//$cohortFilter =$vars['cohortFilter'];
+
+
+$cvcohortguid= ElggSession::offsetGet('cvcohortguid');  
+$courseguid = get_entity($cvcohortguid)->container_guid;
 $menuguid= ElggSession::offsetGet('cvmenuguid');
 $filter = get_input('filter', 'all'); //the currently selected dropdown list  item  
+//echo '$filter '.$filter;
 //pull down the create strings for the various plugins from the settings page:
 $createString = unserialize(elgg_get_plugin_setting('plugincreatestring', 'courseview'));
 
@@ -18,35 +23,32 @@ $createbutton = str_replace('{user_guid}', elgg_get_logged_in_user_guid(), $crea
 //create and populate a pulldown menu using the list of authorized plugins from the setup screen   
 $availableplugins = unserialize(elgg_get_plugin_setting('availableplugins', 'courseview'));  //pull down list of authorized plugin types
 $availableplugins['all'] = 'All';  //add the ability for the student to select all content
-//
-//foreach ($availableplugins as $value)
-//{
-//    if ($value=='')
-//    {
-//        echo $value.'x';
-//        unset_config($value);
-//    }
-  
-//}
-//
-//
-unset ($availableplugins[array_search('',$availableplugins)]);
+
+//this will remove any 'empty' choices such as is caused by the Page vs PageTop of the wiki plugin
+
+while (array_search("",$availableplugins))
+{
+    unset ($availableplugins[array_search("",$availableplugins)]);
+}
 
 $availablecohorts = cv_get_cohorts_by_courseguid($courseguid);
 
 $dropdownlist= array();
 foreach ($availablecohorts as $availablecohort)
 {
+    $cohort = "Parent course: ".get_entity($availablecohort->guid)->container_guid;
     $dropdownlist [$availablecohort->guid] = $availablecohort->title;
 }
-
+//echo 'cohort filter was '.get_input('cohortfilter').'<br>';
+$cfilter =get_input('cohortfilter', $cvcohortguid); 
+//echo 'cohort filter now is '.$cfilter.'<br>';
 echo '<form method="get" action="' . current_page_url() . '">';
 if (get_entity($menuguid)->menutype=='student')
 {
     echo' List content in: ';
     echo elgg_view('input/dropdown', array(
-    'name' => 'filter',
-    'value' => $filter,
+    'name' => 'cohortfilter',   //need to finish this code so the cohort filter works
+    'value' => $cfilter,
     'options_values' => $dropdownlist));
 }
 echo ' filter by:  ';

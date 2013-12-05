@@ -15,8 +15,10 @@ $action = $vars['action'];
 $validplugins = unserialize(elgg_get_plugin_setting('availableplugins', 'courseview'));
 $validkeys = array_keys($validplugins);
 $donotdisplay = true;
+//echo "Action: ".$vars['action'];
 foreach ($validkeys as $plugin)
 {
+  //  echo "Plugin :".$plugin.'<br>';
     if (strpos($action, $plugin)!==false)
     {
         $donotdisplay=false;

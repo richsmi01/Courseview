@@ -6,12 +6,12 @@
 
 //I need to place the code to build the course object here and then redirect some sort of course editing page...
 //I should check to make sure that the user is a professor.
-echo'createcourse action called';
+//echo'createcourse action called';
 //exit;
 $cvcoursename = get_input('cvcoursename');  //this pulls the text from the title textbox in the form...
-echo $cvcoursename;
+//echo $cvcoursename;
 $cvcoursedescription = get_input('cvcoursedescription');
-echo $cvcoursedescription;
+//echo $cvcoursedescription;
 
 $cvcourse = new ElggObject();
 $cvcourse->title = $cvcoursename;
@@ -22,7 +22,7 @@ $cvcourse->save();
 $cvcourse->cvcourse = true;
 $cvcourse->description = $cvcoursedescription;
 $cvcourse->save();
-echo elgg_echo("Course Created! ");
+//echo elgg_echo("Course Created! ");
 
 $cvmenu = new ElggObject();
     $cvmenu->subtype = 'cvmenu';
@@ -37,7 +37,7 @@ $cvmenu = new ElggObject();
     $cvmenu->indent="0";
     $cvmenu->save();
 //now, connect it to the course
-    echo "Adding first menu item relationship: $cvcourse->guid menu $cvmenu->guid";
+    //echo "Adding first menu item relationship: $cvcourse->guid menu $cvmenu->guid";
     add_entity_relationship($cvcourse->guid, "menu", $cvmenu->guid);
 
 

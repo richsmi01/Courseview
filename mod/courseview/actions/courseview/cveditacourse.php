@@ -5,7 +5,7 @@
  * and open the template in the editor.
  */
   elgg_load_library('elgg:courseview');
-echo 'edit a course action';
+//echo 'edit a course action';
 //$userguid = elgg_get_logged_in_user_guid();
 //
 //$groupsmember = elgg_get_entities_from_relationship(array
@@ -17,22 +17,22 @@ echo 'edit a course action';
 //    'relationship_guid' => $userguid,
 //        )
 //);
-$groupsmember = cv_get_users_cohorts ();
+$cohorts = cv_get_users_cohorts ();
 
 
-if (($groupsmember))
-{
-    echo 'belongs to at least one group';
-} else
-{
-    echo 'no';
-}
+//if (($groupsmember))
+//{
+//   // echo 'belongs to at least one group';
+//} else
+//{
+//    //echo 'no';
+//}
 
 
 $cvcohortguid=ElggSession::offsetGet('cvcohortguid');
 $cvmenuguid = ElggSession::offsetGet('cvmenuguid');
 
-foreach ($groupsmember as $cohort)
+foreach ($cohorts as $cohort)
 {
     $cvcohortguid = $cohort->guid;
 //This pulls all menu entitities that have a relationship with this course...
@@ -49,7 +49,7 @@ $menu = elgg_get_entities_from_relationship(array
 
 //Here we are building the html of the treeview control and adding the correct css classes so that my css
 //can turn it into a tree that can be manipulated by the user 
-echo elgg_echo ('<div class ="css-treeview">');
+//echo elgg_echo ('<div class ="css-treeview">');
   foreach ($menu as $menuitem)
 {
     //If this menu item should be indented from the previous one, add a <ul> tag to start a new unordered list

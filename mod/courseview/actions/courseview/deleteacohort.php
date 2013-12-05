@@ -5,20 +5,20 @@
  * and open the template in the editor.
  */
 
-echo 'cool!<br/>';
+//echo 'cool!<br/>';
 $cvcohortguid = get_input('cvcohort'); 
-echo $cvcohortguid."!!!";
+//echo $cvcohortguid."!!!";
 $cvcohort = get_entity($cvcohortguid);
-echo $cvcohort->title;
+//echo $cvcohort->title;
 
 
 
 
 
 
-echo 'Course:  '.$cvcohort->title.' has been deleted';
+//echo 'Course:  '.$cvcohort->title.' has been deleted';
 $cvcohort->delete();
-exit;
+//exit;
 
 
 ?>

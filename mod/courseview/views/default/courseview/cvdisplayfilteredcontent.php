@@ -1,11 +1,18 @@
 <?php
 
-//echo 'cvdisplayfilteredcontent<br>';
+
 $filter = get_input('filter', 'all'); //the currently selected dropdown list  item  
 $cvmenuguid = ElggSession::offsetGet('cvmenuguid');
 $cvcohortguid = ElggSession::offsetGet('cvcohortguid');
+$cohortguid=get_input ('cohortfilter',$cvcohortguid);
+//echo '<br>in cvdisplayfilteredcontent <br>cohort filter:  '.$cohortguid.'<br>';
+$cohortname = get_entity($cohortguid)->title;
+//echo "dropdown info: ".$cohortname;
 
-$relationship = 'content' . $cvcohortguid;
+
+//$relationship = 'content' . $cvcohortguid;
+$relationship = 'content' . $cohortguid;
+
 //echo elgg_echo("Relationship name:  " . $relationship);
 //echo elgg_echo("Relationship GUID:  " . $cvmenuguid);
 //

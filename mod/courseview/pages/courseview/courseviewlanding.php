@@ -1,5 +1,9 @@
 <?php
 
+echo "in courseviewlanding.php";
+exit;
+
+
 //$courseview_guid = courseview_initialize();
 //echo elgg_echo ("~~~".var_dump($courseview_guid));
 //this puts the courseview object into the session

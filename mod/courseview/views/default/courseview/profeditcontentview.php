@@ -1,46 +1,41 @@
 <?php
-
-//echo 'profeditcontentview<br>';
-
-//    echo ' <div id ="editbox">    
-echo ' <ul>';
-    echo '<li>';
-     echo "<input type='checkbox' name='a' id='cp-2'>CourseView administration";
-             echo' <div>';
-echo ' <ul>';
-    echo '<li>';
-        echo "<input type='checkbox' name='a' id='cp-2'>Edit The current module";
-        echo' <div>';
-            echo elgg_view_form('editmenuitem');
-        echo' </div>';
-    echo '<li>';
-
-    echo '<li>';
-        echo "<input type='checkbox' >Add menu item below current node";
-        echo "<div > ";
-            echo elgg_view_form('addmenuitem');
-        echo'</div>';
-    echo '<li>';
-    echo '<li>';
-    echo "<input type='checkbox' >Other stuff";
-    echo '<div>';
-        echo elgg_view_form('createcourse');
-        echo elgg_view_form('cveditacourse');
-        echo elgg_view_form ('deletecourse');
-        echo elgg_view_form('addacohort');
-        echo elgg_view_form('deleteacohort');
-       
-    echo '</div>';
-    echo '</li>';
-echo '</ul>';
-    echo '</div>';
-  echo '</li>';
-echo '</ul>';
-echo '</br>';
-
-//if (cv_isprof(elgg_get_logged_in_user_entity()))
-//{
-//    echo ' Prof area to add content<br>';
-//   
-//}
+/*
+ * used to create the administration views that are presented to a professor
+ */
 ?>
+<ul>
+    <li>
+        <input type='checkbox' name='a' id='cp-2'>CourseView Administration
+        <div>
+            <ul>
+                <li class ='sub'>
+                    <input type='checkbox' name='a' >Edit the current menu item
+                    <div>
+                        <?php echo elgg_view_form('editmenuitem'); ?>
+                    </div>
+                </li>
+
+                <li class ='sub'>
+                    <input type='checkbox' >Add new menu item below the current menu item
+                    <div > 
+                        <?php echo elgg_view_form('addmenuitem'); ?>
+                    </div>
+                </li>
+                <li class ='sub'>
+                    <input type='checkbox'  >Manage Courses and Cohorts
+                    <div>
+                        <?php
+                        echo elgg_view_form('createcourse');
+                        echo elgg_view_form('cveditacourse');
+                        echo elgg_view_form('deletecourse');
+                        echo elgg_view_form('addacohort');
+                        echo elgg_view_form('deleteacohort');
+                        ?>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </li>
+</ul>
+</br>
+

@@ -28,32 +28,36 @@ $options = array
  $courses = elgg_get_entities_from_metadata($options);
  foreach ($courses as $course)
 {
-    echo "Course:  $course->title --  $course->guid <br>";
-    //var_dump($course);
     $cohorts = cv_get_cohorts_by_courseguid ($course->guid);
-    echo "<br>Retrieved ". sizeof($cohorts) ."cohorts.<br>";
+     echo "Course:  $course->title --  $course->guid :   Retrieved ". sizeof($cohorts) ." cohorts.<br>";
+    
     foreach ($cohorts as $cohort)
     {
-        echo "-------Cohort:  $cohort->title --  $cohort->guid <br>";
+        echo "-------Cohort:  $cohort->title --  $cohort->guid";
         //var_dump($cohort);
          $menuitems = cv_get_menu_items_for_cohort($cohort->guid);
-         echo "<br>Retrieved ". sizeof($menuitems) ."menu items.<br>";
+         echo ":  Retrieved ". sizeof($menuitems) ."menu items.<br><br>";
           foreach ($menuitems as $menuitem)
           {
             $test = get_entity_relationships($menuitem->guid);
             //var_dump($menuitem);
-              echo "--------------Menu Item:  $menuitem->name --  $menuitem->guid --$menuitem->menutype -- menuorder $menuitem->menuorder --  indentlevel = $menuitem->indent<br>";
+              echo "--------------Menu Item:  $menuitem->name <br>";
+              echo "----------------- Guid:  $menuitem->guid <br>";
+              echo "------------------Menu type: $menuitem->menutype <br>";
+              echo "------------------menuorder: $menuitem->menuorder <br>";
+              echo "------------------indentlevel:  $menuitem->indent<br>";
+              echo "------------------Parent course:$menuitem->container_guid<br> ";
             $content = cv_get_content_by_menu_item('all', $menuitem->guid, 'content'.$cohort->guid);
+            echo "-------------------Retrieved ".sizeof($content)." content relationships<br>";
             foreach($test as $t)
             {
-                //var_dump($t);
-                echo 'Relationship  '. $t->relationship."<br>";
+                echo '-------------------------Relationship  '. $t->guid_one."--". $t->relationship."--".$t->guid_two."<br>";
             }
             
             foreach ($content as $contentitem)
             {
                // var_dump($contentitem);
-                echo '------------------Content:'. $contentitem->getSubtype().' --'.$contentitem->title.'--'.$contentitem->guid.'<br>';
+                echo '----------------------------------Content:'. $contentitem->getSubtype().' --'.$contentitem->title.'--'.$contentitem->guid.'<br>';
             }
             
           }

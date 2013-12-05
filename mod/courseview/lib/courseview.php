@@ -59,8 +59,14 @@ function cv_get_users_cohorts()
 
 function cv_isprof($user)
 {
+    //echo "Entering cv_isprof<br>";
+   // echo "<br>User: ".($user->name)."--".$user->guid;
+    $profgroupguid = elgg_get_plugin_setting('profsgroup', 'courseview');
+    //echo "<br>Prof group guid: ". $profgroupguid;
     $profsgroup = get_entity(elgg_get_plugin_setting('profsgroup', 'courseview'));
-
+    
+   // echo "Profsgroup GUID: ". $profsgroup->guid;
+    //echo "Is memeber? "+$profsgroup->isMember($user);
     if ($profsgroup == false)
     {
         return false;
@@ -72,6 +78,7 @@ function cv_isprof($user)
 
 function cv_get_cohorts_by_courseguid($courseguid)
 {
+  
     $options = array
         ('type' => 'group',
         'metadata_names' => array('cvcohort'),
@@ -99,6 +106,8 @@ function cv_debug_to_console( $data ) {
 
     echo $output;
 }
+
+
 
 //    echo elgg_entity_exists(elgg_get_plugin_setting('profsgroup','courseview'));
 //    //echo get_entity($profsgroup)->isMember($user);
@@ -134,45 +143,45 @@ function cv_get_content_by_menu_item($filter, $cvmenuguid, $relationship)
     return $content;
 }
 
-function courseview_initialize()
-{
+//function courseview_initialize()
+//{
 //just some learning stuff
-    $courseview_object = elgg_get_entities(array('type' => 'object', 'subtype' => 'courseview'))[0];
+  //  $courseview_object = elgg_get_entities(array('type' => 'object', 'subtype' => 'courseview'))[0];
 
 //echo elgg_echo ('coursetreexxx'.var_dump($courseview_object->coursetree));
-    ElggSession::offsetSet('currentcourse', $courseview_object->coursetree);
+ //   ElggSession::offsetSet('currentcourse', $courseview_object->coursetree);
 
 
 //echo 'courseview_object guid:  ' . $courseview_object->guid;
-    $courseview_object->plugins = array('Hi Rich...It works!', 'blog', 'bookmark');
-    $courseview_object->save;
+ //   $courseview_object->plugins = array('Hi Rich...It works!', 'blog', 'bookmark');
+ //   $courseview_object->save;
 
 // echo '######'.$courseview_object->plugins[0];
 //if a CourseView Object doesn't exist, this must be the first time the plugin has run.  In that case,
 //we build a CourseView Object to track various things that our plugin needs.
-    if (!$courseview_object)
-    {
+//    if (!$courseview_object)
+//    {
 //Since this is the first time that CourseView has run, we need to create a professor group
-        $courseview_profsgroup = new ElggGroup();
-        $courseview_profsgroup->subtype = 'group';
-        $courseview_profsgroup->title = 'profsgroup';
-        $courseview_profsgroup->name = 'profsgroup'; //just added this...should it be name or title?
-        $courseview_profsgroup->save();
-
-        $courseview_object = new ElggObject();
-        $courseview_object->subtype = "courseview";
-        $courseview_object->access_id = 2;
-        $courseview_object->save();
-        $courseview_object->plugins = array('blog', 'bookmark');
-        $courseview_object->profsgroup = $courseview_profsgroup->guid; //add the profsgroup guid to our courseview object.
-        $courseview_object->save();
-    }
-
-
+//        $courseview_profsgroup = new ElggGroup();
+//        $courseview_profsgroup->subtype = 'group';
+//        $courseview_profsgroup->title = 'profsgroup';
+//        $courseview_profsgroup->name = 'profsgroup'; //just added this...should it be name or title?
+//        $courseview_profsgroup->save();
+//
+//        $courseview_object = new ElggObject();
+//        $courseview_object->subtype = "courseview";
+//        $courseview_object->access_id = 2;
+//        $courseview_object->save();
+//        $courseview_object->plugins = array('blog', 'bookmark');
+//        $courseview_object->profsgroup = $courseview_profsgroup->guid; //add the profsgroup guid to our courseview object.
+//        $courseview_object->save();
+//    }
 
 
-    return $courseview_object->guid;
-}
+
+
+//    return $courseview_object->guid;
+//}
 
 function courseview_create_course()
 {

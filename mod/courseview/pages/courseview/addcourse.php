@@ -6,7 +6,8 @@
 
 //echo 'adding course';
 
-
+echo "In addcourse.php<br>";
+exit;
 
 $html = elgg_view_form('createcourse');
 //echo elgg_echo("Testing");

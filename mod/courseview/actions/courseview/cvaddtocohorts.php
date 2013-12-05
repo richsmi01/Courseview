@@ -12,7 +12,7 @@ elgg_load_library('elgg:courseview');
  
 $test = get_input ('test');
 //echo $test['key'];
-var_dump ($test);
+//var_dump ($test);
 
 
 
@@ -24,7 +24,7 @@ foreach ($menuitems as $item )
     //echo 'menu item: '.$item->guid." -- ". $item->name."- "."rs".$count.'--'.get_input('rs'.$count)   .  "<br>";
     $test = get_input('rs'.$item->guid);
     
-    echo "<br>$item->guid--- $test <br>";
+   // echo "<br>$item->guid--- $test <br>";
      $relationship = 'content'.$cvcohortguid;
 
 //        echo 'cvmenuguid:  '.$cvmenuguid.'<br>';
@@ -36,12 +36,12 @@ foreach ($menuitems as $item )
       $one=$item->guid;
       $two=$relationship;
       $three= $cvobject->guid;
-      echo'<br>$$$$$$$$$$$$$$$$$$$$$$$$$$$$$<br>';
-      echo '<br>'.$one.'--'.$two.'--'.$three.'<br>';
+      //echo'<br>$$$$$$$$$$$$$$$$$$$$$$$$$$$$$<br>';
+      //echo '<br>'.$one.'--'.$two.'--'.$three.'<br>';
    
 //        add_entity_relationship($one, $two, $three);
     }
     $count++;
 }
-exit;
+//exit;
 ?>

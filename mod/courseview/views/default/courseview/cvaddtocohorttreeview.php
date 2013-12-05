@@ -20,7 +20,7 @@ $userguid = elgg_get_logged_in_user_guid();
 elgg_load_library('elgg:courseview');
 
 //get  a list of the cohorts that the logged in user belongs to
-$groupsmember = cv_get_users_cohorts();
+$cohorts = cv_get_users_cohorts();
 
 
 echo ('<div class ="cvtreeaddtocohort">');
@@ -31,7 +31,7 @@ $rscount = 0;
 //echo 'object guid';
 //echo "<input type ='input'  name='objectguid'   />";
 //loop through each cohort and build the tree menu
-foreach ($groupsmember as $cohort)
+foreach ($cohorts as $cohort)
 {
     $cvcohortguid = $cohort->guid;
     $menuitems = cv_get_menu_items_for_cohort($cvcohortguid);
@@ -87,7 +87,7 @@ foreach ($groupsmember as $cohort)
             echo "</label>";
         }
         //otherwise, let's just create a link to the contentpane and pass the guid of the menu object...the css class indent is also added here
-        elseif ($menuitem->menutype == 'professor')
+        elseif ($menuitem->menutype == 'professor'&& !cv_isprof($user))
         {
             echo "<span class ='indent'>$name.</span>";
         } else

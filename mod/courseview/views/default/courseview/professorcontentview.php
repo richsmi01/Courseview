@@ -6,8 +6,7 @@
  */
 $cvmenuguid = ElggSession::offsetGet('cvmenuguid');
 $cvcohortguid = ElggSession::offsetGet('cvcohortguid');
-//echo 'professorcontentview<br>';
-
+echo "professorcontentview<br>";
 if (cv_isprof(elgg_get_logged_in_user_entity()))
 {
     echo elgg_view('courseview/cvfiltercontent');

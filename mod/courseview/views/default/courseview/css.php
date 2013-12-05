@@ -195,25 +195,24 @@ width:30px;
 height:30px;
 
 }
-.uparrowcontainer, downarrowcontainer {
-display:block;
-}
+//.uparrowcontainer, downarrowcontainer {
+//}
 
-.uparrow {
-height:15px;
-width: 15px;
-background-color:blue;
-border: solid black;
-margin:3px;
+//.uparrow {
+//height:15px;
+//width: 15px;
+//background-color:blue;
+//border: solid black;
+//margin:3px;
 
-}
-.downarrow {
-height:15px;
-width: 15px;
-background-color:red;
-border: solid black;
-margin:3px;
-}
+//}
+//.downarrow {
+//height:15px;
+//width: 15px;
+//background-color:red;
+//border: solid black;
+//margin:3px;
+//}
 
 #cvfolderdescription {
 font-size: 400%;
@@ -243,7 +242,9 @@ display: block;
 /*background-color:yellow;*/
 }
 
-
+.sub {
+margin:5px 5px 5px 15px;
+}
 
 .cvcurrent {
 font-style: italic;
@@ -277,4 +278,10 @@ height:0px;
     font-size:300%;
     text-align: center;
     font-weight: bold;
+}
+
+/*  Change the width of the sidebar to allow the tree menu to fit nicely */
+.elgg-sidebar {	
+	width: 310px;
+                      background:lightgrey;
 }

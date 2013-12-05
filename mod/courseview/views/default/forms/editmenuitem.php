@@ -31,6 +31,7 @@ echo elgg_view('input/submit', array(
 echo '<br/>';
 echo elgg_view('input/submit', array(
     'value' => 'Delete Menu Item',
+    'name' =>'buttonchoice',
     'class' => 'elgg-requires-confirmation'));
 //echo '<input type ="checkbox" id = "editcoursecheckbox"/>Confirm Delete --(need to Elggify this)';
 echo '</div>';

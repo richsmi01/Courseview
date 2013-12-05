@@ -25,7 +25,7 @@ $cvcohortguid = ElggSession::offsetGet('cvcohortguid');
 $cvcourseguid = get_entity($cvcohortguid)->container_guid;
 
 $moduleorder = $currentcvmenu->menuorder + 1;
-echo "order num:  " . $moduleorder . '###';
+//echo "order num:  " . $moduleorder . '###';
 
 $menu = elgg_get_entities_from_relationship(array
     ('relationship_guid' => $cvcourseguid,
@@ -37,13 +37,13 @@ $menu = elgg_get_entities_from_relationship(array
         )
 );
 //var_dump($menu);
-echo 'Number to change' . sizeof($menu) . '###';
+//echo 'Number to change' . sizeof($menu) . '###';
 for ($a = $moduleorder; $a < sizeof($menu); $a++)
 {
-    echo'!!!!<br>';
+    //echo'!!!!<br>';
     $currentsort = $menu[$a]->menuorder;
     $newsort = $currentsort + 1;
-    echo'<br/>changing ' . $menu[$a]->name . ' from ' . $currentsort . ' to ' . $newsort;
+    //echo'<br/>changing ' . $menu[$a]->name . ' from ' . $currentsort . ' to ' . $newsort;
     $menu[$a]->menuorder = $newsort;
     $menu[$a]->save();
 }
@@ -63,8 +63,8 @@ $cvmenu->indent = $indent;
 //now, connect it to the course
 
 add_entity_relationship($cvcourseguid, 'menu', $cvmenu->guid);
-echo 'cvcourse = ' . get_entity($cvcourseguid)->title;
-echo 'cvmenu = ' . $cvmenu->name;
-echo 'indent: '.$indent;
+//echo 'cvcourse = ' . get_entity($cvcourseguid)->title;
+//echo 'cvmenu = ' . $cvmenu->name;
+//echo 'indent: '.$indent;
 //exit;
 ?>
