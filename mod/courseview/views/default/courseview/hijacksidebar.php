@@ -30,7 +30,7 @@
 
 <?php
 //pull in any needed vars
-$cvcohortguid = ElggSession::offsetGet('cvcohortguid');
+$cohortguid = ElggSession::offsetGet('cvcohortguid');
 $cvmenuguid = ElggSession::offsetGet('cvmenuguid');
 $userguid = elgg_get_logged_in_user_guid();
 
@@ -79,7 +79,7 @@ foreach ($cohorts as $cohort)
         $count++;
         $class2 = "";
         $indent = $menuitem->indent;
-        if ($menuitem->guid == $cvmenuguid  && $cohortguid == $cvcohortguid)
+        if ($menuitem->guid == $cvmenuguid  && $cohortguid == $cohortguid)
         {
             $class2 = " cvcurrent";  //setting the current menu item
         }

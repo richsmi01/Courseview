@@ -70,6 +70,7 @@ function courseviewInit()
     elgg_register_action("deletecourse", $base_path . '/actions/courseview/deletecourse.php');
     elgg_register_action('toggle', $base_path . '/actions/courseview/togglecourseview.php');
     elgg_register_action('addmenuitem', $base_path . '/actions/courseview/addmenuitem.php'); //::TODO: what is this again???
+    elgg_register_action('editacohort', $base_path . '/actions/courseview/editacohort.php'); 
 }
 
 //this is the method that gets called when one of the courseview urls is called.  We will use a switch to choose how to respond
@@ -176,23 +177,33 @@ function cvinterceptupdate($event, $type, $object)
     $cvcohortguid = ElggSession::offsetGet('cvcohortguid');
     $validplugins = unserialize(elgg_get_plugin_setting('availableplugins', 'courseview'));
     
-    $modules = get_input('modules');
-    foreach ($modules as $module)
+   
+    $menu_items = get_input('menuitems');
+    foreach ($menu_items as $menu_item)
     {
-        $guid_one = substr($module,1);
+     /*Note that $menu_items is an array of Strings passed from cvaddtocohorttree where each element contains three pieces 
+      * of information in the format Xmenuitemguid|cohortguid where X is a + if a new relationship should be created.
+      * menuitemguid is stripped out into $menu_item and cohortguid is stripped out into $cohort_guid
+     */
+        $cohort_guid = substr(strstr($menu_item, '|'),1);
+        $menu_item_guid= substr(strstr($menu_item, '|', true),1);
+        echo 'menu_item_guid: '.$menu_item_guid;
+//        $guid_one = substr($menu_item,1);
+         $guid_one = $menu_item_guid;
         
         //need to check if this is a non-professor type content and change relationship accordingly...
         $relationship = 'content' ;
         if (get_entity($cvmenuguid)->menutype != 'professor')
         {
-            $relationship.= $cvcohortguid;
+//            $relationship.= $cvcohortguid;
+             $relationship.= $cohort_guid;
         }
 
         $guid_two = $object->guid;
-        echo '<br>Module: '.'--'.get_entity($guid_one)->name;
-        if (strrchr ('+', $module))  //if the module was checked, then add relationship
+       // echo '<br>Module: '.'--'.get_entity($guid_one)->name;
+        if (strrchr ('+', $menu_item))  //if the module was checked, then add relationship
         {
-            echo '<br> Adding ' . $guid_one . '--' . $relationship . '--' . $guid_two . '<br>';
+           // echo '<br> Adding ' . $guid_one . '--' . $relationship . '--' . $guid_two . '<br>';
             add_entity_relationship($guid_one, $relationship, $guid_two);
         } 
         else
@@ -200,20 +211,21 @@ function cvinterceptupdate($event, $type, $object)
             $rel_to_delete = check_entity_relationship($guid_one, $relationship, $guid_two);
             if ($rel_to_delete)  //if the module was unchecked and there was a relationship, we need to remove the relationship
             {
-                echo '<br> Removing Relationship with id: ' . $rel_to_delete->id;
+             //   echo '<br> Removing Relationship with id: ' . $rel_to_delete->id;
                 delete_relationship($rel_to_delete->id);
             } 
             else
             {
-                echo '<br>leaving module ' . get_entity($guid_one)->name . ' alone';
+               // echo '<br>leaving module ' . get_entity($guid_one)->name . ' alone';
             }
         }
     }
-    echo 'Completed<br>';
+    //exit;
+  //  echo 'Completed<br>';
     $rootdomain = elgg_get_site_url();
-    echo '$rootdomain = '.$rootdomain.'<br>';
+  //  echo '$rootdomain = '.$rootdomain.'<br>';
     $cvredirect = $rootdomain . 'courseview/contentpane/' . $cvcohortguid . '/' . $cvmenuguid;
-    echo '$cvredirect = '.$cvredirect;
+  //  echo '$cvredirect = '.$cvredirect;
     ElggSession::offsetSet('cvredirect', $cvredirect);
 }
 

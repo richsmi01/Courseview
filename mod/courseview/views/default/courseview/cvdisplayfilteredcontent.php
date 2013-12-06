@@ -3,8 +3,8 @@
 
 $filter = get_input('filter', 'all'); //the currently selected dropdown list  item  
 $cvmenuguid = ElggSession::offsetGet('cvmenuguid');
-$cvcohortguid = ElggSession::offsetGet('cvcohortguid');
-$cohortguid=get_input ('cohortfilter',$cvcohortguid);
+$cohortguid = ElggSession::offsetGet('cvcohortguid');
+$cohortguid=get_input ('cohortfilter',$cohortguid);
 //echo '<br>in cvdisplayfilteredcontent <br>cohort filter:  '.$cohortguid.'<br>';
 $cohortname = get_entity($cohortguid)->title;
 //echo "dropdown info: ".$cohortname;

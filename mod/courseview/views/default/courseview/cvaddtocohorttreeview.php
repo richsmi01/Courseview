@@ -33,8 +33,8 @@ $rscount = 0;
 //loop through each cohort and build the tree menu
 foreach ($cohorts as $cohort)
 {
-    $cvcohortguid = $cohort->guid;
-    $menuitems = cv_get_menu_items_for_cohort($cvcohortguid);
+    $cohortguid = $cohort->guid;
+    $menuitems = cv_get_menu_items_for_cohort($cohortguid);
 
     //$checkedmodules =array();
     //Here we are building the html of the treeview control and adding the correct css classes so that my css
@@ -46,15 +46,15 @@ foreach ($cohorts as $cohort)
     foreach ($menuitems as $menuitem)
     {
 
-        $rel = 'content' . $cvcohortguid;
+        $rel = 'content' . $cohortguid;
         $checkoptions = false;
         if (check_entity_relationship($menuitem->guid, $rel, $entity->guid)->guid_one > 0)
         {
             $checkoptions = true;
         }
-        if ($cvmenuguid ==$menuitem->guid)
+        if ($cvmenuguid == $menuitem->guid)
         {
-            $checkoptions =true;
+            $checkoptions = true;
         }
 
         //If this menu item should be indented from the previous one, add a <ul> tag to start a new unordered list
@@ -83,24 +83,26 @@ foreach ($cohorts as $cohort)
             echo "<li>";
             echo "<input type ='checkbox'  name='$indent' class ='cvmenuitem'   />";
             echo "<label>";
-            echo "<a href='" . elgg_get_site_url() . "courseview/contentpane/" . $cvcohortguid . "/" . $menuitem->guid . "'> " . $name . "</a>";
+            echo "<a href='" . elgg_get_site_url() . "courseview/contentpane/" . $cohortguid . "/" . $menuitem->guid . "'> " . $name . "</a>";
             echo "</label>";
         }
         //otherwise, let's just create a link to the contentpane and pass the guid of the menu object...the css class indent is also added here
-        elseif ($menuitem->menutype == 'professor'&& !cv_isprof($user))
+        elseif ($menuitem->menutype == 'professor' && !cv_isprof($user))
         {
             echo "<span class ='indent'>$name.</span>";
         } else
         {
-            $value = $menuitem->guid;
+            /* Note that the value that we are passing to the checkboxes is aString passed  each String  contains three pieces 
+             * of information in the format Xmenuitemguid|cohortguid where X is a + if a new relationship should be created.
+             */
+            $value = $menuitem->guid . "|" . $cohortguid;
             echo ("<li>");
-            echo elgg_view('input/checkbox', array('name' => 'modules[]', 'value' => '+' . $value, 'class' => 'cvinsert', 'checked' => $checkoptions, 'default' => '-' . $value));
-            echo "<a  name='$indent' class = 'cvmenuitem $class2  indent' href ='" . elgg_get_site_url() . "courseview/contentpane/" . $cvcohortguid . "/" . $menuitem->guid . "' >" . $name . "</a></li>";
+            echo elgg_view('input/checkbox', array('name' => 'menuitems[]', 'value' => '+' . $value, 'class' => 'cvinsert', 'checked' => $checkoptions, 'default' => '-' . $value));
+            echo "<a  name='$indent' class = 'cvmenuitem $class2  indent' href ='" . elgg_get_site_url() . "courseview/contentpane/" . $cohortguid . "/" . $menuitem->guid . "' >" . $name . "</a></li>";
         }
     }
     echo ('</div>');
 }
 echo '<br>';
 echo '</div>';
-
 ?>

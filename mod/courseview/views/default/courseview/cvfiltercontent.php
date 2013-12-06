@@ -7,8 +7,8 @@
 //$cohortFilter =$vars['cohortFilter'];
 
 
-$cvcohortguid= ElggSession::offsetGet('cvcohortguid');  
-$courseguid = get_entity($cvcohortguid)->container_guid;
+$cohortguid= ElggSession::offsetGet('cvcohortguid');  
+$courseguid = get_entity($cohortguid)->container_guid;
 $menuguid= ElggSession::offsetGet('cvmenuguid');
 $filter = get_input('filter', 'all'); //the currently selected dropdown list  item  
 //echo '$filter '.$filter;
@@ -40,12 +40,12 @@ foreach ($availablecohorts as $availablecohort)
     $dropdownlist [$availablecohort->guid] = $availablecohort->title;
 }
 //echo 'cohort filter was '.get_input('cohortfilter').'<br>';
-$cfilter =get_input('cohortfilter', $cvcohortguid); 
+$cfilter =get_input('cohortfilter', $cohortguid); 
 //echo 'cohort filter now is '.$cfilter.'<br>';
 echo '<form method="get" action="' . current_page_url() . '">';
 if (get_entity($menuguid)->menutype=='student')
 {
-    echo' List content in: ';
+    echo' List content in cohort: ';
     echo elgg_view('input/dropdown', array(
     'name' => 'cohortfilter',   //need to finish this code so the cohort filter works
     'value' => $cfilter,

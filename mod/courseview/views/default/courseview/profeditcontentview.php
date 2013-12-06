@@ -29,7 +29,9 @@
                         echo elgg_view_form('cveditacourse');
                         echo elgg_view_form('deletecourse');
                         echo elgg_view_form('addacohort');
+                        echo elgg_view_form('editacohort');
                         echo elgg_view_form('deleteacohort');
+                        
                         ?>
                     </div>
                 </li>

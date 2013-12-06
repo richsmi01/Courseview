@@ -7,7 +7,7 @@
 
 elgg_load_library('elgg:courseview');
 
- $cvcohortguid = ElggSession::offsetGet('cvcohortguid');
+ $cohortguid = ElggSession::offsetGet('cvcohortguid');
 
  
 $test = get_input ('test');
@@ -25,7 +25,7 @@ foreach ($menuitems as $item )
     $test = get_input('rs'.$item->guid);
     
    // echo "<br>$item->guid--- $test <br>";
-     $relationship = 'content'.$cvcohortguid;
+     $relationship = 'content'.$cohortguid;
 
 //        echo 'cvmenuguid:  '.$cvmenuguid.'<br>';
 //        echo 'relationship:  '.$relationship.'<br>';

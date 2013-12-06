@@ -6,9 +6,9 @@
  */
 
 //echo 'cool!<br/>';
-$cvcohortguid = get_input('cvcohort'); 
+$cohortguid = get_input('cvcohort'); 
 //echo $cvcohortguid."!!!";
-$cvcohort = get_entity($cvcohortguid);
+$cvcohort = get_entity($cohortguid);
 //echo $cvcohort->title;
 
 
