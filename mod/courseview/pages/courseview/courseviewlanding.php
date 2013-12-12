@@ -1,6 +1,6 @@
 <?php
-
-echo "in courseviewlanding.php";
+elgg_load_library('elgg:cv_debug');
+cv_debug("Entering pages/courseviewlanding.php", 'stuff',0);
 exit;
 
 

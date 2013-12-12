@@ -280,6 +280,11 @@ height:0px;
     font-weight: bold;
 }
 
+.disabled {
+color:grey;
+font-style:italic;
+}
+
 /*  Change the width of the sidebar to allow the tree menu to fit nicely 
 .elgg-sidebar {	
 	width: 310px;

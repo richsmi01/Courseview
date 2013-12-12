@@ -4,6 +4,8 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
+
+
 //forward('courseview/contentpane');
            $plugin_path = elgg_get_plugins_path().'courseview/pages/courseview';
            $elgg_path =elgg_get_site_url();	

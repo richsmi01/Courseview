@@ -1,10 +1,12 @@
 <?php
 //Check to see if the action string contains any of our approved plugins...If it does, and the user is in a cohort, display the page.
- elgg_load_library('elgg:courseview');
+ 
+
+elgg_load_library('elgg:courseview');
  //first, we should check to see if the user has any cohorts...if they don't return without doing anything else
-if ( true)
+if ( !cv_is_courseview_user())
 {
-    //::TODO:  Need to write a method that determines whether a user is in any cohorts
+    return;
 }
 
 //var_dump($vars['action']);
@@ -60,7 +62,7 @@ foreach ($validkeys as $plugin)
     <div id ='addToCohort'>
     <?php
      //echo elgg_view('courseview/debug');
-        echo elgg_view('courseview/cvaddtocohorttreeview',$vars);
+        echo elgg_view('courseview/cvaddtocohorttreeview',$vars);  //what $vars???
         echo '</div>';
         echo '</div>';
     ?>

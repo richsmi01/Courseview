@@ -40,6 +40,13 @@ function cv_get_student_menu_items_by_cohort($cvcohortguid)
     return $menu;
 }
 
+function cv_is_courseview_user ()
+{
+     $cohorts = cv_get_users_cohorts();
+    return sizeof($cohorts);
+}
+
+
 
 function cv_get_users_cohorts()
 {
@@ -53,19 +60,19 @@ function cv_get_users_cohorts()
         'relationship_guid' => $userguid,
     );
     $groupsmember = elgg_get_entities_from_relationship($searchcriteria);
-   // var_dump ($groupsmember);
+    // var_dump ($groupsmember);
     return $groupsmember;
 }
 
 function cv_isprof($user)
 {
     //echo "Entering cv_isprof<br>";
-   // echo "<br>User: ".($user->name)."--".$user->guid;
+    // echo "<br>User: ".($user->name)."--".$user->guid;
     $profgroupguid = elgg_get_plugin_setting('profsgroup', 'courseview');
     //echo "<br>Prof group guid: ". $profgroupguid;
     $profsgroup = get_entity(elgg_get_plugin_setting('profsgroup', 'courseview'));
-    
-   // echo "Profsgroup GUID: ". $profsgroup->guid;
+
+    // echo "Profsgroup GUID: ". $profsgroup->guid;
     //echo "Is memeber? "+$profsgroup->isMember($user);
     if ($profsgroup == false)
     {
@@ -78,7 +85,7 @@ function cv_isprof($user)
 
 function cv_get_cohorts_by_courseguid($courseguid)
 {
-  
+
     $options = array
         ('type' => 'group',
         'metadata_names' => array('cvcohort'),
@@ -91,23 +98,36 @@ function cv_get_cohorts_by_courseguid($courseguid)
     return $value;
 }
 
-function cv_is_valid_plugin( $arg1)
+function cv_is_valid_plugin($arg1)
 {
-    $validplugins= unserialize(elgg_get_plugin_setting('availableplugins', 'courseview')); 
-    return (array_key_exists($arg1,$validplugins));  
+    $validplugins = unserialize(elgg_get_plugin_setting('availableplugins', 'courseview'));
+   
+    return (array_key_exists($arg1, $validplugins));
 }
 
-function cv_debug_to_console( $data ) {
+//function cv_debug_to_console($data)
+//{
+//
+//    if (is_array($data))
+//        $output = "<script>console.log( 'Debug Objects: " . implode(',', $data) . "' );</script>";
+//    else
+//        $output = "<script>console.log( 'Debug Objects: " . $data . "' );</script>";
+//
+//    echo $output;
+//}
 
-    if ( is_array( $data ) )
-        $output = "<script>console.log( 'Debug Objects: " . implode( ',', $data) . "' );</script>";
-    else
-        $output = "<script>console.log( 'Debug Objects: " . $data . "' );</script>";
-
-    echo $output;
-}
-
-
+//function cv_calc_relationship_string($menuitem)
+//{
+//
+//    //if the $menuitem is of type 'professor', the relationship string is simple 'content'
+//    $relationship = 'content';
+//    //however, if the $menuitem is not of type 'professor' (ie, of type 'student'), then we need to append the particulart  cohort to 'content'
+//    if (get_entity($menu_item_guid)->menutype != 'professor')
+//    {
+//        $relationship.= $cohort_guid;
+//    }
+//    return $relationship;
+//}
 
 //    echo elgg_entity_exists(elgg_get_plugin_setting('profsgroup','courseview'));
 //    //echo get_entity($profsgroup)->isMember($user);
@@ -146,16 +166,12 @@ function cv_get_content_by_menu_item($filter, $cvmenuguid, $relationship)
 //function courseview_initialize()
 //{
 //just some learning stuff
-  //  $courseview_object = elgg_get_entities(array('type' => 'object', 'subtype' => 'courseview'))[0];
-
+//  $courseview_object = elgg_get_entities(array('type' => 'object', 'subtype' => 'courseview'))[0];
 //echo elgg_echo ('coursetreexxx'.var_dump($courseview_object->coursetree));
- //   ElggSession::offsetSet('currentcourse', $courseview_object->coursetree);
-
-
+//   ElggSession::offsetSet('currentcourse', $courseview_object->coursetree);
 //echo 'courseview_object guid:  ' . $courseview_object->guid;
- //   $courseview_object->plugins = array('Hi Rich...It works!', 'blog', 'bookmark');
- //   $courseview_object->save;
-
+//   $courseview_object->plugins = array('Hi Rich...It works!', 'blog', 'bookmark');
+//   $courseview_object->save;
 // echo '######'.$courseview_object->plugins[0];
 //if a CourseView Object doesn't exist, this must be the first time the plugin has run.  In that case,
 //we build a CourseView Object to track various things that our plugin needs.
@@ -176,10 +192,6 @@ function cv_get_content_by_menu_item($filter, $cvmenuguid, $relationship)
 //        $courseview_object->profsgroup = $courseview_profsgroup->guid; //add the profsgroup guid to our courseview object.
 //        $courseview_object->save();
 //    }
-
-
-
-
 //    return $courseview_object->guid;
 //}
 
@@ -225,7 +237,5 @@ function courseview_listplugins()
 //echo $returnvalue;
     return $returnvalue;
 }
-
-
 
 ?>

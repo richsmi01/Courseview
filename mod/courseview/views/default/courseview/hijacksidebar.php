@@ -5,12 +5,8 @@
         
         var currentposition = current.id;
         var currentindent = current.name;
-       // var stuff="length of treemenu: "+treemenu.length+"\ncurrent: "+current+"<br>";
         for (i = currentposition; i >=0; i--) 
         {
-            //stuff+=treemenu[i].name+" - "+treemenu[i].id+"<br>";
-            //treemenu[i].innerHTML += "**"+treemenu[i].id;
-//            treemenu[i].checked=true;
             if (treemenu[i].checked==false&& treemenu[i].name<currentindent) 
             {
                 treemenu[i].checked=true;
@@ -22,26 +18,26 @@
                 break;
             }
         }
-    current.checked=true;
-//var debug = document.getElementById("debug");
-        //debug.innerHTML += ' Debug Stuff<br>' + stuff;
-        }
+        current.checked=true;
+    }
 </script>
 
 <?php
-//pull in any needed vars
-$cohortguid = ElggSession::offsetGet('cvcohortguid');
+
+$cvcohortguid = ElggSession::offsetGet('cvcohortguid');
 $cvmenuguid = ElggSession::offsetGet('cvmenuguid');
 $userguid = elgg_get_logged_in_user_guid();
 
 //we'll need some of the library methods here
 elgg_load_library('elgg:courseview');
+elgg_load_library('elgg:cv_debug');
+cv_debug("Entering hijacksidebar.php", 'stuff');
 
 //get  a list of the cohorts that the logged in user belongs to
 $cohorts = cv_get_users_cohorts();
-
+cv_debug($cohorts, "test");
 echo '<h3>CourseView</h3><br>';
-$count=0;
+$count = 0;
 //loop through each cohort and build the tree menu
 foreach ($cohorts as $cohort)
 {
@@ -71,25 +67,25 @@ foreach ($cohorts as $cohort)
 
         //setting up attributes to insert into the html tags
         $name = $menuitem->name;
-        if ($indentlevel==0)  //if this is a topline course menuitem, add the cohort to the text
+        if ($indentlevel == 0)  //if this is a topline course menuitem, add the cohort to the text
         {
-            $name.='-'.$cohort->title;
+            $name.='-' . $cohort->title;
         }
         $id1 = $count; //$menuitem->menuorder;
         $count++;
         $class2 = "";
         $indent = $menuitem->indent;
-        if ($menuitem->guid == $cvmenuguid  && $cohortguid == $cohortguid)
+        if ($menuitem->guid == $cvmenuguid && $cohortguid == $cvcohortguid)
         {
             $class2 = " cvcurrent";  //setting the current menu item
         }
         if ($menuitem->menutype == "folder")
         {
             echo "<li>";
-                echo "<input type ='checkbox' abc ='m' name='$indent' class ='cvmenuitem $class2' id ='$id1' />";
-                    echo "<label>";
-                        echo "<a href='" . elgg_get_site_url() . "courseview/contentpane/" . $cohortguid . "/" . $menuitem->guid . "'> " . $name . "</a>";
-                    echo "</label>";
+            echo "<input type ='checkbox' abc ='m' name='$indent' class ='cvmenuitem $class2' id ='$id1' />";
+            echo "<label>";
+            echo "<a href='" . elgg_get_site_url() . "courseview/contentpane/" . $cohortguid . "/" . $menuitem->guid . "'> " . $name . "</a>";
+            echo "</label>";
         }
         //otherwise, let's just create a link to the contentpane and pass the guid of the menu object...the css class indent is also added here
         else
