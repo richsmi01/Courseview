@@ -170,19 +170,31 @@ function cvsidebarintercept($hook, $entity_type, $returnvalue, $params)
 
 function cvinterceptupdate($event, $type, $object)
 {
+    elgg_load_library('elgg:cv_debug');
+    cv_debug("Entering cvinterceptupdate - Object:  ". $object->getSubtype(), "cvinterceptupdate");
     $cvmenuguid = ElggSession::offsetGet('cvmenuguid'); //need to get this from the session since I'm no longer on a courseview page
     $cvcohortguid = ElggSession::offsetGet('cvcohortguid');
     $validplugins = unserialize(elgg_get_plugin_setting('availableplugins', 'courseview'));
 
     $menu_items = get_input('menuitems');
+    
+ 
+     cv_debug("Number of menuitems: ".sizeof($menu_items),"cvinterceptupdate");
     foreach ($menu_items as $menu_item)
     {
+        cv_debug($menu_item,"cvinterceptupdate");
         /* Note that $menu_items is an array of Strings passed from cvaddtocohorttree where each element contains three pieces 
          * of information in the format Xmenuitemguid|cohortguid where X is a + if a new relationship should be created.
          * menuitemguid is stripped out into $menu_item and cohortguid is stripped out into $cohort_guid
          */
         $cohort_guid = substr(strstr($menu_item, '|'), 1);
-        $menu_item_guid = substr(strstr($menu_item, '|', true), 1);
+        
+        $stop=stripos ($menu_item,'|')-1;
+        cv_debug("stop: ".$stop,"cvinterceptupdate");
+        $temp=  substr($menu_item, 1,  $stop);
+        
+       
+        $menu_item_guid = substr($menu_item, 1,  $stop);//substr(strstr($menu_item, '|', true), 1);
         $guid_one = $menu_item_guid;
 
         //need to check if this is a non-professor type content and change relationship accordingly...
@@ -196,7 +208,9 @@ function cvinterceptupdate($event, $type, $object)
         $guid_two = $object->guid;
         if (strrchr('+', $menu_item))  //if the module was checked, then add relationship
         {
-            add_entity_relationship($guid_one, $relationship, $guid_two);
+            cv_debug("Adding Relationship: $guid_one, $relationship, $guid_two", "cvinterceptupdate");
+            $z=add_entity_relationship($guid_one, $relationship, $guid_two);
+             cv_debug($z,"cvinterceptupdate");
         } 
         else
         {

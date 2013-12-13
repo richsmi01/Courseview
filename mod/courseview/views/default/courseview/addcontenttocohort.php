@@ -3,6 +3,7 @@
  
 
 elgg_load_library('elgg:courseview');
+elgg_load_library('elgg:cv_debug');
  //first, we should check to see if the user has any cohorts...if they don't return without doing anything else
 if ( !cv_is_courseview_user())
 {
@@ -26,6 +27,7 @@ foreach ($validkeys as $plugin)
         $donotdisplay=false;
     }
 }
+cv_debug("Decided not to display", "",5);
 //if (array_key_exists("blog", $validplugins))
 //exit;
     if ($donotdisplay)

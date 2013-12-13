@@ -87,13 +87,15 @@ foreach ($cohorts as $cohort)
         //If this menu item should be indented from the previous one, add a <ul> tag to start a new unordered list
         if ($menuitem->indent > $indentlevel)
         {
-            echo('<ul>');
+            echo'<ul>';
         }
         //if this menu item should be outdented, close off our list item and unorderedlist item
         else if ($menuitem->indent < $indentlevel)
         {
-            echo ('</li> </ul>');
+            echo '</ul></li>';
         }
+        
+ 
         //now we set indent level to the current menu item indent level so that we can check against it on the next iteration
         $indentlevel = $menuitem->indent;
 
@@ -112,6 +114,7 @@ foreach ($cohorts as $cohort)
             echo "<label>";
             echo "<a href='" . elgg_get_site_url() . "courseview/contentpane/" . $cohortguid . "/" . $menuitem->guid . "'> " . $name . "</a>";
             echo "</label>";
+         
         }
         //otherwise, let's just create a link to the contentpane and pass the guid of the menu object...the css class indent is also added here
         elseif (($menuitem->menutype == 'professor' && !cv_isprof(get_entity($userguid))) || in_array($menuitem->guid, $prof_menu_item_already_used))
@@ -125,22 +128,22 @@ foreach ($cohorts as $cohort)
              * of information in the format Xmenuitemguid|cohortguid where X is a + if a new relationship should be created.
              */
             $value = $menuitem->guid . "|" . $cohortguid;
+        
             echo ("<li>");
-            echo elgg_view('input/checkbox', array('name' => 'menuitems[]', 'id' => $value, 'value' => '+' . $value, 'class' => 'cvinsert', 'checked' => $checkoptions, 'default' => '-' . $value));
+            echo elgg_view('input/checkbox', array('name' => 'menuitems[]', 'value' => '+' . $value, 'class' => 'cvinsert', 'checked' => $checkoptions, 'default' => '-' . $value));
             //maybe make this a label instead of an anchor
-            echo "<label  for ='$value'>$name</label></li>";
+            echo "<label  for ='$value'>$name.$value.$checkoptions</label>";
 //             echo "<a  name='$indent' class = 'cvmenuitem $class2  indent' href ='" . elgg_get_site_url() . "courseview/contentpane/" . $cohortguid . "/" . $menuitem->guid . "' >" . $name . "</a></li>";
-                if ($menuitem->menutype == 'professor' )
+               
+            if ($menuitem->menutype == 'professor' )
                 {
                     $prof_menu_item_already_used [] = $menuitem->guid;
-                }
-            
-            
-            
+                } 
+       
             }
+            
     }
 echo '</div>';
 }
 echo '<br>';
 echo '</div>';
-?>
