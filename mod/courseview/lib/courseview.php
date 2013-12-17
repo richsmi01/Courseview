@@ -24,6 +24,12 @@ function cv_get_menu_items_for_cohort($cvcohortguid)
     return $menu;
 }
 
+function is_valid_plugin($arg1)
+{
+    $validplugins = unserialize(elgg_get_plugin_setting('availableplugins', 'courseview'));
+    return (array_key_exists($arg1, $validplugins));
+}
+
 function cv_get_student_menu_items_by_cohort($cvcohortguid)
 {
     $menu = elgg_get_entities_from_relationship(array

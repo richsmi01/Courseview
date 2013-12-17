@@ -4,32 +4,46 @@
 
 elgg_load_library('elgg:courseview');
 elgg_load_library('elgg:cv_debug');
- //first, we should check to see if the user has any cohorts...if they don't return without doing anything else
-if ( !cv_is_courseview_user())
+ 
+
+$action = $vars['action'];
+cv_debug ("action: $action", "",5);
+
+/*first, we should check to see if the user has any cohorts...if they don't, return without doing anything else.
+ * Also, certain pages are beyond our ability to automatically filter out.  For instance, we do want the cvaddtocohorttreeview to
+ * pop up when desiging a poll.  However, we don't want it to pop up when taking the poll.  The only way to do this is to look for
+ * a particular word in the $action string that is created by the plugin.  Again, for the poll plugin, this $action String looks something
+ * like this: http://localhost/elgg/action/polls/vote  -- In this case we are able to pull out the word vote as being unique to this page and check 
+ * for it.  If we find it, we don't want to add cvaddtocohorttreeview to the page.
+ * 
+ * Note - For now, I've just hard-coded the 'vote' but what I really should do is eventually add a text input to the settings form that will allow
+ * the user to type in a set of keywords, separated by spaces, and use them instead of a hardcoded 'vote'.  
+ * 
+ * Further Note - I should add the ability for my cv_debug to switch to certain modes from the settings form.  For instance, a series of checkboxes  of 
+ * all possible logging activities.  One could be 'Show Actions' which the administrator could select and have all actions added to the log file. 
+ *  That way the administrator could look for filter words.
+ */
+if ( !cv_is_courseview_user()|| strpos($action, 'vote')!==false)
 {
     return;
 }
 
-//var_dump($vars['action']);
-$entity = ($vars['entity']);
-//echo "...".$entity->guid;
-//var_dump($vars);
-$action = $vars['action'];
+//$entity = ($vars['entity']);
+
 $validplugins = unserialize(elgg_get_plugin_setting('availableplugins', 'courseview'));
 $validkeys = array_keys($validplugins);
 $donotdisplay = true;
-//echo "Action: ".$vars['action'];
+
 foreach ($validkeys as $plugin)
 {
   //  echo "Plugin :".$plugin.'<br>';
     if (strpos($action, $plugin)!==false)
     {
         $donotdisplay=false;
+        break;
     }
 }
-cv_debug("Decided not to display", "",5);
-//if (array_key_exists("blog", $validplugins))
-//exit;
+
     if ($donotdisplay)
     {
        return true;
@@ -37,7 +51,7 @@ cv_debug("Decided not to display", "",5);
 ?>
 <script>
     /**
-     * Comment
+     * A bit of javascript to collapse the cohorttree unless the user clicks on the topline
      */
     function showCVAdd() {
        
@@ -65,6 +79,5 @@ cv_debug("Decided not to display", "",5);
     <?php
      //echo elgg_view('courseview/debug');
         echo elgg_view('courseview/cvaddtocohorttreeview',$vars);  //what $vars???
-        echo '</div>';
-        echo '</div>';
+   
     ?>
