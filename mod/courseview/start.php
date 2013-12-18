@@ -13,8 +13,8 @@ function courseviewInit()
     elgg_load_library('elgg:courseview');
     elgg_load_library('elgg:cv_debug');
 
-    //if the user is not a member of any cohorts, then don't bother running anything.
-    if (!cv_is_courseview_user())
+    //if the user is not a member of any cohorts, not a prof, and not an admin then don't bother running anything.
+    if (!cv_is_courseview_user()  && !cv_isprof(elgg_get_logged_in_user_entity()) && !elgg_is_admin_logged_in())
     {
         return;
     }
